@@ -1,0 +1,1023 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Media Datavista</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/waffle-soft" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/genty" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f8ff;
+      --panel: #ffffff;
+      --primary: #4b8df8;
+      --primary-soft: #6da8ff;
+      --muted: #4c5a73;
+      --line: #dbe6ff;
+      --shadow: 0 18px 60px rgba(75, 141, 248, 0.15);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(107, 168, 255, 0.12), transparent 32%),
+                  radial-gradient(circle at 80% 0%, rgba(75, 141, 248, 0.16), transparent 34%),
+                  var(--bg);
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(109, 168, 255, 0.18), transparent 55%);
+      filter: blur(40px);
+      z-index: -1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    body::before { 
+      top: -140px; 
+      left: -120px;
+      animation-delay: 0s;
+    }
+    body::after { 
+      bottom: -160px; 
+      right: -140px;
+      animation-delay: 3s;
+    }
+
+    .shell {
+      max-width: 1080px;
+      margin: 40px auto 48px auto;
+      padding: 0 20px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      color: var(--muted);
+      gap: 12px;
+    }
+
+    .badge {
+      background: rgba(75, 141, 248, 0.12);
+      color: var(--primary);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      font-size: 13px;
+      border: 1px solid rgba(75, 141, 248, 0.16);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .card {
+      background: var(--panel);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 32px;
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .grid-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 16px;
+    }
+
+    .title {
+      font-family: 'Waffle Soft', 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(38px, 6vw, 56px);
+      margin: 0 0 12px 0;
+      color: #0f172a;
+      letter-spacing: 1px;
+      animation: slideInLeft 0.8s ease;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .genty {
+      font-family: 'Genty Sans', 'Genty', 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 0.3px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 700;
+      transition: all 0.22s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
+      color: #ffffff;
+      box-shadow: 0 12px 30px rgba(75, 141, 248, 0.35);
+    }
+
+    .btn-primary:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 16px 40px rgba(75, 141, 248, 0.45);
+      animation: pulse 0.6s ease;
+    }
+
+    .slides {
+      margin-top: 30px;
+      position: relative;
+      min-height: 300px;
+    }
+
+    .slide { display: none; animation: fadeIn 0.45s ease; }
+    .slide.active { display: block; }
+
+    .card-lite {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 60px 20px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      text-align: center;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .toc-item {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      text-align: left;
+      color: #0f172a;
+      box-shadow: 0 12px 28px rgba(75, 141, 248, 0.12);
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      animation: fadeIn 0.5s ease backwards;
+    }
+
+    .toc-item:nth-child(1) { animation-delay: 0.1s; }
+    .toc-item:nth-child(2) { animation-delay: 0.2s; }
+    .toc-item:nth-child(3) { animation-delay: 0.3s; }
+    .toc-item:nth-child(4) { animation-delay: 0.4s; }
+    .toc-item:nth-child(5) { animation-delay: 0.5s; }
+    .toc-item:nth-child(6) { animation-delay: 0.6s; }
+
+    .toc-item:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 16px 36px rgba(75, 141, 248, 0.2);
+    }
+
+    .toc-item span:first-child {
+      display: inline-block;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    .img-placeholder {
+      margin-top: 16px;
+      border: 2px dashed var(--line);
+      border-radius: 12px;
+      background: #ffffff;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .badge-soft {
+      display: inline-block;
+      margin-bottom: 10px;
+      background: rgba(15, 23, 42, 0.04);
+      color: var(--muted);
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+    }
+
+    .progress {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+    }
+
+    .bar {
+      height: 10px;
+      background: #e7eefc;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary), var(--primary-soft));
+      border-radius: 999px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-buttons {
+      margin-top: 26px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -1000px 0; }
+      100% { background-position: 1000px 0; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @media (max-width: 768px) {
+      .card { padding: 24px; }
+      .grid-head { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <span class="badge">Bahan Ajar</span>
+    </div>
+
+    <div class="card">
+      <div class="grid-head">
+        <div>
+          <h1 class="title">Media Datavista</h1>
+          
+        </div>
+      </div>
+
+      <div class="slides" id="slides">
+        <section class="slide active" data-slide="0">
+          <div class="card-lite">
+            <h2 class="title" style="margin:0">Media Datavista</h2>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="1">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <p class="genty" style="font-size:22px;margin:0 0 16px 0;line-height:1.4">Judul Penelitian: Pengembangan Bahan Ajar Project-Based Learning Berbantuan Media Digital DataVista untuk Penguatan Literasi Statistik serta Resiliensi Siswa SMP</p>
+            <div class="genty" style="font-size:18px;line-height:1.6;margin-bottom:20px">
+              <div>Wahyu Setiawan</div>
+              <div>2211397</div>
+              <div>S3 Pendidikan Matematika</div>
+              <div>Universitas Pendidikan Indonesia</div>
+            </div>
+            <div class="genty" style="font-size:18px;line-height:1.6">
+              <div style="font-weight:700;margin-bottom:8px">Pembimbing:</div>
+              <div>Prof. Dr. H. Nanang Priatna, M.Pd</div>
+              <div>Prof. Drs. Suhendra, Ph.D</div>
+              <div>Dr. Bambang Avip Priatna, M.Si</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="2">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:12px">Daftar Isi</div>
+            <div class="toc-grid">
+              <button class="toc-item genty" onclick="updateSlide(3)">
+                <span style="font-size:32px;margin-right:12px">📖</span>
+                <span>Petunjuk penggunaan Bahan ajar.</span>
+              </button>
+              <button class="toc-item genty" onclick="updateSlide(4)">
+                <span style="font-size:32px;margin-right:12px">🎯</span>
+                <span>Capaian Pembelajaran.</span>
+              </button>
+              <button class="toc-item genty" onclick="updateSlide(5)">
+                <span style="font-size:32px;margin-right:12px">🎓</span>
+                <span>Tujuan Pembelajaran.</span>
+              </button>
+              <button class="toc-item genty" onclick="updateSlide(6)">
+                <span style="font-size:32px;margin-right:12px">📚</span>
+                <span>Materi.</span>
+              </button>
+              <button class="toc-item genty" onclick="updateSlide(7)">
+                <span style="font-size:32px;margin-right:12px">💻</span>
+                <span>Media.</span>
+              </button>
+              <button class="toc-item genty" onclick="updateSlide(8)">
+                <span style="font-size:32px;margin-right:12px">🗺️</span>
+                <span>Peta Konsep.</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="3">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">📖 Petunjuk Penggunaan Bahan Ajar</div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Selamat datang di <strong>Media Datavista</strong>! Bahan ajar interaktif ini dirancang untuk membantu kalian memahami konsep statistika dengan cara yang menyenangkan dan interaktif. Berikut adalah panduan penggunaannya:
+            </div>
+
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#f9fbff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>1️⃣ Navigasi Slide</strong><br>
+              • Gunakan tombol <strong>"Berikutnya ⟶"</strong> dan <strong>"⟵ Sebelumnya"</strong> untuk berpindah antar slide<br>
+              • Klik tombol pada <strong>Daftar Isi</strong> untuk langsung menuju topik tertentu<br>
+              • Gunakan tombol <strong>"⟵ Kembali ke Daftar Isi"</strong> untuk kembali ke menu utama<br>
+              • Progress bar di bawah menunjukkan posisi kalian saat ini
+            </div>
+
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>2️⃣ Mempelajari Materi</strong><br>
+              • Di bagian <strong>Materi</strong>, kalian akan mempelajari:<br>
+              &nbsp;&nbsp;- Ukuran Pemusatan (Mean, Median, Modus)<br>
+              &nbsp;&nbsp;- Ukuran Penyebaran (Jangkauan, Kuartil)<br>
+              &nbsp;&nbsp;- Penyajian Data<br>
+              • Setiap topik dilengkapi dengan penjelasan, contoh, dan gambar ilustrasi<br>
+              • Baca dengan seksama dan pahami langkah-langkah yang diberikan
+            </div>
+
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#e8f0ff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>3️⃣ Menggunakan Media Interaktif</strong><br>
+              • Buka bagian <strong>Media</strong> untuk mencoba visualisasi data secara langsung<br>
+              • <strong>Input Data Sendiri:</strong> Ubah nama kategori dan nilai dengan mengetik langsung di kotak input<br>
+              • <strong>Tambah Kategori:</strong> Klik tombol <strong>"+ Tambah Kategori"</strong> untuk menambah data baru<br>
+              • <strong>Hapus Kategori:</strong> Klik tombol <strong>×</strong> merah di pojok kanan input untuk menghapus<br>
+              • <strong>Acak Data:</strong> Klik <strong>"Acak Data"</strong> untuk melihat data acak<br>
+              • <strong>Reset:</strong> Klik <strong>"Reset"</strong> untuk kembali ke data awal (Jan-Apr)<br>
+              • Amati bagaimana perubahan data memengaruhi Tabel, Diagram Batang, Diagram Garis, dan Diagram Lingkaran
+            </div>
+
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>4️⃣ Panduan Diagram Lingkaran</strong><br>
+              • Di bagian Media, kalian juga dapat melihat cara menghitung diagram lingkaran<br>
+              • Klik <strong>"Tampilkan Langkah Perhitungan"</strong> untuk melihat:<br>
+              &nbsp;&nbsp;- Rumus perhitungan persentase<br>
+              &nbsp;&nbsp;- Rumus perhitungan sudut sektor<br>
+              &nbsp;&nbsp;- Tabel perhitungan detail untuk setiap kategori<br>
+              • Ini membantu kalian memahami matematika di balik visualisasi data
+            </div>
+
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#f9fbff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>💡 Tips Belajar Efektif</strong><br>
+              ✓ Ikuti materi secara berurutan dari awal<br>
+              ✓ Cobalah semua fitur interaktif di bagian Media<br>
+              ✓ Gunakan data kalian sendiri untuk latihan (misalnya: nilai ujian, tinggi badan teman, dll.)<br>
+              ✓ Bandingkan berbagai jenis diagram untuk memahami perbedaan visualisasi<br>
+              ✓ Jangan ragu untuk kembali ke materi jika ada yang belum dipahami<br>
+              ✓ Pelajari Peta Konsep untuk melihat gambaran besar materi statistika
+            </div>
+
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>🎯 Tujuan Akhir:</strong> Setelah mempelajari bahan ajar ini, kalian diharapkan dapat memahami konsep statistika dasar, mampu menyajikan data dalam berbagai bentuk diagram, serta dapat menganalisis dan menginterpretasi data dengan benar.
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="4">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Capaian Pembelajaran</div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:16px;line-height:1.6;color:#0f172a">
+              Mereka dapat menentukan dan menafsirkan rerata (mean), median, modus, dan jangkauan (range) dari data tersebut untuk menyelesaikan masalah (termasuk membandingkan suatu data terhadap kelompoknya, membandingkan dua kelompok data, memprediksi, membuat keputusan). Mereka dapat menyelidiki kemungkinan adanya perubahan pengukuran pusat tersebut akibat perubahan data.
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="5">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Tujuan Pembelajaran</div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="6">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:12px">Materi</div>
+            <div class="toc-grid">
+              <button class="toc-item genty" onclick="updateSlide(10)">Ukuran Pemusatan (Mean, Median, Modus)</button>
+              <button class="toc-item genty" onclick="updateSlide(11)">Ukuran Penyebaran (Jangkauan, Kuartil)</button>
+              <button class="toc-item genty" onclick="updateSlide(18)">Penyajian Data</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="7">
+          <div class="card-lite" id="media-sandbox" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:12px">Media Interaktif Penyajian Data</div>
+            <div class="genty" style="margin-top:4px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#ffffff;font-size:15px;line-height:1.7;color:#0f172a">
+              Masukkan atau ubah data, lalu lihat empat representasi (tabel, diagram batang, diagram garis, diagram lingkaran) terbarui otomatis. Siswa bisa menarik nilai (lewat input), mengacak data, dan mengamati jangkauan/perubahan bentuk grafik.
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:16px">
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#f9fbff">
+                <div class="genty" style="font-weight:700;margin-bottom:10px;font-size:16px">Input Data (Ribu Ton)</div>
+                <div id="media-inputs-container" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                  <!-- Inputs will be generated dynamically -->
+                </div>
+                <div style="display:flex;gap:10px;margin-top:12px">
+                  <button id="media-add" class="btn-ghost" style="flex:1;border:1px solid var(--line)">+ Tambah Kategori</button>
+                  <button id="media-random" class="btn-primary" style="flex:1">Acak Data</button>
+                  <button id="media-reset" class="btn-ghost" style="flex:1;border:1px solid var(--line)">Reset</button>
+                </div>
+              </div>
+
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#ffffff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Tabel</div>
+                <table style="width:100%;border-collapse:collapse;font-size:14px" id="media-table">
+                  <thead>
+                    <tr style="background:#e8f0ff;font-weight:700"><th style="padding:8px;border:1px solid var(--line)">Bulan</th><th style="padding:8px;border:1px solid var(--line)">Produksi (Ribu Ton)</th></tr>
+                  </thead>
+                  <tbody id="media-table-body"></tbody>
+                </table>
+              </div>
+
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#ffffff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Diagram Batang</div>
+                <div id="media-bars" style="position:relative;height:200px;border-left:1px solid #94a3b8;border-bottom:1px solid #94a3b8;padding:0 12px 14px 12px;display:flex;align-items:flex-end;gap:18px;overflow-x:auto">
+                  <!-- Bars will be generated dynamically -->
+                </div>
+              </div>
+
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#ffffff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Diagram Garis</div>
+                <svg id="media-line-svg" viewBox="0 0 280 200" style="width:100%;height:auto">
+                  <line x1="36" y1="20" x2="36" y2="180" stroke="#94a3b8" stroke-width="1" />
+                  <line x1="36" y1="180" x2="260" y2="180" stroke="#94a3b8" stroke-width="1" />
+                  <polyline id="media-line" points="" fill="none" stroke="#4b8df8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                  <g id="media-line-points"></g>
+                  <g id="media-line-labels"></g>
+                  <text x="6" y="30" font-size="11" fill="#0f172a">Produksi</text>
+                </svg>
+              </div>
+
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#ffffff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Diagram Lingkaran</div>
+                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                  <div id="media-pie" style="width:150px;height:150px;border-radius:50%;background:conic-gradient(#4b8df8 0 32%, #6da8ff 32% 62%, #a6c8ff 62% 100%);box-shadow:0 8px 18px rgba(15,23,42,0.12)"></div>
+                  <div id="media-pie-legend" style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#0f172a">
+                    <!-- Legend will be generated dynamically -->
+                  </div>
+                </div>
+              </div>
+
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#ffffff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Panduan Diagram Lingkaran</div>
+                <div class="genty" style="font-size:14px;line-height:1.7;color:#0f172a">
+                  Tidak yakin cara membuat diagram lingkaran? Ikuti langkah berikut yang otomatis memakai data di atas.
+                </div>
+                <button id="media-pie-toggle" class="btn-ghost" style="margin-top:10px;border:1px solid var(--line)">Tampilkan Langkah Perhitungan</button>
+                <div id="media-pie-steps" style="margin-top:10px;display:none">
+                  <div class="genty" style="padding:10px;border:1px dashed var(--line);border-radius:10px;background:#f9fbff;font-size:14px;line-height:1.7;color:#0f172a">
+                    <div><strong>Langkah 1:</strong> Hitung total <em>S</em> = jumlah seluruh data.</div>
+                    <div><strong>Langkah 2:</strong> Persentase kategori <em>p</em><sub>i</sub> = (nilai<sub>i</sub> / S) × 100%.</div>
+                    <div><strong>Langkah 3:</strong> Sudut sektor θ<sub>i</sub> = (p<sub>i</sub> / 100) × 360°.</div>
+                  </div>
+                  <table id="media-pie-steps-table" style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px">
+                    <thead>
+                      <tr style="background:#e8f0ff;font-weight:700">
+                        <th style="padding:8px;border:1px solid var(--line)">Kategori</th>
+                        <th style="padding:8px;border:1px solid var(--line)">Nilai</th>
+                        <th style="padding:8px;border:1px solid var(--line)">% dari Total</th>
+                        <th style="padding:8px;border:1px solid var(--line)">Sudut (°)</th>
+                      </tr>
+                    </thead>
+                    <tbody id="media-pie-steps-body"></tbody>
+                  </table>
+                  <div class="genty" id="media-pie-total" style="margin-top:8px;font-size:13px;color:var(--muted)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="8">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Peta Konsep</div>
+            <div class="img-placeholder" style="padding:12px">
+              <img src="../images/diagram-peta-konsep-statistika-kelas-8.png" alt="Diagram Peta Konsep Statistika Kelas 8" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="9">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Pengukuran Data</div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="10">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:12px">Ukuran Pemusatan (Mean, Median, Modus)</div>
+            <div class="toc-grid">
+              <button class="toc-item genty" onclick="updateSlide(13)">Mean</button>
+              <button class="toc-item genty" onclick="updateSlide(14)">Median</button>
+              <button class="toc-item genty" onclick="updateSlide(15)">Modus</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="11">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:12px">Ukuran Penyebaran (Jangkauan, Kuartil)</div>
+            <div class="toc-grid">
+              <button class="toc-item genty" onclick="updateSlide(16)">Jangkauan</button>
+              <button class="toc-item genty" onclick="updateSlide(17)">Kuartil</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="12">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Visualisasi Data</div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="13">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Mean</div>
+            <div class="img-placeholder" style="padding:12px">
+              <img src="../images/rata.png" alt="Mean" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Diagram Batang tersebut menggambarkan pasien Covid-19 yang sembuh dari 5 Provinsi di Indonesia. Berapakah nilai rata-ratanya?<br><br>
+              Untuk menjawab pertanyaan tersebut coba lakukan langkah-langkah berikut ini.<br><br>
+              <strong>Langkah pertama,</strong> data yang ada di diagram batang diubah dalam bentuk tabel, seperti berikut ini.
+            </div>
+            <div class="img-placeholder" style="padding:12px;margin-top:14px">
+              <img src="../images/rata2.png" alt="Langkah Kedua Mean" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>Langkah kedua,</strong> jumlahkan semua data tersebut, bagilah dengan banyak data, dalam hal ini karena ada 5 Provinsi, maka banyak ada ada 5. Hasil dari Pembagian tersebut menunjukkan nilai rata-rata dari Pasien yang sembuh Covid-19 untuk 5 Provinsi
+            </div>
+            <div class="img-placeholder" style="padding:12px;margin-top:14px">
+              <img src="../images/rata3-1.png" alt="Langkah Kedua Mean - Perhitungan" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Untuk menentukan rata-rata dari suatu data yang cukup banyak dapat digunakan dengan cara menjumlahkan hasil kali antara data dengan frekuensinya setelah itu dibagi dengan banyak data yang ada. Dalam bentuk umum dapat ditulis,
+            </div>
+            <div class="img-placeholder" style="padding:12px;margin-top:14px">
+              <img src="../images/rata4.png" alt="Rumus Mean" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="14">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Median</div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Median dari kumpulan data merupakan suatu nilai data yang terletak di tengah-tengah kumpulan data yang telah diurutkan. Jadi, terdapat 50% dari banyak data yang nilai-nilainya lebih tinggi atau sama dengan median dan 50% dari banyak data yang nilai-nilainya kurang dari atau sama dengan median. Median dari kumpulan data yang jumlahnya ganjil dan data yang jumlahnya genap memiliki cara yang tidak sama.
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>a. Menentukan Median data ganjil</strong><br>
+              <strong>Langkah pertama</strong> yaitu mengurutkan data tersebut dari data terkecil sampai data terbesar<br>
+              <strong>Langkah kedua</strong> yaitu pasangkan data yang sudah terurut dari sisi luar ke sisi dalam, sehingga menyisakan satu data tunggal<br>
+              <div style="margin-top:12px;padding:10px;border-radius:8px;background:#f9fbff;display:flex;justify-content:center">
+                <img src="../images/median.png" alt="Median Data Ganjil" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 4px 12px rgba(15,23,42,0.1)">
+              </div>
+              <strong>Langkah ketiga</strong> yaitu<br>
+              Data bagian tengah yang tidak memiliki pasangan dinamakan dengan Median.
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>b. Menentukan Median data genap</strong><br>
+              <strong>Langkah pertama</strong> yaitu mengurutkan data tersebut dari data terkecil sampai data terbesar<br>
+              <strong>Langkah kedua</strong> yaitu pasangkan data yang sudah terurut dari sisi luar ke sisi dalam, sehingga menyisakan satu data tunggal<br>
+              <strong>Langkah ketiga</strong> yaitu<br>
+              Karena ada dua data pada bagian tengah, maka nilai median berada di tengah-tengah kedua data tersebut. Cara menentukan median adalah dengan membagi dua jumlah dari dua data pada bagian tengah. Data bagian tengah yang tidak memiliki pasangan dinamakan dengan Median.
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="15">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:14px">Modus</div>
+            <div class="img-placeholder" style="padding:12px">
+              <img src="../images/modus.png" alt="Modus" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Untuk memahami modus dari suatu data, coba perhatikan data kasus Positif Covid-19 di salah satu Provinsi di Indonesia pada gambar 6.2. Dalam grafik tersebut dipaparkan data kasus Covid-19 di salah satu Provinsi di Indonesia mulai bulan Maret 2020 sampai April 2022. Dari tabel tersebut terlihat jelas bahwa data terendah pada bulan Maret 2020 dan data tertinggi pada bulan Juli 2021 sebesar 9.651 kasus. <strong>Modus dari suatu data adalah data yang sering muncul.</strong> Dengan demikian, kalian dapat menentukan modus pada gambar 6.3 yaitu data yang sering muncul pada bulan Juli 2021, yaitu sebesar 9.651 kasus, sehingga modus dari diagram tersebut adalah Juli 2021.
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="16">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Jangkauan</div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Jangkauan (range) adalah selisih antara data terbesar dan data terkecil. Jangkauan digunakan untuk mengukur penyebaran data yang paling sederhana.
+            </div>
+            <div class="img-placeholder" style="padding:12px;margin-top:14px">
+              <img src="../images/jk.png" alt="Jangkauan" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Gambar diagram garis tersebut menggambarkan perkembangan produksi beras di Indonesia dalam satuan Ribuan Ton untuk tahun 2020 (garis hijau) dan tahun 2021 (garis merah). Dalam diagram garis tersebut terlihat bahwa produksi beras Indonesia mengalami kenaikan dan penurunan pada bulan-bulan tertentu. Selisih produksi beras tertinggi dan terendah dalam setahun dapat ditentukan dengan cara mengurangi data tertinggi dengan data terendah
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Selisih dari data tertinggi dengan data terendah dinamakan dengan Jangkauan. Jadi, jangkauan dapat diartikan dengan mengurangi data tertinggi dengan data terendah, maka dapat disimpulkan bahwa Jangkauan adalah selisih antara nilai data terbesar dengan nilai data terkecil. Jangkauan diperoleh dengan mengurangi data terbesar dengan data terkecil
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="17">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Kuartil</div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Ukuran penyebaran data yang kedua adalah kuartil. Jika median adalah membagi data yang diurutkan menjadi dua kelompok yang sama banyak, maka kuartil adalah membagi data yang diurutkan menjadi empat yang sama banyak, sehingga masing-masing kelompok terdiri atas ¼ bagian data. Ada tiga jenis kuartil, yaitu kuartil pertama/kuartil bawah (Q1), kuartil kedua/kuartil tengah atau median (Q2), dan kuartil ketiga/kuartil atas (Q3).
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="18">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:12px">Penyajian Data</div>
+            <div class="genty" style="margin-top:4px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#ffffff;font-size:15px;line-height:1.7;color:#0f172a">
+              Contoh penyajian data dalam empat bentuk umum: tabel, diagram batang, diagram garis, dan diagram lingkaran.
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:16px">
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#f9fbff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Tabel Produksi Beras</div>
+                <table style="width:100%;border-collapse:collapse;font-size:14px">
+                  <tr style="background:#e8f0ff;font-weight:700"><th style="padding:8px;border:1px solid var(--line)">Bulan</th><th style="padding:8px;border:1px solid var(--line)">Produksi (Ribu Ton)</th></tr>
+                  <tr><td style="padding:8px;border:1px solid var(--line)">Jan</td><td style="padding:8px;border:1px solid var(--line)">420</td></tr>
+                  <tr><td style="padding:8px;border:1px solid var(--line)">Feb</td><td style="padding:8px;border:1px solid var(--line)">460</td></tr>
+                  <tr><td style="padding:8px;border:1px solid var(--line)">Mar</td><td style="padding:8px;border:1px solid var(--line)">510</td></tr>
+                  <tr><td style="padding:8px;border:1px solid var(--line)">Apr</td><td style="padding:8px;border:1px solid var(--line)">480</td></tr>
+                </table>
+              </div>
+
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#f9fbff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Diagram Batang</div>
+                <div style="position:relative;height:180px;border-left:1px solid #94a3b8;border-bottom:1px solid #94a3b8;padding:0 12px 12px 12px;display:flex;align-items:flex-end;gap:18px">
+                  <div style="width:36px;height:120px;background:linear-gradient(180deg,#6da8ff,#4b8df8);border-radius:6px 6px 2px 2px;display:flex;align-items:flex-end;justify-content:center;color:#0f172a;font-size:12px;font-weight:700;box-shadow:0 6px 12px rgba(15,23,42,0.12)">420</div>
+                  <div style="width:36px;height:140px;background:linear-gradient(180deg,#6da8ff,#1e73d8);border-radius:6px 6px 2px 2px;display:flex;align-items:flex-end;justify-content:center;color:#0f172a;font-size:12px;font-weight:700;box-shadow:0 6px 12px rgba(15,23,42,0.12)">460</div>
+                  <div style="width:36px;height:160px;background:linear-gradient(180deg,#6da8ff,#165bb5);border-radius:6px 6px 2px 2px;display:flex;align-items:flex-end;justify-content:center;color:#0f172a;font-size:12px;font-weight:700;box-shadow:0 6px 12px rgba(15,23,42,0.12)">510</div>
+                  <div style="width:36px;height:150px;background:linear-gradient(180deg,#6da8ff,#2a7bf0);border-radius:6px 6px 2px 2px;display:flex;align-items:flex-end;justify-content:center;color:#0f172a;font-size:12px;font-weight:700;box-shadow:0 6px 12px rgba(15,23,42,0.12)">480</div>
+                  <div style="position:absolute;bottom:-4px;left:8px;right:0;display:flex;justify-content:space-between;padding:0 6px;font-size:12px;color:#0f172a;font-weight:700"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span></div>
+                </div>
+              </div>
+
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#f9fbff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Diagram Garis</div>
+                <svg viewBox="0 0 280 180" style="width:100%;height:auto">
+                  <line x1="36" y1="16" x2="36" y2="160" stroke="#94a3b8" stroke-width="1" />
+                  <line x1="36" y1="160" x2="260" y2="160" stroke="#94a3b8" stroke-width="1" />
+                  <polyline points="36,150 96,130 156,110 216,125 260,105" fill="none" stroke="#4b8df8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                  <circle cx="36" cy="150" r="5" fill="#4b8df8" />
+                  <circle cx="96" cy="130" r="5" fill="#4b8df8" />
+                  <circle cx="156" cy="110" r="5" fill="#4b8df8" />
+                  <circle cx="216" cy="125" r="5" fill="#4b8df8" />
+                  <circle cx="260" cy="105" r="5" fill="#4b8df8" />
+                  <text x="32" y="170" font-size="11" fill="#0f172a">Jan</text>
+                  <text x="92" y="170" font-size="11" fill="#0f172a">Feb</text>
+                  <text x="152" y="170" font-size="11" fill="#0f172a">Mar</text>
+                  <text x="212" y="170" font-size="11" fill="#0f172a">Apr</text>
+                  <text x="8" y="24" font-size="11" fill="#0f172a">Produksi</text>
+                </svg>
+              </div>
+
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#f9fbff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Diagram Lingkaran</div>
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                  <div style="width:140px;height:140px;border-radius:50%;background:conic-gradient(#4b8df8 0 32%, #6da8ff 32% 62%, #a6c8ff 62% 100%);box-shadow:0 8px 18px rgba(15,23,42,0.12)"></div>
+                  <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#0f172a">
+                    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#4b8df8"></span> Padi 32%</span>
+                    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#6da8ff"></span> Jagung 30%</span>
+                    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#a6c8ff"></span> Kedelai 38%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="progress">
+        <div class="bar"><span id="progressBar"></span></div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn-ghost" id="prevBtn">⟵ Sebelumnya</button>
+        <button class="btn-primary" id="nextBtn">Berikutnya ⟶</button>
+        <button class="btn-ghost" id="backBtn">⟵ Kembali ke Daftar Isi</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const progressBar = document.getElementById('progressBar');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const backBtn = document.getElementById('backBtn');
+
+    let current = 0;
+
+    function updateSlide(index) {
+      if (index < 0 || index >= slides.length) return;
+      slides.forEach(sl => sl.classList.remove('active'));
+      slides[index].classList.add('active');
+      current = index;
+      const percent = ((index + 1) / slides.length) * 100;
+      progressBar.style.width = `${percent}%`;
+      const showPrevNext = index <= 1;
+      prevBtn.style.visibility = showPrevNext ? 'visible' : 'hidden';
+      nextBtn.style.visibility = showPrevNext ? 'visible' : 'hidden';
+      backBtn.style.visibility = (index >= 3 && index <= 8) || (index >= 9 && index <= 18) ? 'visible' : 'hidden';
+      if (index === 2) {
+        prevBtn.style.visibility = 'hidden';
+        nextBtn.style.visibility = 'hidden';
+        backBtn.style.visibility = 'hidden';
+      }
+      prevBtn.disabled = index === 0;
+    }
+
+    prevBtn.addEventListener('click', () => updateSlide(Math.max(current - 1, 0)));
+    nextBtn.addEventListener('click', () => updateSlide(Math.min(current + 1, slides.length - 1)));
+    backBtn.addEventListener('click', () => {
+      // Slide 13-15 (Mean, Median, Modus) kembali ke slide 10 (Ukuran Pemusatan)
+      if (current >= 13 && current <= 15) {
+        updateSlide(10);
+      }
+      // Slide 16-17 (Jangkauan, Kuartil) kembali ke slide 11 (Ukuran Penyebaran)
+      else if (current >= 16 && current <= 17) {
+        updateSlide(11);
+      }
+      // Slide 18 (Penyajian Data) kembali ke slide 6 (Materi)
+      else if (current === 18) {
+        updateSlide(6);
+      }
+      // Slide lainnya kembali ke Daftar Isi (slide 2)
+      else {
+        updateSlide(2);
+      }
+    });
+
+    // Media interaktif: penyajian data
+    function initMediaSandbox() {
+      const container = document.getElementById('media-sandbox');
+      if (!container) return;
+
+      const defaultLabels = ['Jan', 'Feb', 'Mar', 'Apr'];
+      const defaultData = [420, 460, 510, 480];
+      let labels = [...defaultLabels];
+      let data = [...defaultData];
+
+      const inputsContainer = document.getElementById('media-inputs-container');
+      const barsContainer = document.getElementById('media-bars');
+      const line = document.getElementById('media-line');
+      const linePointsGroup = document.getElementById('media-line-points');
+      const lineLabelsGroup = document.getElementById('media-line-labels');
+      const pie = document.getElementById('media-pie');
+      const pieLegend = document.getElementById('media-pie-legend');
+      const pieToggle = document.getElementById('media-pie-toggle');
+      const pieSteps = document.getElementById('media-pie-steps');
+      const pieStepsBody = document.getElementById('media-pie-steps-body');
+      const pieTotal = document.getElementById('media-pie-total');
+      const tableBody = document.getElementById('media-table-body');
+      const addBtn = document.getElementById('media-add');
+      const randomBtn = document.getElementById('media-random');
+      const resetBtn = document.getElementById('media-reset');
+
+      const pieColors = ['#4b8df8', '#6da8ff', '#a6c8ff', '#8fb4ff', '#5c9eff', '#3d85f0', '#7eb8ff', '#4f91f5'];
+      const barGradients = [
+        'linear-gradient(180deg,#6da8ff,#4b8df8)',
+        'linear-gradient(180deg,#6da8ff,#1e73d8)',
+        'linear-gradient(180deg,#6da8ff,#165bb5)',
+        'linear-gradient(180deg,#6da8ff,#2a7bf0)',
+        'linear-gradient(180deg,#8fb4ff,#5c9eff)',
+        'linear-gradient(180deg,#a6c8ff,#7eb8ff)',
+        'linear-gradient(180deg,#6da8ff,#3d85f0)',
+        'linear-gradient(180deg,#8fb4ff,#4f91f5)'
+      ];
+
+      function rebuildInputs() {
+        inputsContainer.innerHTML = '';
+        data.forEach((val, i) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.cssText = 'position:relative';
+          wrapper.innerHTML = `
+            <label class="genty" style="font-size:14px;color:#0f172a;display:block">
+              <input class="media-label" data-idx="${i}" type="text" value="${labels[i]}" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:14px;margin-bottom:6px" />
+              <input class="media-input" data-idx="${i}" type="number" min="0" step="10" value="${val}" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px">
+            </label>
+            ${data.length > 1 ? `<button class="media-remove" data-idx="${i}" style="position:absolute;top:0;right:0;background:#ff4b4b;color:#fff;border:none;border-radius:8px;width:24px;height:24px;cursor:pointer;font-size:14px;font-weight:700;box-shadow:0 2px 6px rgba(255,75,75,0.3)">×</button>` : ''}
+          `;
+          inputsContainer.appendChild(wrapper);
+        });
+        bindInputEvents();
+      }
+
+      function bindInputEvents() {
+        document.querySelectorAll('.media-input').forEach((inp, i) => {
+          inp.addEventListener('input', () => {
+            const val = parseFloat(inp.value) || 0;
+            data[i] = Math.max(0, val);
+            render();
+          });
+        });
+        document.querySelectorAll('.media-label').forEach((inp, i) => {
+          inp.addEventListener('input', () => {
+            const txt = (inp.value || '').trim();
+            labels[i] = txt.length ? txt : `Item ${i + 1}`;
+            render();
+          });
+        });
+        document.querySelectorAll('.media-remove').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.idx);
+            if (data.length > 1) {
+              data.splice(idx, 1);
+              labels.splice(idx, 1);
+              rebuildInputs();
+              render();
+            }
+          });
+        });
+      }
+
+      function render() {
+        const maxVal = Math.max(...data, 1);
+        const total = data.reduce((a, b) => a + b, 0) || 1;
+
+        // Tabel
+        tableBody.innerHTML = data
+          .map((v, i) => `<tr><td style="padding:8px;border:1px solid var(--line)">${labels[i]}</td><td style="padding:8px;border:1px solid var(--line)">${v}</td></tr>`)
+          .join('');
+
+        // Batang
+        const barWidth = Math.max(32, Math.min(48, 220 / data.length));
+        barsContainer.innerHTML = data.map((v, i) => {
+          const h = Math.max(24, (v / maxVal) * 160);
+          const grad = barGradients[i % barGradients.length];
+          return `<div style="width:${barWidth}px;height:${h}px;background:${grad};border-radius:6px 6px 2px 2px;display:flex;align-items:flex-end;justify-content:center;color:#0f172a;font-size:11px;font-weight:700;box-shadow:0 6px 12px rgba(15,23,42,0.12)"><span>${v}</span></div>`;
+        }).join('');
+        // Bar labels
+        const labelsHtml = data.map((_, i) => `<span style="flex:1;text-align:center;font-size:11px">${labels[i]}</span>`).join('');
+        barsContainer.innerHTML += `<div style="position:absolute;bottom:-4px;left:8px;right:0;display:flex;justify-content:space-between;padding:0 6px;font-size:11px;color:#0f172a;font-weight:700">${labelsHtml}</div>`;
+
+        // Garis
+        const lineWidth = 224;
+        const step = data.length > 1 ? lineWidth / (data.length - 1) : 0;
+        const baseY = 180;
+        const scaleY = 120;
+        const points = data.map((v, i) => {
+          const x = 36 + i * step;
+          const y = Math.max(30, baseY - (v / maxVal) * scaleY);
+          return `${x},${y}`;
+        }).join(' ');
+        line.setAttribute('points', points);
+        
+        linePointsGroup.innerHTML = data.map((v, i) => {
+          const x = 36 + i * step;
+          const y = Math.max(30, baseY - (v / maxVal) * scaleY);
+          return `<circle cx="${x}" cy="${y}" r="5" fill="#4b8df8" />`;
+        }).join('');
+        
+        lineLabelsGroup.innerHTML = data.map((v, i) => {
+          const x = 36 + i * step;
+          return `<text x="${x - 10}" y="196" font-size="10" fill="#0f172a">${labels[i]}</text>`;
+        }).join('');
+
+        // Pie
+        let acc = 0;
+        const percents = data.map(v => (v / total) * 100);
+        const angles = percents.map(p => p * 3.6);
+        const segments = data.map((v, i) => {
+          const start = acc;
+          const pct = percents[i];
+          acc += pct;
+          return `${pieColors[i % pieColors.length]} ${start}% ${Math.min(100, start + pct)}%`;
+        }).join(', ');
+        pie.style.background = `conic-gradient(${segments})`;
+        
+        pieLegend.innerHTML = data.map((v, i) => {
+          const pct = percents[i].toFixed(1);
+          const ang = angles[i].toFixed(1);
+          const color = pieColors[i % pieColors.length];
+          return `<span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:${color}"></span> <span>${labels[i]} ${pct}% (${v}) — ${ang}°</span></span>`;
+        }).join('');
+
+        // Pie steps table
+        if (pieStepsBody) {
+          pieStepsBody.innerHTML = data.map((v, i) => {
+            return `<tr><td style="padding:8px;border:1px solid var(--line)">${labels[i]}</td><td style="padding:8px;border:1px solid var(--line)">${v}</td><td style="padding:8px;border:1px solid var(--line)">${percents[i].toFixed(1)}%</td><td style="padding:8px;border:1px solid var(--line)">${angles[i].toFixed(1)}°</td></tr>`;
+          }).join('');
+        }
+        if (pieTotal) {
+          const sumPct = percents.reduce((a, b) => a + b, 0);
+          const sumAng = angles.reduce((a, b) => a + b, 0);
+          pieTotal.textContent = `Total S = ${total}. Jumlah persentase ≈ ${sumPct.toFixed(1)}% dan jumlah sudut ≈ ${sumAng.toFixed(1)}°. Perbedaan kecil bisa terjadi karena pembulatan.`;
+        }
+      }
+
+      addBtn?.addEventListener('click', () => {
+        const nextNum = data.length + 1;
+        labels.push(`Kat ${nextNum}`);
+        data.push(Math.floor(400 + Math.random() * 150));
+        rebuildInputs();
+        render();
+      });
+
+      randomBtn?.addEventListener('click', () => {
+        data = data.map(() => Math.floor(320 + Math.random() * 220));
+        rebuildInputs();
+        render();
+      });
+
+      resetBtn?.addEventListener('click', () => {
+        data = [...defaultData];
+        labels = [...defaultLabels];
+        rebuildInputs();
+        render();
+      });
+
+      // Toggle steps panel
+      pieToggle?.addEventListener('click', () => {
+        if (!pieSteps) return;
+        const show = pieSteps.style.display !== 'block';
+        pieSteps.style.display = show ? 'block' : 'none';
+        pieToggle.textContent = show ? 'Sembunyikan Langkah Perhitungan' : 'Tampilkan Langkah Perhitungan';
+      });
+
+      rebuildInputs();
+      render();
+    }
+
+    initMediaSandbox();
+
+    document.addEventListener('keydown', (e) => {
+      if (current <= 1) {
+        if (e.key === 'ArrowRight') updateSlide(Math.min(current + 1, slides.length - 1));
+        if (e.key === 'ArrowLeft') updateSlide(Math.max(current - 1, 0));
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>
+
