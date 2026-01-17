@@ -1,19 +1,1758 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Media DataVista</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #f4f8ff;
+      --panel: #ffffff;
+      --primary: #4b8df8;
+      --primary-soft: #6da8ff;
+      --muted: #6b7280;
+      --line: #dbe6ff;
+      --shadow: 0 18px 60px rgba(75, 141, 248, 0.15);
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(107, 168, 255, 0.12), transparent 32%),
+                  radial-gradient(circle at 80% 0%, rgba(75, 141, 248, 0.16), transparent 34%),
+                  var(--bg);
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(109, 168, 255, 0.18), transparent 55%);
+      z-index: -1;
+      filter: blur(6px);
+    }
+
+    body::before { top: -140px; left: -120px; }
+    body::after { bottom: -160px; right: -140px; }
+
+    .shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 0 48px 0;
+      position: relative;
+    }
+
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 0 16px; }
+    .badge {
+      background: #e8f0ff;
+      color: #0f172a;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin: 0 16px;
+    }
+
+    .grid-head { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: center; }
+
+    .title {
+      margin: 0;
+      letter-spacing: 1px;
+      font-weight: 700;
+      animation: float 3s ease-in-out infinite;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .title:hover {
+      transform: scale(1.05);
+      text-shadow: 0 8px 16px rgba(75, 141, 248, 0.3);
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .genty {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 0.3px;
+      font-weight: 600;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 700;
+      transition: all 0.22s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
+      color: #ffffff;
+      box-shadow: 0 12px 30px rgba(75, 141, 248, 0.35);
+    }
+
+    .btn-primary:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 16px 40px rgba(75, 141, 248, 0.45);
+      animation: pulse 0.6s ease;
+    }
+
+    .btn-ghost {
+      background: #eef2ff;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+
+    .slides { margin-top: 30px; position: relative; min-height: 300px; }
+    .slide { display: none; animation: fadeIn 0.45s ease; }
+    .slide.active { display: block; }
+
+    .card-lite {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 60px 20px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      text-align: center;
+    }
+
+    .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 16px; }
+
+    .toc-item {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      text-align: left;
+      color: #0f172a;
+      box-shadow: 0 12px 28px rgba(75, 141, 248, 0.12);
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      animation: fadeIn 0.5s ease backwards;
+    }
+
+    .toc-item:nth-child(1) { animation-delay: 0.1s; }
+    .toc-item:nth-child(2) { animation-delay: 0.2s; }
+    .toc-item:nth-child(3) { animation-delay: 0.3s; }
+    .toc-item:nth-child(4) { animation-delay: 0.4s; }
+    .toc-item:nth-child(5) { animation-delay: 0.5s; }
+    .toc-item:nth-child(6) { animation-delay: 0.6s; }
+
+    .toc-item:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 16px 36px rgba(75, 141, 248, 0.2); }
+    .toc-item span:first-child { display: inline-block; animation: bounce 2s ease-in-out infinite; }
+
+    .img-placeholder {
+      margin-top: 16px;
+      border: 2px dashed var(--line);
+      border-radius: 12px;
+      background: #ffffff;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .badge-soft { display: inline-block; margin-bottom: 10px; background: rgba(15, 23, 42, 0.04); color: var(--muted); padding: 6px 12px; border-radius: 12px; font-size: 12px; letter-spacing: 0.3px; }
+
+    .progress { margin-top: 24px; display: grid; grid-template-columns: 1fr; align-items: center; }
+    .bar { height: 10px; background: #e7eefc; border-radius: 999px; overflow: hidden; position: relative; }
+    .bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--primary), var(--primary-soft)); border-radius: 999px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+
+    .nav-buttons { margin-top: 26px; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 16px; width: 100%; max-width: 1100px; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+
+    @media (max-width: 768px) {
+      .card { padding: 20px; }
+      .grid-head { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-    <img src="logo upi.jpg" alt="Logo">
-    <img src="pk2.jpeg" alt="PK2">
-    <img src="rata.png" alt="Rata">
-    <img src="rata2.png" alt="Rata 2">
-    <img src="rata3-1.png" alt="Rata 3">
-    <img src="rata4.png" alt="Rata 4">
-    <img src="median.png" alt="Median">
-    <img src="modus.png" alt="Modus">
-    <img src="jk.png" alt="JK">
+  <div class="shell">
+    <div class="topbar">
+      <span class="badge">Bahan Ajar</span>
+      <div style="display:flex;gap:6px;align-items:center">
+        <button title="Perkecil" aria-label="Perkecil tampilan" style="padding:6px 10px;border-radius:10px;background:#eef3ff;color:#0f172a" onclick="adjustZoom(0.9)">A-</button>
+        <button title="Perbesar" aria-label="Perbesar tampilan" style="padding:6px 10px;border-radius:10px;background:#4b8df8;color:#fff" onclick="adjustZoom(1.1)">A+</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="grid-head">
+        <div style="width: 100%; text-align: center;">
+          <h1 class="title" style="color: #4b8df8;">Media DataVista</h1>
+        </div>
+      </div>
+
+      <div class="slides" id="slides">
+        <section class="slide active" data-slide="1">
+          <div class="card-lite" style="text-align:center;padding:36px 28px">
+            <div style="font-size:52px;margin-bottom:16px">👋</div>
+            <div class="genty" style="font-size:30px;font-weight:700;color:#4b8df8;margin-bottom:12px">Selamat datang di Media DataVista</div>
+            <div class="genty" style="font-size:17px;line-height:1.7;color:#0f172a;max-width:720px;margin:0 auto 24px auto">Media interaktif untuk belajar statistika dengan cara menyenangkan. Klik Berikutnya untuk melihat identitas media.</div>
+            <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+              <button onclick="updateSlide(2)" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 6px 16px rgba(75,141,248,0.28);transition:all 0.2s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Mulai →</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="2">
+          <div class="card-lite" style="text-align:center;padding:32px 24px;position:relative">
+            <button aria-label="Kembali ke Halaman Awal" onclick="updateSlide(1)" title="Beranda" style="position:absolute;top:12px;left:12px;border:none;background:transparent;cursor:pointer;font-size:18px;line-height:1">🏠</button>
+
+            <img src="../images/logo upi.jpg" alt="Logo UPI" title="Universitas Pendidikan Indonesia" onerror="this.style.display='none';document.getElementById('logo-upi-fallback').style.display='inline-block'" style="position:absolute;top:12px;right:12px;height:36px;width:auto">
+            <span id="logo-upi-fallback" class="genty" style="display:none;position:absolute;top:12px;right:12px;font-weight:700;color:#0f172a">UPI</span>
+
+            <p class="genty" style="font-size:22px;margin:0 0 20px 0;line-height:1.5">Pengembangan Bahan Ajar <em>Project-Based Learning</em> Berbantuan Media Digital DataVista untuk Penguatan Literasi Statistik serta Resiliensi Siswa SMP</p>
+
+            <div class="genty" style="font-size:18px;line-height:1.6;margin-bottom:22px">
+              <div style="margin-bottom:6px">Wahyu Setiawan</div>
+              <div style="margin-bottom:6px">2211397</div>
+              <div style="margin-bottom:6px">S3 Pendidikan Matematika</div>
+              <div>Universitas Pendidikan Indonesia</div>
+            </div>
+            <div class="genty" style="font-size:18px;line-height:1.6;margin-top:8px">
+              <div style="font-weight:700;margin-bottom:10px">Pembimbing:</div>
+              <div style="margin-bottom:6px">Prof. Dr. H. Nanang Priatna, M.Pd</div>
+              <div style="margin-bottom:6px">Prof. Drs. Suhendra, M. Ed., Ph.D</div>
+              <div>Dr. Bambang Avip Priatna, M.Si</div>
+            </div>
+
+            <div class="genty" style="margin-top:24px;font-size:14px;color:#475569">Klik 'Berikutnya' untuk memulai petualangan statistikmu!</div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="3">
+          <div class="card-lite" style="text-align:center;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:16px">Daftar Isi</div>
+            <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0;align-items:center;margin-top:16px">
+              <button id="toc-btn-3" class="toc-item genty" onclick="updateSlide(4)" style="flex:0 1 auto">
+                <span style="font-size:32px;display:block">📖</span>
+                <span style="font-size:12px;display:block">Petunjuk</span>
+              </button>
+              <span style="font-size:20px;margin:0 8px">→</span>
+              <button id="toc-btn-4" class="toc-item genty" onclick="updateSlide(5)" style="flex:0 1 auto;opacity:0.5;cursor:not-allowed" disabled>
+                <span style="font-size:32px;display:block">🎯</span>
+                <span style="font-size:12px;display:block">Capaian</span>
+              </button>
+              <span style="font-size:20px;margin:0 8px">→</span>
+              <button id="toc-btn-5" class="toc-item genty" onclick="updateSlide(6)" style="flex:0 1 auto;opacity:0.5;cursor:not-allowed" disabled>
+                <span style="font-size:32px;display:block">🎓</span>
+                <span style="font-size:12px;display:block">Tujuan</span>
+              </button>
+              <span style="font-size:20px;margin:0 8px">→</span>
+              <button id="toc-btn-6" class="toc-item genty" onclick="updateSlide(7)" style="flex:0 1 auto;opacity:0.5;cursor:not-allowed" disabled>
+                <span style="font-size:32px;display:block">🗺️</span>
+                <span style="font-size:12px;display:block">Peta Konsep</span>
+              </button>
+              <span style="font-size:20px;margin:0 8px">→</span>
+              <button id="toc-btn-7" class="toc-item genty" onclick="updateSlide(8)" style="flex:0 1 auto;opacity:0.5;cursor:not-allowed" disabled>
+                <span style="font-size:32px;display:block">📚</span>
+                <span style="font-size:12px;display:block">Materi</span>
+              </button>
+              <span style="font-size:20px;margin:0 8px">→</span>
+              <button id="toc-btn-8" class="toc-item genty" onclick="updateSlide(9)" style="flex:0 1 auto;opacity:0.5;cursor:not-allowed" disabled>
+                <span style="font-size:32px;display:block">🚀</span>
+                <span style="font-size:12px;display:block">Proyek</span>
+              </button>
+            </div>
+
+            <div style="margin-top:24px;display:flex;justify-content:center;gap:12px">
+              <button onclick="updateSlide(1)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">⟵ Kembali ke Halaman Awal</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="4">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">📖 Petunjuk Penggunaan Media DataVista</div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">Selamat datang di <strong>Media DataVista</strong>! Bahan ajar interaktif ini dirancang untuk membantu kalian memahami konsep statistika dengan cara yang menyenangkan dan interaktif. Berikut adalah panduan penggunaannya:</div>
+
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#f9fbff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>A. Persiapan Awal</strong><br>
+              • <strong>Akses Media:</strong> Buka aplikasi DataVista melalui tautan yang tersedia<br>
+              • <strong>Navigasi Utama:</strong> Gunakan tombol <strong>"Berikutnya"</strong> untuk melanjutkan ke halaman identitas dan <strong>"Sebelumnya"</strong> jika ingin kembali ke halaman utama<br>
+              • <strong>Identitas:</strong> Masukkan nama lengkap atau nama kelompok pada kolom yang tersedia agar hasil investigasi datamu dapat tersimpan secara personal
+            </div>
+
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>B. Menjelajahi Fitur (Melalui Daftar Isi)</strong><br>
+              Setelah masuk ke halaman Daftar Isi, kamu dapat memilih menu-menu berikut sesuai kebutuhan proyekmu:<br><br>
+              • <strong>Peta Konsep:</strong> Lihat gambaran besar materi Statistika (Data, Pengumpulan, Penyajian, Analisis, dan Aplikasi) sebelum memulai olah data<br>
+              • <strong>Materi:</strong> Pelajari konsep dasar seperti Ukuran Pemusatan (Mean, Median, Modus) dan Ukuran Penyebaran (Jangkauan, Kuartil, Simpangan Kuartil)<br>
+              • <strong>Proyek (Data Kelompok):</strong> Isi data kelompok, anggota, dan informasi sekolah untuk dokumentasi proyekmu<br>
+              • <strong>Kalkulator Statistik:</strong> Hitung Mean, Median, Modus, Kuartil, dan Jangkauan dengan langkah-langkah lengkap
+            </div>
+
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#e8f0ff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>C. Menggunakan Kalkulator Statistik</strong><br>
+              • <strong>Input Data:</strong> Masukkan data angka yang ingin kamu hitung (contoh: 5, 7, 3, 8, 5, 9) ke dalam kolom yang tersedia<br>
+              • <strong>Pilih Perhitungan:</strong> Klik tombol sesuai kebutuhan (Mean, Median, Modus, Kuartil, atau Jangkauan)<br>
+              • <strong>Lihat Hasil & Langkah:</strong> Setiap perhitungan akan menampilkan hasil final dan langkah-langkah detail di bawahnya<br>
+              • <strong>Hitung Semua Sekaligus:</strong> Kamu bisa klik beberapa tombol perhitungan, semua hasil akan ditampilkan dan TIDAK SALING MENGHILANGKAN<br>
+              • <strong>Hapus Hasil:</strong> Klik tombol "🗑️ Hapus Semua Hasil" jika ingin menghapus semua perhitungan dan mulai dari awal
+            </div>
+
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>D. Download Proyek sebagai PDF 📥</strong><br>
+              • <strong>Lokasi Tombol:</strong> Tombol "📥 Download Proyek Lengkap (PDF)" ada di halaman Kalkulator Statistik<br>
+              • <strong>Isi PDF:</strong> File PDF akan berisi 2 bagian lengkap:<br>
+              &nbsp;&nbsp;&nbsp;1️⃣ Halaman Data Kelompok (nama kelompok, anggota, sekolah)<br>
+              &nbsp;&nbsp;&nbsp;2️⃣ Halaman Kalkulator (data yang diinput + semua hasil perhitungan)<br>
+              • <strong>Kualitas:</strong> PDF berkualitas tinggi dengan warna jelas dan tajam<br>
+              • <strong>Nama File:</strong> Otomatis menggunakan format Proyek_Lengkap_[NamaKelompok]_[Tanggal].pdf
+            </div>
+
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#f9fbff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>E. Tips Resiliensi Digital</strong><br>
+              • <strong>Jangan Panik:</strong> Jika ada masalah, periksa kembali data yang diinput atau coba refresh halaman (literasi digital)<br>
+              • <strong>Simpan Hasil:</strong> Download PDF proyekmu secara berkala agar tidak kehilangan data<br>
+              • <strong>Eksplorasi Bebas:</strong> Coba hitung semua jenis statistik (Mean, Median, Modus, dll) untuk memahami perbedaannya<br>
+              • <strong>Coba Lagi:</strong> Jika terjadi kendala teknis, ketangguhanmu dalam menghadapi kendala adalah bagian dari proses belajar menjadi siswa yang resilien
+            </div>
+
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#f9fbff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a"><strong>🎯 Tujuan Akhir:</strong> Setelah mempelajari media ini, kalian diharapkan dapat memahami konsep statistika dasar, mampu menyajikan data dalam berbagai bentuk diagram, serta dapat menganalisis dan menginterpretasi data dengan benar.</div>
+
+            <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+              <button onclick="markSlideAsRead(4); updateTocButtons(); updateSlide(5);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Capaian Pembelajaran →</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="5">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">🎯 Capaian Pembelajaran</div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:16px;line-height:1.6;color:#0f172a">peserta didik dapat menentukan dan menafsirkan rerata (mean), median, modus, dan jangkauan (range) dari data tersebut untuk menyelesaikan masalah (termasuk membandingkan suatu data terhadap kelompoknya, membandingkan dua kelompok data, memprediksi, membuat keputusan)</div>
+
+            <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+              <button onclick="updateSlide(4)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Petunjuk</button>
+              <button onclick="markSlideAsRead(5); updateTocButtons(); updateSlide(6);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Tujuan Pembelajaran →</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="6">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:16px">🎓 Tujuan Pembelajaran</div>
+            <div style="font-size:15px;line-height:1.8;color:#0f172a">
+              <p style="margin-bottom:12px;font-weight:600">Tujuan dari pembelajaran ini adalah:</p>
+              <ol style="padding-left:24px;margin:0">
+                <li style="margin-bottom:10px">Siswa mampu menjelaskan dalam membaca data (dalam bentuk tabel, grafik/diagram) berdasarkan distribusi data, nilai rata-rata, median, modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu menjelaskan dalam menyajikan data (dalam bentuk tabel, grafik/diagram) berdasarkan distribusi data, nilai rata-rata, median, modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu menjelaskan dalam mengambil kesimpulan dari data yang disajikan (dalam bentuk tabel, grafik/diagram) yang berkaitan dengan distribusi data, nilai rata-rata, median, modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu menjelaskan dalam mendeskripsikan data berdasarkan distribusi data, nilai rata-rata, median, modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu menjelaskan dalam mengelompokkan dan mereduksi data berdasarkan distribusi data, nilai rata-rata, median, dan modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu menjelaskan dalam mempresentasikan dan menyelesaikan masalah yang berkaitan dengan distribusi data, nilai rata-rata, median, dan modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu menjelaskan dalam menganalisis dan menafsirkan data dari suatu kumpulan data yang berkaitan dengan distribusi data, nilai rata-rata, median, dan modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu untuk membaca data (dalam bentuk tabel, grafik/diagram) berdasarkan distribusi data, nilai rata-rata, median, dan modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu untuk menyajikan data (dalam bentuk tabel, grafik/diagram) berdasarkan distribusi data, nilai rata-rata, median, dan modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu untuk mengambil kesimpulan dari data yang disajikan (dalam bentuk tabel, grafik/diagram) yang berkaitan dengan distribusi data, nilai rata-rata, median, dan modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu mendeskripsikan data berdasarkan distribusi data, nilai rata-rata, median, dan modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu untuk mengelompokkan dan mereduksi data berdasarkan distribusi data, nilai rata-rata, median, dan modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu untuk mempresentasikan dan menyelesaikan masalah yang berkaitan dengan distribusi data, nilai rata-rata, median, dan modus dan sebaran data</li>
+                <li style="margin-bottom:10px">Siswa mampu untuk menganalisis dan menafsirkan data dari suatu kumpulan data yang berkaitan dengan distribusi data, nilai rata-rata, median, dan modus dan sebaran data</li>
+              </ol>
+            </div>
+
+            <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+              <button onclick="updateSlide(5)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Capaian Pembelajaran</button>
+              <button onclick="markSlideAsRead(6); updateTocButtons(); updateSlide(7);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Peta Konsep →</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="7">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">🗺️ Peta Konsep</div>
+            <div class="img-placeholder" style="padding:12px">
+              <img src="../images/pk2.jpeg" alt="Peta Konsep DataVista (pk2)" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+
+            <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+              <button onclick="updateSlide(6)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Tujuan</button>
+              <button onclick="markSlideAsRead(7); updateTocButtons(); updateSlide(8);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Materi →</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="8">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:12px">📚 Materi</div>
+            <div class="toc-grid">
+              <button class="toc-item genty" onclick="updateSlide(11)">Ukuran Pemusatan (Mean, Median, Modus)</button>
+              <button class="toc-item genty" onclick="updateSlide(14)">Ukuran Penyebaran (Jangkauan, Kuartil)</button>
+              <button class="toc-item genty" onclick="updateSlide(16)">Penyajian Data</button>
+            </div>
+
+            <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+              <button onclick="updateSlide(7)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Peta Konsep</button>
+              
+              <button onclick="markSlideAsRead(8); updateTocButtons(); updateSlide(9);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Proyek →</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="9">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:20px;text-align:center">🚀 Proyek: Data Kelompok</div>
+            <div style="margin-bottom:20px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#f9fbff;text-align:center">
+              <p class="genty" style="font-size:14px;color:#0f172a;margin:0">Kamu baru memulai! Semangat menyelesaikan 6 misi di atas secara berurutan</p>
+            </div>
+
+            <div style="margin-bottom:24px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#f9fbff">
+              <label class="genty" style="font-weight:700;display:block;margin-bottom:8px;color:#0f172a">Nama Kelompok:</label>
+              <input type="text" id="groupName" placeholder="Masukkan nama kelompok..." style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif">
+            </div>
+
+            <div style="margin-bottom:24px">
+              <div class="genty" style="font-weight:700;margin-bottom:14px;color:#0f172a;font-size:16px">Anggota Kelompok:</div>
+              <div id="membersList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px"></div>
+            </div>
+
+            <div style="margin-top:24px;padding:18px;border:2px dashed #4b8df8;border-radius:14px;background:rgba(75,141,248,0.05)">
+              <div class="genty" style="font-weight:700;margin-bottom:14px;color:#0f172a;font-size:16px">➕ Tambah Anggota Baru</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+                <div>
+                  <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">Nama Siswa:</label>
+                  <input type="text" id="memberName" placeholder="Nama lengkap..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+                </div>
+                <div>
+                  <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">Posisi/Tanggung Jawab:</label>
+                  <select id="memberRole" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+                    <option value="">-- Pilih Posisi --</option>
+                    <option value="Ketua">Ketua Kelompok</option>
+                    <option value="Wakil Ketua">Wakil Ketua</option>
+                    <option value="Sekretaris">Sekretaris</option>
+                    <option value="Bendahara">Bendahara</option>
+                    <option value="Anggota">Anggota Biasa</option>
+                  </select>
+                </div>
+              </div>
+              <button onclick="addMember()" style="width:100%;padding:12px 16px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 6px 18px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Tambahkan ke Kelompok</button>
+            </div>
+
+            <div style="margin-top:24px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#e8f0ff">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                <div>
+                  <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">📅 Tahun Ajaran:</label>
+                  <div style="padding:10px 12px;background:#ffffff;border:1px solid var(--line);border-radius:10px;font-size:14px;font-weight:700;color:#0f172a">2025/2026</div>
+                </div>
+                <div>
+                  <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">🏫 Sekolah:</label>
+                  <input type="text" id="schoolName" placeholder="Nama sekolah..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+              <button onclick="updateSlide(8)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Materi</button>
+              <button onclick="markSlideAsRead(9); updateTocButtons(); updateSlide(10);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Kalkulator Statistik →</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="10">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px;text-align:center">📊 Kalkulator Statistik Interaktif</div>
+            <div class="genty" style="margin-top:4px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#ffffff;font-size:14px;line-height:1.6;color:#0f172a;text-align:center">Masukkan data dan lihat cara menghitung Mean, Median, Modus, Kuartil, dan Jangkauan dengan langkah-langkah yang jelas!</div>
+
+            <div style="margin-top:20px;padding:16px;border:2px solid var(--primary);border-radius:12px;background:rgba(75,141,248,0.05)">
+              <div class="genty" style="font-weight:700;margin-bottom:10px;font-size:15px">Masukkan Data:</div>
+              <div style="display:flex;gap:10px;margin-bottom:10px">
+                <textarea id="calc-data-input" placeholder="Contoh: 5, 7, 3, 8, 5, 9, 3, 8, 5, 6, 7, 8" style="flex:1;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;min-height:60px"></textarea>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button onclick="loadExampleDataCalc()" style="padding:8px 14px;background:#e2e8f0;color:#0f172a;border:none;border-radius:8px;font-size:13px;cursor:pointer;font-weight:600">📝 Muat Contoh</button>
+                <button onclick="clearAllDataCalc()" style="padding:8px 14px;background:#fee2e2;color:#991b1b;border:none;border-radius:8px;font-size:13px;cursor:pointer;font-weight:600">🗑️ Hapus Semua</button>
+              </div>
+              <div id="calc-error" style="display:none;margin-top:10px;padding:10px;background:#fee2e2;color:#991b1b;border-radius:8px;font-size:13px"></div>
+            </div>
+
+            <div style="margin-top:16px">
+              <div class="genty" style="font-weight:700;margin-bottom:10px;font-size:15px">Pilih Perhitungan:</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+                <button onclick="calculateMeanCalc()" style="padding:12px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(75,141,248,0.3)">📈 Mean</button>
+                <button onclick="calculateMedianCalc()" style="padding:12px;background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(139,92,246,0.3)">📊 Median</button>
+                <button onclick="calculateModeCalc()" style="padding:12px;background:linear-gradient(135deg,#ec4899,#f472b6);color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(236,72,153,0.3)">🎯 Modus</button>
+                <button onclick="calculateQuartileCalc()" style="padding:12px;background:linear-gradient(135deg,#10b981,#34d399);color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3)">📐 Kuartil</button>
+                <button onclick="calculateRangeCalc()" style="padding:12px;background:linear-gradient(135deg,#f59e0b,#fbbf24);color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(245,158,11,0.3)">📏 Jangkauan</button>
+              </div>
+            </div>
+
+            <div id="calc-result-section" style="display:none;margin-top:20px"></div>
+
+            <div style="margin-top:24px;text-align:center">
+              <button onclick="downloadProyekLengkapPDF()" style="padding:14px 32px;background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 6px 18px rgba(139,92,246,0.4);transition:all 0.22s ease;font-size:15px" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">📥 Download Proyek Lengkap (PDF)</button>
+              <div style="margin-top:8px;font-size:12px;color:#64748b;text-align:center">Termasuk Data Kelompok & Hasil Kalkulator</div>
+            </div>
+
+            <div style="margin-top:16px;display:flex;justify-content:space-between;gap:12px">
+              <button onclick="updateSlide(9)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Data Kelompok</button>
+              <button onclick="markSlideAsRead(10); updateTocButtons(); alert('Selamat, kamu sudah menyelesaikan proyek ini! \n\nSilakan unduh PDF sebagai dokumentasi, dan lanjutkan eksplorasi materi jika diperlukan.');" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Selesai ✓</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="11">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Mean</div>
+            <div class="img-placeholder" style="padding:12px">
+              <img src="../images/rata.png" alt="Mean" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Diagram Batang tersebut menggambarkan pasien Covid-19 yang sembuh dari 5 Provinsi di Indonesia. Berapakah nilai rata-ratanya?<br><br>
+              Untuk menjawab pertanyaan tersebut coba lakukan langkah-langkah berikut ini.<br><br>
+              <strong>Langkah pertama,</strong> data yang ada di diagram batang diubah dalam bentuk tabel, seperti berikut ini.
+            </div>
+            <div class="img-placeholder" style="padding:12px;margin-top:14px">
+              <img src="../images/rata2.png" alt="Langkah Kedua Mean" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>Langkah kedua,</strong> jumlahkan semua data tersebut, bagilah dengan banyak data, dalam hal ini karena ada 5 Provinsi, maka banyak ada ada 5. Hasil dari Pembagian tersebut menunjukkan nilai rata-rata dari Pasien yang sembuh Covid-19 untuk 5 Provinsi
+            </div>
+            <div class="img-placeholder" style="padding:12px;margin-top:14px">
+              <img src="../images/rata3-1.png" alt="Langkah Kedua Mean - Perhitungan" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Untuk menentukan rata-rata dari suatu data yang cukup banyak dapat digunakan dengan cara menjumlahkan hasil kali antara data dengan frekuensinya setelah itu dibagi dengan banyak data yang ada. Dalam bentuk umum dapat ditulis,
+            </div>
+            <div class="img-placeholder" style="padding:12px;margin-top:14px">
+              <img src="../images/rata4.png" alt="Rumus Mean" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="12">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Median</div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Median dari kumpulan data merupakan suatu nilai data yang terletak di tengah-tengah kumpulan data yang telah diurutkan. Jadi, terdapat 50% dari banyak data yang nilai-nilainya lebih tinggi atau sama dengan median dan 50% dari banyak data yang nilai-nilainya kurang dari atau sama dengan median. Median dari kumpulan data yang jumlahnya ganjil dan data yang jumlahnya genap memiliki cara yang tidak sama.
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>a. Menentukan Median data ganjil</strong><br>
+              <strong>Langkah pertama</strong> yaitu mengurutkan data tersebut dari data terkecil sampai data terbesar<br>
+              <strong>Langkah kedua</strong> yaitu pasangkan data yang sudah terurut dari sisi luar ke sisi dalam, sehingga menyisakan satu data tunggal<br>
+              <div style="margin-top:12px;padding:10px;border-radius:8px;background:#f9fbff;display:flex;justify-content:center">
+                <img src="../images/median.png" alt="Median Data Ganjil" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 4px 12px rgba(15,23,42,0.1)">
+              </div>
+              <strong>Langkah ketiga</strong> yaitu<br>
+              Data bagian tengah yang tidak memiliki pasangan dinamakan dengan Median.
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>b. Menentukan Median data genap</strong><br>
+              <strong>Langkah pertama</strong> yaitu mengurutkan data tersebut dari data terkecil sampai data terbesar<br>
+              <strong>Langkah kedua</strong> yaitu pasangkan data yang sudah terurut dari sisi luar ke sisi dalam, sehingga menyisakan satu data tunggal<br>
+              <strong>Langkah ketiga</strong> yaitu<br>
+              Karena ada dua data pada bagian tengah, maka nilai median berada di tengah-tengah kedua data tersebut. Cara menentukan median adalah dengan membagi dua jumlah dari dua data pada bagian tengah. Data bagian tengah yang tidak memiliki pasangan dinamakan dengan Median.
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="13">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:14px">Modus</div>
+            <div class="img-placeholder" style="padding:12px">
+              <img src="../images/modus.png" alt="Modus" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Untuk memahami modus dari suatu data, coba perhatikan data kasus Positif Covid-19 di salah satu Provinsi di Indonesia pada gambar 6.2. Dalam grafik tersebut dipaparkan data kasus Covid-19 di salah satu Provinsi di Indonesia mulai bulan Maret 2020 sampai April 2022. Dari tabel tersebut terlihat jelas bahwa data terendah pada bulan Maret 2020 dan data tertinggi pada bulan Juli 2021 sebesar 9.651 kasus. <strong>Modus dari suatu data adalah data yang sering muncul.</strong> Dengan demikian, kalian dapat menentukan modus pada gambar 6.3 yaitu data yang sering muncul pada bulan Juli 2021, yaitu sebesar 9.651 kasus, sehingga modus dari diagram tersebut adalah Juli 2021.
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="14">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Jangkauan</div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Jangkauan (range) adalah selisih antara data terbesar dan data terkecil. Jangkauan digunakan untuk mengukur penyebaran data yang paling sederhana.
+            </div>
+            <div class="img-placeholder" style="padding:12px;margin-top:14px">
+              <img src="../images/jk.png" alt="Jangkauan" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Gambar diagram garis tersebut menggambarkan perkembangan produksi beras di Indonesia dalam satuan Ribuan Ton untuk tahun 2020 (garis hijau) dan tahun 2021 (garis merah). Dalam diagram garis tersebut terlihat bahwa produksi beras Indonesia mengalami kenaikan dan penurunan pada bulan-bulan tertentu. Selisih produksi beras tertinggi dan terendah dalam setahun dapat ditentukan dengan cara mengurangi data tertinggi dengan data terendah
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Selisih dari data tertinggi dengan data terendah dinamakan dengan Jangkauan. Jadi, jangkauan dapat diartikan dengan mengurangi data tertinggi dengan data terendah, maka dapat disimpulkan bahwa Jangkauan adalah selisih antara nilai data terbesar dengan nilai data terkecil. Jangkauan diperoleh dengan mengurangi data terbesar dengan data terkecil
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="15">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Kuartil</div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Ukuran penyebaran data yang kedua adalah kuartil. Jika median adalah membagi data yang diurutkan menjadi dua kelompok yang sama banyak, maka kuartil adalah membagi data yang diurutkan menjadi empat yang sama banyak, sehingga masing-masing kelompok terdiri atas ¼ bagian data. Ada tiga jenis kuartil, yaitu kuartil pertama/kuartil bawah (Q1), kuartil kedua/kuartil tengah atau median (Q2), dan kuartil ketiga/kuartil atas (Q3).
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="16">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:12px">Penyajian Data</div>
+            <div class="genty" style="margin-top:4px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#ffffff;font-size:15px;line-height:1.7;color:#0f172a">
+              Contoh penyajian data dalam empat bentuk umum: tabel, diagram batang, diagram garis, dan diagram lingkaran.
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:16px">
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#f9fbff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Tabel Produksi Beras</div>
+                <table style="width:100%;border-collapse:collapse;font-size:14px">
+                  <tr style="background:#e8f0ff;font-weight:700"><th style="padding:8px;border:1px solid var(--line)">Bulan</th><th style="padding:8px;border:1px solid var(--line)">Produksi (Ribu Ton)</th></tr>
+                  <tr><td style="padding:8px;border:1px solid var(--line)">Jan</td><td style="padding:8px;border:1px solid var(--line)">420</td></tr>
+                  <tr><td style="padding:8px;border:1px solid var(--line)">Feb</td><td style="padding:8px;border:1px solid var(--line)">460</td></tr>
+                  <tr><td style="padding:8px;border:1px solid var(--line)">Mar</td><td style="padding:8px;border:1px solid var(--line)">510</td></tr>
+                  <tr><td style="padding:8px;border:1px solid var(--line)">Apr</td><td style="padding:8px;border:1px solid var(--line)">480</td></tr>
+                </table>
+              </div>
+
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#f9fbff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Diagram Batang</div>
+                <div style="position:relative;height:180px;border-left:1px solid #94a3b8;border-bottom:1px solid #94a3b8;padding:0 12px 12px 12px;display:flex;align-items:flex-end;gap:18px">
+                  <div style="width:36px;height:120px;background:linear-gradient(180deg,#6da8ff,#4b8df8);border-radius:6px 6px 2px 2px;display:flex;align-items:flex-end;justify-content:center;color:#0f172a;font-size:12px;font-weight:700;box-shadow:0 6px 12px rgba(15,23,42,0.12)">420</div>
+                  <div style="width:36px;height:140px;background:linear-gradient(180deg,#6da8ff,#1e73d8);border-radius:6px 6px 2px 2px;display:flex;align-items:flex-end;justify-content:center;color:#0f172a;font-size:12px;font-weight:700;box-shadow:0 6px 12px rgba(15,23,42,0.12)">460</div>
+                  <div style="width:36px;height:160px;background:linear-gradient(180deg,#6da8ff,#165bb5);border-radius:6px 6px 2px 2px;display:flex;align-items:flex-end;justify-content:center;color:#0f172a;font-size:12px;font-weight:700;box-shadow:0 6px 12px rgba(15,23,42,0.12)">510</div>
+                  <div style="width:36px;height:150px;background:linear-gradient(180deg,#6da8ff,#2a7bf0);border-radius:6px 6px 2px 2px;display:flex;align-items:flex-end;justify-content:center;color:#0f172a;font-size:12px;font-weight:700;box-shadow:0 6px 12px rgba(15,23,42,0.12)">480</div>
+                  <div style="position:absolute;bottom:-4px;left:8px;right:0;display:flex;justify-content:space-between;padding:0 6px;font-size:12px;color:#0f172a;font-weight:700"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span></div>
+                </div>
+              </div>
+
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#f9fbff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Diagram Garis</div>
+                <svg viewBox="0 0 280 180" style="width:100%;height:auto">
+                  <line x1="36" y1="16" x2="36" y2="160" stroke="#94a3b8" stroke-width="1" />
+                  <line x1="36" y1="160" x2="260" y2="160" stroke="#94a3b8" stroke-width="1" />
+                  <polyline points="36,150 96,130 156,110 216,125 260,105" fill="none" stroke="#4b8df8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                  <circle cx="36" cy="150" r="5" fill="#4b8df8" />
+                  <circle cx="96" cy="130" r="5" fill="#4b8df8" />
+                  <circle cx="156" cy="110" r="5" fill="#4b8df8" />
+                  <circle cx="216" cy="125" r="5" fill="#4b8df8" />
+                  <circle cx="260" cy="105" r="5" fill="#4b8df8" />
+                  <text x="32" y="170" font-size="11" fill="#0f172a">Jan</text>
+                  <text x="92" y="170" font-size="11" fill="#0f172a">Feb</text>
+                  <text x="152" y="170" font-size="11" fill="#0f172a">Mar</text>
+                  <text x="212" y="170" font-size="11" fill="#0f172a">Apr</text>
+                  <text x="8" y="24" font-size="11" fill="#0f172a">Produksi</text>
+                </svg>
+              </div>
+
+              <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#f9fbff">
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Diagram Lingkaran</div>
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                  <div style="width:140px;height:140px;border-radius:50%;background:conic-gradient(#4b8df8 0 32%, #6da8ff 32% 62%, #a6c8ff 62% 100%);box-shadow:0 8px 18px rgba(15,23,42,0.12)"></div>
+                  <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#0f172a">
+                    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#4b8df8"></span> Padi 32%</span>
+                    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#6da8ff"></span> Jagung 30%</span>
+                    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#a6c8ff"></span> Kedelai 38%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-ghost" id="prevBtn">⟵ Sebelumnya</button>
+      <button class="btn-ghost" id="backBtn" style="visibility:hidden">⟵ Kembali ke Daftar Isi</button>
+      <button class="btn-primary" id="nextBtn">Berikutnya ⟶</button>
+    </div>
+  </div>
+
+  <script>
+    // ========== TRACKING & TOC ==========
+    let readSlides = new Set();
+
+    function markSlideAsRead(slideIndex) {
+      readSlides.add(slideIndex);
+    }
+
+    function updateTocButtons() {
+      const tocButtonMap = {
+        4: 'toc-btn-3', // Petunjuk
+        5: 'toc-btn-4', // Capaian
+        6: 'toc-btn-5', // Tujuan
+        7: 'toc-btn-6', // Peta Konsep
+        8: 'toc-btn-7', // Materi
+        9: 'toc-btn-8'  // Proyek (Data Kelompok)
+      };
+
+      const sequence = [4, 5, 6, 7, 8, 9];
+      
+      let lastReadIndex = -1;
+      for (let i = 0; i < sequence.length; i++) {
+        if (readSlides.has(sequence[i])) {
+          lastReadIndex = i;
+        } else {
+          break;
+        }
+      }
+
+      for (let i = 0; i < sequence.length; i++) {
+        const btnId = tocButtonMap[sequence[i]];
+        const btn = document.getElementById(btnId);
+        if (btn) {
+          if (i <= lastReadIndex + 1) {
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            btn.style.cursor = 'pointer';
+          } else {
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+          }
+        }
+      }
+    }
+
+    // ========== MANAJEMEN KELOMPOK & ANGGOTA ==========
+    let groupMembers = [];
+
+    function addMember() {
+      const memberName = document.getElementById('memberName').value.trim();
+      const memberRole = document.getElementById('memberRole').value.trim();
+
+      if (!memberName) {
+        alert('Silakan masukkan nama siswa');
+        return;
+      }
+
+      if (!memberRole) {
+        alert('Silakan pilih posisi/tanggung jawab');
+        return;
+      }
+
+      groupMembers.push({
+        name: memberName,
+        role: memberRole
+      });
+
+      document.getElementById('memberName').value = '';
+      document.getElementById('memberRole').value = '';
+
+      renderMembers();
+    }
+
+    function removeMember(index) {
+      if (confirm('Hapus anggota ini dari kelompok?')) {
+        groupMembers.splice(index, 1);
+        renderMembers();
+      }
+    }
+
+    function renderMembers() {
+      const membersList = document.getElementById('membersList');
+      
+      if (groupMembers.length === 0) {
+        membersList.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #94a3b8; padding: 24px; font-style: italic;">Belum ada anggota. Tambahkan anggota kelompok terlebih dahulu.</div>';
+        return;
+      }
+
+      membersList.innerHTML = groupMembers.map((member, idx) => {
+        const roleColors = {
+          'Ketua': '#ff6b6b',
+          'Wakil Ketua': '#ff922b',
+          'Sekretaris': '#4b8df8',
+          'Bendahara': '#51cf66',
+          'Anggota': '#748cc4'
+        };
+
+        const roleColor = roleColors[member.role] || '#4b8df8';
+        const icons = {
+          'Ketua': '👑',
+          'Wakil Ketua': '🤝',
+          'Sekretaris': '📝',
+          'Bendahara': '💰',
+          'Anggota': '👤'
+        };
+
+        return `
+          <div style="border:1px solid var(--line);border-radius:12px;padding:16px;background:linear-gradient(135deg,#ffffff 0%,#f9fbff 100%);box-shadow:0 4px 12px rgba(75,141,248,0.08)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+              <div style="font-size:36px">${icons[member.role] || '👤'}</div>
+              <button onclick="removeMember(${idx})" style="background:#ff4b4b;color:#fff;border:none;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:16px;font-weight:700;box-shadow:0 2px 6px rgba(255,75,75,0.2);transition:all 0.22s ease" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">×</button>
+            </div>
+            <div class="genty" style="font-weight:700;font-size:16px;color:#0f172a;margin-bottom:6px">${member.name}</div>
+            <div style="display:inline-block;padding:6px 12px;border-radius:8px;background:${roleColor};color:#fff;font-size:12px;font-weight:700;letter-spacing:0.3px">${member.role}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ========== SLIDE NAVIGATION ==========
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const backBtn = document.getElementById('backBtn');
+    const shell = document.querySelector('.shell');
+
+    let current = 0;
+    let zoomLevel = 1;
+
+    function adjustZoom(factor) {
+      zoomLevel = Math.min(1.5, Math.max(0.9, zoomLevel * factor));
+      shell.style.zoom = zoomLevel;
+    }
+
+    function resolveSlideIndex(target) {
+      if (typeof target === 'number') {
+        const byData = slides.findIndex(sl => Number(sl.dataset.slide) === target);
+        if (byData !== -1) return byData;
+        return Math.max(0, Math.min(slides.length - 1, target));
+      }
+      return 0;
+    }
+
+    function updateSlide(target) {
+      const index = resolveSlideIndex(target);
+      const slideNumber = Number(slides[index].dataset.slide);
+      slides.forEach(sl => sl.classList.remove('active'));
+      slides[index].classList.add('active');
+      current = index;
+
+      // Show prev/next only on slide 2
+      if (slideNumber === 2) {
+        prevBtn.style.visibility = 'visible';
+        nextBtn.style.visibility = 'visible';
+        prevBtn.disabled = true;
+        nextBtn.disabled = false;
+        backBtn.style.visibility = 'hidden';
+      } else {
+        prevBtn.style.visibility = 'hidden';
+        nextBtn.style.visibility = 'hidden';
+        const showBack = slideNumber >= 3;
+        backBtn.style.visibility = showBack ? 'visible' : 'hidden';
+      }
+    }
+
+    prevBtn.addEventListener('click', () => {
+      const currentSlideNumber = Number(slides[current].dataset.slide);
+      updateSlide(currentSlideNumber - 1);
+    });
+    nextBtn.addEventListener('click', () => {
+      const currentSlideNumber = Number(slides[current].dataset.slide);
+      updateSlide(currentSlideNumber + 1);
+    });
+    backBtn.addEventListener('click', () => {
+      const slideNumber = Number(slides[current].dataset.slide);
+      if (slideNumber >= 11 && slideNumber <= 13) {
+        updateSlide(8);
+      } else if (slideNumber >= 14 && slideNumber <= 15) {
+        updateSlide(8);
+      } else if (slideNumber === 16) {
+        updateSlide(8);
+      } else {
+        updateSlide(3);
+      }
+    });
+
+    // Set initial navigation state
+    updateSlide(1);
+
+    // Media interaktif: penyajian data
+    function initMediaSandbox() {
+      const container = document.getElementById('media-sandbox');
+      if (!container) return;
+
+      const defaultLabels = ['Jan', 'Feb', 'Mar', 'Apr'];
+      const defaultData = [420, 460, 510, 480];
+      let labels = [...defaultLabels];
+      let data = [...defaultData];
+
+      const inputsContainer = document.getElementById('media-inputs-container');
+      const barsContainer = document.getElementById('media-bars');
+      const line = document.getElementById('media-line');
+      const linePointsGroup = document.getElementById('media-line-points');
+      const lineLabelsGroup = document.getElementById('media-line-labels');
+      const pie = document.getElementById('media-pie');
+      const pieLegend = document.getElementById('media-pie-legend');
+      const pieToggle = document.getElementById('media-pie-toggle');
+      const pieSteps = document.getElementById('media-pie-steps');
+      const pieStepsBody = document.getElementById('media-pie-steps-body');
+      const pieTotal = document.getElementById('media-pie-total');
+      const tableBody = document.getElementById('media-table-body');
+      const addBtn = document.getElementById('media-add');
+      const randomBtn = document.getElementById('media-random');
+      const resetBtn = document.getElementById('media-reset');
+
+      const pieColors = ['#4b8df8', '#6da8ff', '#a6c8ff', '#8fb4ff', '#5c9eff', '#3d85f0', '#7eb8ff', '#4f91f5'];
+      const barGradients = [
+        'linear-gradient(180deg,#6da8ff,#4b8df8)',
+        'linear-gradient(180deg,#6da8ff,#1e73d8)',
+        'linear-gradient(180deg,#6da8ff,#165bb5)',
+        'linear-gradient(180deg,#6da8ff,#2a7bf0)',
+        'linear-gradient(180deg,#8fb4ff,#5c9eff)',
+        'linear-gradient(180deg,#a6c8ff,#7eb8ff)',
+        'linear-gradient(180deg,#6da8ff,#3d85f0)',
+        'linear-gradient(180deg,#8fb4ff,#4f91f5)'
+      ];
+
+      function rebuildInputs() {
+        inputsContainer.innerHTML = '';
+        data.forEach((val, i) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.cssText = 'position:relative';
+          wrapper.innerHTML = `
+            <label class="genty" style="font-size:14px;color:#0f172a;display:block">
+              <input class="media-label" data-idx="${i}" type="text" value="${labels[i]}" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:14px;margin-bottom:6px" />
+              <input class="media-input" data-idx="${i}" type="number" min="0" step="10" value="${val}" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px">
+            </label>
+            ${data.length > 1 ? `<button class="media-remove" data-idx="${i}" style="position:absolute;top:0;right:0;background:#ff4b4b;color:#fff;border:none;border-radius:8px;width:24px;height:24px;cursor:pointer;font-size:14px;font-weight:700;box-shadow:0 2px 6px rgba(255,75,75,0.3)">×</button>` : ''}
+          `;
+          inputsContainer.appendChild(wrapper);
+        });
+        bindInputEvents();
+      }
+
+      function bindInputEvents() {
+        document.querySelectorAll('.media-input').forEach((inp, i) => {
+          inp.addEventListener('input', () => {
+            const val = parseFloat(inp.value) || 0;
+            data[i] = Math.max(0, val);
+            render();
+          });
+        });
+        document.querySelectorAll('.media-label').forEach((inp, i) => {
+          inp.addEventListener('input', () => {
+            const txt = (inp.value || '').trim();
+            labels[i] = txt.length ? txt : `Item ${i + 1}`;
+            render();
+          });
+        });
+        document.querySelectorAll('.media-remove').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.idx);
+            if (data.length > 1) {
+              data.splice(idx, 1);
+              labels.splice(idx, 1);
+              rebuildInputs();
+              render();
+            }
+          });
+        });
+      }
+
+      function render() {
+        const maxVal = Math.max(...data, 1);
+        const total = data.reduce((a, b) => a + b, 0) || 1;
+
+        // Tabel
+        tableBody.innerHTML = data
+          .map((v, i) => `<tr><td style="padding:8px;border:1px solid var(--line)">${labels[i]}</td><td style="padding:8px;border:1px solid var(--line)">${v}</td></tr>`)
+          .join('');
+
+        // Batang
+        const barWidth = Math.max(32, Math.min(48, 220 / data.length));
+        barsContainer.innerHTML = data.map((v, i) => {
+          const h = Math.max(24, (v / maxVal) * 160);
+          const grad = barGradients[i % barGradients.length];
+          return `<div style="width:${barWidth}px;height:${h}px;background:${grad};border-radius:6px 6px 2px 2px;display:flex;align-items:flex-end;justify-content:center;color:#0f172a;font-size:11px;font-weight:700;box-shadow:0 6px 12px rgba(15,23,42,0.12)"><span>${v}</span></div>`;
+        }).join('');
+        // Bar labels
+        const labelsHtml = data.map((_, i) => `<span style="flex:1;text-align:center;font-size:11px">${labels[i]}</span>`).join('');
+        barsContainer.innerHTML += `<div style="position:absolute;bottom:-4px;left:8px;right:0;display:flex;justify-content:space-between;padding:0 6px;font-size:11px;color:#0f172a;font-weight:700">${labelsHtml}</div>`;
+
+        // Garis
+        const lineWidth = 224;
+        const step = data.length > 1 ? lineWidth / (data.length - 1) : 0;
+        const baseY = 180;
+        const scaleY = 120;
+        const points = data.map((v, i) => {
+          const x = 36 + i * step;
+          const y = Math.max(30, baseY - (v / maxVal) * scaleY);
+          return `${x},${y}`;
+        }).join(' ');
+        line.setAttribute('points', points);
+        
+        linePointsGroup.innerHTML = data.map((v, i) => {
+          const x = 36 + i * step;
+          const y = Math.max(30, baseY - (v / maxVal) * scaleY);
+          return `<circle cx="${x}" cy="${y}" r="5" fill="#4b8df8" />`;
+        }).join('');
+        
+        lineLabelsGroup.innerHTML = data.map((v, i) => {
+          const x = 36 + i * step;
+          return `<text x="${x - 10}" y="196" font-size="10" fill="#0f172a">${labels[i]}</text>`;
+        }).join('');
+
+        // Pie
+        let acc = 0;
+        const percents = data.map(v => (v / total) * 100);
+        const angles = percents.map(p => p * 3.6);
+        const segments = data.map((v, i) => {
+          const start = acc;
+          const pct = percents[i];
+          acc += pct;
+          return `${pieColors[i % pieColors.length]} ${start}% ${Math.min(100, start + pct)}%`;
+        }).join(', ');
+        pie.style.background = `conic-gradient(${segments})`;
+        
+        pieLegend.innerHTML = data.map((v, i) => {
+          const pct = percents[i].toFixed(1);
+          const ang = angles[i].toFixed(1);
+          const color = pieColors[i % pieColors.length];
+          return `<span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:${color}"></span> <span>${labels[i]} ${pct}% (${v}) — ${ang}°</span></span>`;
+        }).join('');
+
+        // Pie steps table
+        if (pieStepsBody) {
+          pieStepsBody.innerHTML = data.map((v, i) => {
+            return `<tr><td style="padding:8px;border:1px solid var(--line)">${labels[i]}</td><td style="padding:8px;border:1px solid var(--line)">${v}</td><td style="padding:8px;border:1px solid var(--line)">${percents[i].toFixed(1)}%</td><td style="padding:8px;border:1px solid var(--line)">${angles[i].toFixed(1)}°</td></tr>`;
+          }).join('');
+        }
+        if (pieTotal) {
+          const sumPct = percents.reduce((a, b) => a + b, 0);
+          const sumAng = angles.reduce((a, b) => a + b, 0);
+          pieTotal.textContent = `Total S = ${total}. Jumlah persentase ≈ ${sumPct.toFixed(1)}% dan jumlah sudut ≈ ${sumAng.toFixed(1)}°. Perbedaan kecil bisa terjadi karena pembulatan.`;
+        }
+      }
+
+      addBtn?.addEventListener('click', () => {
+        const nextNum = data.length + 1;
+        labels.push(`Kat ${nextNum}`);
+        data.push(Math.floor(400 + Math.random() * 150));
+        rebuildInputs();
+        render();
+      });
+
+      randomBtn?.addEventListener('click', () => {
+        data = data.map(() => Math.floor(320 + Math.random() * 220));
+        rebuildInputs();
+        render();
+      });
+
+      resetBtn?.addEventListener('click', () => {
+        data = [...defaultData];
+        labels = [...defaultLabels];
+        rebuildInputs();
+        render();
+      });
+
+      // Toggle steps panel
+      pieToggle?.addEventListener('click', () => {
+        if (!pieSteps) return;
+        const show = pieSteps.style.display !== 'block';
+        pieSteps.style.display = show ? 'block' : 'none';
+        pieToggle.textContent = show ? 'Sembunyikan Langkah Perhitungan' : 'Tampilkan Langkah Perhitungan';
+      });
+
+      rebuildInputs();
+      render();
+    }
+
+    initMediaSandbox();
+
+    // Initialize members list on page load
+    renderMembers();
+
+    document.addEventListener('keydown', (e) => {
+      const slideNumber = Number(slides[current].dataset.slide);
+      if (slideNumber <= 2) {
+        if (e.key === 'ArrowRight') updateSlide(Math.min(current + 1, slides.length - 1));
+        if (e.key === 'ArrowLeft') updateSlide(Math.max(current - 1, 0));
+      }
+    });
+
+    // ========== KALKULATOR STATISTIK FUNCTIONS ==========
+    
+    function loadExampleDataCalc() {
+      document.getElementById('calc-data-input').value = '5, 7, 3, 8, 5, 9, 3, 8, 5, 6, 7, 8';
+      hideErrorCalc();
+    }
+
+    function clearAllDataCalc() {
+      document.getElementById('calc-data-input').value = '';
+      document.getElementById('calc-result-section').style.display = 'none';
+      hideErrorCalc();
+    }
+
+    function showErrorCalc(message) {
+      const errorDiv = document.getElementById('calc-error');
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+    }
+
+    function hideErrorCalc() {
+      document.getElementById('calc-error').style.display = 'none';
+    }
+
+    function getDataCalc() {
+      hideErrorCalc();
+      const input = document.getElementById('calc-data-input').value.trim();
+      
+      if (!input) {
+        showErrorCalc('❌ Mohon masukkan data terlebih dahulu!');
+        return null;
+      }
+
+      const numbers = input
+        .split(/[,\s]+/)
+        .map(str => str.trim())
+        .filter(str => str !== '')
+        .map(str => parseFloat(str));
+
+      if (numbers.length === 0) {
+        showErrorCalc('❌ Data tidak valid! Pastikan Anda memasukkan angka.');
+        return null;
+      }
+
+      if (numbers.some(isNaN)) {
+        showErrorCalc('❌ Data mengandung nilai yang bukan angka! Mohon periksa kembali.');
+        return null;
+      }
+
+      return numbers;
+    }
+
+    function displayResultCalc(title, finalAnswer, steps, additionalInfo = '') {
+      const resultSection = document.getElementById('calc-result-section');
+      
+      let stepsHTML = '';
+      steps.forEach((step, index) => {
+        stepsHTML += `
+          <div style="background:white;padding:12px;border-left:4px solid var(--primary);margin-bottom:10px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.05)">
+            <span style="display:inline-block;background:var(--primary);color:white;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-weight:700;font-size:13px;margin-right:8px">${index + 1}</span>
+            <span style="color:#1e293b;font-size:14px">${step}</span>
+          </div>
+        `;
+      });
+
+      // Buat elemen hasil baru
+      const newResult = document.createElement('div');
+      newResult.style.cssText = 'margin-bottom:20px;animation:fadeIn 0.4s ease';
+      newResult.innerHTML = `
+        <div style="background:linear-gradient(135deg,var(--primary),var(--primary-soft));color:white;padding:16px;border-radius:12px 12px 0 0;font-size:16px;font-weight:700">
+          ${title}
+        </div>
+        <div style="background:var(--panel);border:2px solid var(--line);border-top:none;border-radius:0 0 12px 12px;padding:20px">
+          <div style="background:linear-gradient(135deg,#10b981,#059669);color:white;padding:16px;border-radius:10px;text-align:center;font-size:18px;font-weight:700;margin-bottom:16px;box-shadow:0 6px 20px rgba(16,185,129,0.3)">
+            ${finalAnswer}
+          </div>
+          <div style="background:#f8fafc;border-radius:10px;padding:16px">
+            <h3 style="color:var(--primary);margin:0 0 12px 0;font-size:16px">📝 Langkah-langkah Perhitungan:</h3>
+            ${stepsHTML}
+          </div>
+          ${additionalInfo}
+        </div>
+      `;
+
+      // Tambahkan hasil baru ke section (append, tidak replace)
+      resultSection.appendChild(newResult);
+      
+      // Tampilkan section jika belum ditampilkan
+      if (resultSection.style.display === 'none' || !resultSection.style.display) {
+        // Tambahkan header dan tombol hapus hanya sekali
+        const header = document.createElement('div');
+        header.id = 'calc-results-header';
+        header.style.cssText = 'margin-bottom:16px;display:flex;justify-content:space-between;align-items:center';
+        header.innerHTML = `
+          <h3 style="color:var(--primary);margin:0;font-size:18px">📊 Hasil Perhitungan</h3>
+          <button onclick="clearAllResultsCalc()" style="padding:8px 16px;background:#ef4444;color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(239,68,68,0.3)" onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">
+            🗑️ Hapus Semua Hasil
+          </button>
+        `;
+        resultSection.insertBefore(header, resultSection.firstChild);
+        resultSection.style.display = 'block';
+      }
+      
+      // Scroll ke hasil baru
+      newResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Fungsi untuk menghapus semua hasil
+    function clearAllResultsCalc() {
+      const resultSection = document.getElementById('calc-result-section');
+      resultSection.innerHTML = '';
+      resultSection.style.display = 'none';
+    }
+
+    function calculateMeanCalc() {
+      const data = getDataCalc();
+      if (!data) return;
+
+      const n = data.length;
+      const sum = data.reduce((acc, val) => acc + val, 0);
+      const mean = sum / n;
+
+      const steps = [
+        `Data yang dimasukkan: <div style="background:#e0f2fe;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace;border-left:4px solid var(--primary)">${data.join(', ')}</div>`,
+        `Jumlah data (n) = <span style="color:var(--primary);font-weight:700">${n}</span>`,
+        `Formula Mean: <div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace;border-left:4px solid #f59e0b">Mean = (Jumlah semua data) / (Banyak data)</div>`,
+        `Hitung jumlah semua data:<br><div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">${data.join(' + ')} = ${sum}</div>`,
+        `Bagi jumlah dengan banyak data:<br><div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">Mean = ${sum} / ${n} = ${mean.toFixed(2)}</div>`
+      ];
+
+      const additionalInfo = `
+        <div style="background:#e0e7ff;border-left:4px solid #6366f1;padding:12px;border-radius:8px;margin-top:14px">
+          <p style="color:#4338ca;font-size:14px;margin:4px 0"><strong>📌 Apa itu Mean?</strong></p>
+          <p style="color:#4338ca;font-size:14px;margin:4px 0">Mean adalah nilai rata-rata dari sekumpulan data. Dihitung dengan menjumlahkan semua data kemudian dibagi dengan banyaknya data.</p>
+        </div>
+      `;
+
+      displayResultCalc(
+        '📈 Hasil Perhitungan MEAN (Rata-rata)',
+        `Mean = ${mean.toFixed(2)}`,
+        steps,
+        additionalInfo
+      );
+    }
+
+    function calculateMedianCalc() {
+      const data = getDataCalc();
+      if (!data) return;
+
+      const sorted = [...data].sort((a, b) => a - b);
+      const n = sorted.length;
+      const isEven = n % 2 === 0;
+      
+      let median;
+      let medianCalc;
+
+      if (isEven) {
+        const mid1 = sorted[n/2 - 1];
+        const mid2 = sorted[n/2];
+        median = (mid1 + mid2) / 2;
+        medianCalc = `Median = (${mid1} + ${mid2}) / 2 = ${median}`;
+      } else {
+        median = sorted[Math.floor(n/2)];
+        medianCalc = `Median = data ke-${Math.floor(n/2) + 1} = ${median}`;
+      }
+
+      const steps = [
+        `Data asli: <div style="background:#e0f2fe;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace;border-left:4px solid var(--primary)">${data.join(', ')}</div>`,
+        `Urutkan data dari terkecil ke terbesar: <div style="background:#e0f2fe;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace;border-left:4px solid var(--primary)">${sorted.join(', ')}</div>`,
+        `Jumlah data (n) = <span style="color:var(--primary);font-weight:700">${n}</span> ${isEven ? '(GENAP)' : '(GANJIL)'}`,
+        isEven 
+          ? `Karena jumlah data genap, median adalah rata-rata dari 2 data tengah:<br><div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0">Posisi tengah: data ke-${n/2} dan ke-${n/2 + 1}<br>Nilai: ${sorted[n/2 - 1]} dan ${sorted[n/2]}</div>`
+          : `Karena jumlah data ganjil, median adalah data yang berada di tengah:<br><div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0">Posisi tengah: data ke-${Math.floor(n/2) + 1}<br>Nilai: ${sorted[Math.floor(n/2)]}</div>`,
+        `<div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">${medianCalc}</div>`
+      ];
+
+      const additionalInfo = `
+        <div style="background:#e0e7ff;border-left:4px solid #6366f1;padding:12px;border-radius:8px;margin-top:14px">
+          <p style="color:#4338ca;font-size:14px;margin:4px 0"><strong>📌 Apa itu Median?</strong></p>
+          <p style="color:#4338ca;font-size:14px;margin:4px 0">Median adalah nilai tengah setelah data diurutkan. Jika jumlah data ganjil, median adalah data di posisi tengah. Jika genap, median adalah rata-rata dari dua data tengah.</p>
+        </div>
+      `;
+
+      displayResultCalc(
+        '📊 Hasil Perhitungan MEDIAN (Nilai Tengah)',
+        `Median = ${median}`,
+        steps,
+        additionalInfo
+      );
+    }
+
+    function calculateModeCalc() {
+      const data = getDataCalc();
+      if (!data) return;
+
+      const frequency = {};
+      data.forEach(num => {
+        frequency[num] = (frequency[num] || 0) + 1;
+      });
+
+      const maxFreq = Math.max(...Object.values(frequency));
+      const modes = Object.keys(frequency)
+        .filter(key => frequency[key] === maxFreq)
+        .map(Number)
+        .sort((a, b) => a - b);
+
+      let freqTable = '<table style="width:100%;border-collapse:collapse;margin:10px 0;font-size:13px">';
+      freqTable += '<tr style="background:var(--primary);color:white"><th style="padding:8px;border:1px solid #ddd">Nilai</th><th style="padding:8px;border:1px solid #ddd">Frekuensi</th></tr>';
+      
+      Object.keys(frequency)
+        .map(Number)
+        .sort((a, b) => a - b)
+        .forEach(num => {
+          const isMode = frequency[num] === maxFreq;
+          freqTable += `<tr style="${isMode ? 'background:#fef3c7;font-weight:700' : 'background:white'}">
+            <td style="padding:8px;border:1px solid #ddd;text-align:center">${num}</td>
+            <td style="padding:8px;border:1px solid #ddd;text-align:center">${frequency[num]} ${isMode ? '⭐' : ''}</td>
+          </tr>`;
+        });
+      freqTable += '</table>';
+
+      let modeResult;
+      if (maxFreq === 1) {
+        modeResult = 'Tidak ada modus (semua data muncul sekali)';
+      } else if (modes.length === 1) {
+        modeResult = `Modus = ${modes[0]} (muncul ${maxFreq} kali)`;
+      } else {
+        modeResult = `Modus = ${modes.join(', ')} (masing-masing muncul ${maxFreq} kali)`;
+      }
+
+      const steps = [
+        `Data yang dimasukkan: <div style="background:#e0f2fe;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace;border-left:4px solid var(--primary)">${data.join(', ')}</div>`,
+        `Hitung frekuensi (berapa kali) setiap nilai muncul: ${freqTable}`,
+        `Frekuensi tertinggi = <span style="color:var(--primary);font-weight:700">${maxFreq}</span>`,
+        maxFreq === 1 
+          ? `Semua nilai muncul 1 kali, sehingga <span style="color:var(--primary);font-weight:700">tidak ada modus</span>`
+          : `Nilai yang muncul paling sering (${maxFreq} kali): <div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">${modes.join(', ')}</div>`
+      ];
+
+      const additionalInfo = `
+        <div style="background:#e0e7ff;border-left:4px solid #6366f1;padding:12px;border-radius:8px;margin-top:14px">
+          <p style="color:#4338ca;font-size:14px;margin:4px 0"><strong>📌 Apa itu Modus?</strong></p>
+          <p style="color:#4338ca;font-size:14px;margin:4px 0">Modus adalah nilai yang paling sering muncul dalam data. Bisa ada satu modus, beberapa modus (multimodal), atau tidak ada modus jika semua nilai muncul dengan frekuensi sama.</p>
+        </div>
+      `;
+
+      displayResultCalc(
+        '🎯 Hasil Perhitungan MODUS (Nilai yang Paling Sering Muncul)',
+        modeResult,
+        steps,
+        additionalInfo
+      );
+    }
+
+    function calculateQuartileCalc() {
+      const data = getDataCalc();
+      if (!data) return;
+
+      const sorted = [...data].sort((a, b) => a - b);
+      const n = sorted.length;
+
+      const Q2 = n % 2 === 0 
+        ? (sorted[n/2 - 1] + sorted[n/2]) / 2 
+        : sorted[Math.floor(n/2)];
+
+      const lowerHalf = n % 2 === 0 
+        ? sorted.slice(0, n/2)
+        : sorted.slice(0, Math.floor(n/2));
+      
+      const Q1 = lowerHalf.length % 2 === 0
+        ? (lowerHalf[lowerHalf.length/2 - 1] + lowerHalf[lowerHalf.length/2]) / 2
+        : lowerHalf[Math.floor(lowerHalf.length/2)];
+
+      const upperHalf = n % 2 === 0
+        ? sorted.slice(n/2)
+        : sorted.slice(Math.floor(n/2) + 1);
+      
+      const Q3 = upperHalf.length % 2 === 0
+        ? (upperHalf[upperHalf.length/2 - 1] + upperHalf[upperHalf.length/2]) / 2
+        : upperHalf[Math.floor(upperHalf.length/2)];
+
+      const steps = [
+        `Data asli: <div style="background:#e0f2fe;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace;border-left:4px solid var(--primary)">${data.join(', ')}</div>`,
+        `Urutkan data: <div style="background:#e0f2fe;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace;border-left:4px solid var(--primary)">${sorted.join(', ')}</div>`,
+        `Jumlah data (n) = <span style="color:var(--primary);font-weight:700">${n}</span>`,
+        `<strong>Langkah 1: Hitung Q2 (Kuartil Tengah / Median)</strong><br>Q2 adalah median dari seluruh data<div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">Q2 = ${Q2}</div>`,
+        `<strong>Langkah 2: Hitung Q1 (Kuartil Bawah)</strong><br>Q1 adalah median dari data bagian bawah:<div style="background:#e0f2fe;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">${lowerHalf.join(', ')}</div><div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">Q1 = ${Q1}</div>`,
+        `<strong>Langkah 3: Hitung Q3 (Kuartil Atas)</strong><br>Q3 adalah median dari data bagian atas:<div style="background:#e0f2fe;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">${upperHalf.join(', ')}</div><div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">Q3 = ${Q3}</div>`
+      ];
+
+      const additionalInfo = `
+        <div style="background:#e0e7ff;border-left:4px solid #6366f1;padding:12px;border-radius:8px;margin-top:14px">
+          <p style="color:#4338ca;font-size:14px;margin:4px 0"><strong>📌 Apa itu Kuartil?</strong></p>
+          <p style="color:#4338ca;font-size:14px;margin:4px 0"><strong>Q1</strong> = Kuartil pertama (25% data berada di bawah nilai ini)</p>
+          <p style="color:#4338ca;font-size:14px;margin:4px 0"><strong>Q2</strong> = Kuartil kedua (Median, 50% data berada di bawah nilai ini)</p>
+          <p style="color:#4338ca;font-size:14px;margin:4px 0"><strong>Q3</strong> = Kuartil ketiga (75% data berada di bawah nilai ini)</p>
+        </div>
+      `;
+
+      displayResultCalc(
+        '📐 Hasil Perhitungan KUARTIL (Q1, Q2, Q3)',
+        `Q1 = ${Q1} | Q2 = ${Q2} | Q3 = ${Q3}`,
+        steps,
+        additionalInfo
+      );
+    }
+
+    function calculateRangeCalc() {
+      const data = getDataCalc();
+      if (!data) return;
+
+      const sorted = [...data].sort((a, b) => a - b);
+      const min = Math.min(...data);
+      const max = Math.max(...data);
+      const range = max - min;
+
+      const steps = [
+        `Data yang dimasukkan: <div style="background:#e0f2fe;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace;border-left:4px solid var(--primary)">${data.join(', ')}</div>`,
+        `Urutkan data: <div style="background:#e0f2fe;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace;border-left:4px solid var(--primary)">${sorted.join(', ')}</div>`,
+        `Cari nilai terkecil (minimum): <div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">Min = ${min}</div>`,
+        `Cari nilai terbesar (maksimum): <div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">Max = ${max}</div>`,
+        `Formula Jangkauan: <div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">Jangkauan = Nilai Maksimum - Nilai Minimum</div>`,
+        `Hitung jangkauan: <div style="background:#fef3c7;padding:10px;border-radius:8px;margin:8px 0;font-family:monospace">Jangkauan = ${max} - ${min} = ${range}</div>`
+      ];
+
+      const additionalInfo = `
+        <div style="background:#e0e7ff;border-left:4px solid #6366f1;padding:12px;border-radius:8px;margin-top:14px">
+          <p style="color:#4338ca;font-size:14px;margin:4px 0"><strong>📌 Apa itu Jangkauan?</strong></p>
+          <p style="color:#4338ca;font-size:14px;margin:4px 0">Jangkauan (Range) adalah selisih antara nilai terbesar dan nilai terkecil dalam data. Jangkauan menunjukkan seberapa lebar penyebaran data.</p>
+        </div>
+      `;
+
+      displayResultCalc(
+        '📏 Hasil Perhitungan JANGKAUAN (Range)',
+        `Jangkauan = ${range}`,
+        steps,
+        additionalInfo
+      );
+    }
+
+    // ========================================
+    // FUNGSI DOWNLOAD PDF
+    // ========================================
+    
+    // Fungsi untuk download Proyek Lengkap (Data Kelompok + Kalkulator) sebagai PDF
+    async function downloadProyekLengkapPDF() {
+      try {
+        // Tampilkan loading
+        const loadingDiv = document.createElement('div');
+        loadingDiv.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:9999';
+        loadingDiv.innerHTML = '<div style="background:white;padding:30px;border-radius:16px;text-align:center"><div style="font-size:18px;font-weight:700;color:#8b5cf6;margin-bottom:10px">📸 Membuat PDF Lengkap...</div><div id="loading-message" style="font-size:14px;color:#0f172a">Mempersiapkan halaman...</div></div>';
+        document.body.appendChild(loadingDiv);
+
+        // Tunggu lebih lama untuk memastikan semua elemen ter-render
+        await new Promise(resolve => setTimeout(resolve, 800));
+
+        // Ambil kedua slide
+        const slide9 = document.querySelector('[data-slide="9"]'); // Data Kelompok
+        const slide10 = document.querySelector('[data-slide="10"]'); // Kalkulator
+        
+        if (!slide9 || !slide10) {
+          alert('Halaman tidak ditemukan. Pastikan Anda sudah mengisi data kelompok.');
+          document.body.removeChild(loadingDiv);
+          return;
+        }
+
+        // Simpan state visibility asli dan display style
+        const originalSlide9Display = slide9.style.display;
+        const originalSlide9Visibility = slide9.style.visibility;
+        const originalSlide10Display = slide10.style.display;
+        const originalSlide10Visibility = slide10.style.visibility;
+        
+        // Pastikan kedua slide visible untuk screenshot (tapi tidak terlihat user)
+        slide9.style.display = 'block';
+        slide9.style.visibility = 'visible';
+        slide9.style.position = 'absolute';
+        slide9.style.left = '-9999px';
+        slide9.style.top = '0';
+        
+        // Pastikan slide 10 juga visible untuk screenshot
+        slide10.style.display = 'block';
+        slide10.style.visibility = 'visible';
+        slide10.style.position = 'absolute';
+        slide10.style.left = '-9999px';
+        slide10.style.top = '0';
+        
+        // Tunggu DOM update
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Update loading message
+        document.getElementById('loading-message').textContent = 'Screenshot halaman 1/2 - Data Kelompok...';
+        
+        // Tunggu sebelum screenshot pertama
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Opsi untuk html2canvas dengan handling yang lebih robust dan kualitas tinggi
+        const html2canvasOptions = {
+          scale: 3,
+          useCORS: true,
+          allowTaint: true,
+          logging: true,
+          backgroundColor: '#f4f8ff',
+          imageTimeout: 15000,
+          removeContainer: true,
+          foreignObjectRendering: false,
+          onclone: (clonedDoc) => {
+            // Pastikan semua font menggunakan fallback yang aman
+            const allElements = clonedDoc.querySelectorAll('*');
+            allElements.forEach(el => {
+              const computedStyle = window.getComputedStyle(el);
+              if (computedStyle.fontFamily.includes('Genty') || computedStyle.fontFamily.includes('Waffle')) {
+                el.style.fontFamily = "'Plus Jakarta Sans', Arial, sans-serif";
+              }
+            });
+          }
+        };
+        
+        // Capture screenshot slide 9 (Data Kelompok)
+        let canvas9;
+        try {
+          canvas9 = await html2canvas(slide9, html2canvasOptions);
+          console.log('Canvas9 created:', canvas9.width, 'x', canvas9.height);
+        } catch (err) {
+          console.error('Error creating canvas9:', err);
+          throw new Error('Gagal screenshot Data Kelompok: ' + err.message);
+        }
+
+        // Update loading message
+        document.getElementById('loading-message').textContent = 'Screenshot halaman 2/2 - Kalkulator Statistik...';
+        
+        // Tunggu sebelum screenshot kedua
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Capture screenshot slide 10 (Kalkulator)
+        let canvas10;
+        try {
+          console.log('Slide10 visible check - scrollHeight:', slide10.scrollHeight, 'offsetHeight:', slide10.offsetHeight);
+          canvas10 = await html2canvas(slide10, {
+            ...html2canvasOptions,
+            windowHeight: slide10.scrollHeight,
+            useCORS: true,
+            allowTaint: true
+          });
+          console.log('Canvas10 created:', canvas10.width, 'x', canvas10.height);
+        } catch (err) {
+          console.error('Error creating canvas10:', err);
+          throw new Error('Gagal screenshot Kalkulator: ' + err.message);
+        }
+
+        // Update loading message
+        document.getElementById('loading-message').textContent = 'Membuat PDF...';
+
+        // Validasi canvas dengan pengecekan yang lebih baik
+        if (!canvas9 || canvas9.width < 10 || canvas9.height < 10) {
+          console.error('Canvas9 invalid:', canvas9);
+          throw new Error('Screenshot Data Kelompok tidak valid');
+        }
+        if (!canvas10 || canvas10.width < 10 || canvas10.height < 10) {
+          console.error('Canvas10 invalid:', canvas10);
+          throw new Error('Screenshot Kalkulator tidak valid');
+        }
+
+        // Konversi canvas ke PDF menggunakan jsPDF
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4'
+        });
+
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
+
+        // === Halaman 1: Data Kelompok (Slide 8) ===
+        const imgHeight9 = (canvas9.height * imgWidth) / canvas9.width;
+        const imgData9 = canvas9.toDataURL('image/png');
+        
+        // Jika tinggi gambar lebih dari 1 halaman, buat multiple pages
+        let heightLeft9 = imgHeight9;
+        let position9 = 0;
+        
+        pdf.addImage(imgData9, 'PNG', 0, position9, imgWidth, imgHeight9);
+        heightLeft9 -= pageHeight;
+        
+        while (heightLeft9 > 0) {
+          position9 = heightLeft9 - imgHeight9;
+          pdf.addPage();
+          pdf.addImage(imgData9, 'PNG', 0, position9, imgWidth, imgHeight9);
+          heightLeft9 -= pageHeight;
+        }
+
+        // === Halaman 2+: Kalkulator Statistik (Slide 9) ===
+        const imgHeight10 = (canvas10.height * imgWidth) / canvas10.width;
+        const imgData10 = canvas10.toDataURL('image/png');
+        
+        console.log('Slide 10 Image Info:');
+        console.log('Canvas10 size:', canvas10.width, 'x', canvas10.height);
+        console.log('Image height in mm:', imgHeight10);
+        console.log('Page height:', pageHeight);
+        
+        // Tambah halaman baru untuk slide 10
+        pdf.addPage();
+        console.log('Added new page for slide 10');
+        
+        // Strategi sederhana: jika gambar lebih tinggi dari 1 halaman, potong menjadi beberapa bagian
+        if (imgHeight10 <= pageHeight) {
+          // Gambar muat dalam 1 halaman
+          console.log('Slide 10 fits in 1 page, adding at position 0');
+          pdf.addImage(imgData10, 'PNG', 0, 0, imgWidth, imgHeight10);
+        } else {
+          // Gambar perlu dipotong ke beberapa halaman
+          console.log('Slide 10 needs multiple pages');
+          let srcY = 0;
+          let pageNum = 0;
+          
+          while (srcY < canvas10.height) {
+            if (pageNum > 0) {
+              pdf.addPage();
+              console.log('Added continuation page', pageNum + 1);
+            }
+            
+            // Hitung berapa tinggi canvas yang bisa ditampilkan di halaman ini
+            const srcHeight = Math.min(pageHeight * (canvas10.width / imgWidth), canvas10.height - srcY);
+            
+            // Buat temporary canvas untuk crop bagian gambar
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas10.width;
+            tempCanvas.height = srcHeight;
+            const ctx = tempCanvas.getContext('2d');
+            ctx.drawImage(canvas10, 0, srcY, canvas10.width, srcHeight, 0, 0, canvas10.width, srcHeight);
+            
+            const croppedImg = tempCanvas.toDataURL('image/png');
+            const croppedHeight = (srcHeight * imgWidth) / canvas10.width;
+            
+            pdf.addImage(croppedImg, 'PNG', 0, 0, imgWidth, croppedHeight);
+            console.log('Added cropped section at page', pageNum + 1, 'srcY:', srcY, 'height:', croppedHeight);
+            
+            srcY += srcHeight;
+            pageNum++;
+          }
+          console.log('Total pages used for slide 10:', pageNum);
+        }
+
+        // Ambil nama kelompok untuk nama file
+        const groupName = document.getElementById('groupName')?.value || 'Kelompok';
+        const fileName = `Proyek_Lengkap_${groupName.replace(/\s+/g, '_')}_${new Date().toLocaleDateString('id-ID').replace(/\//g, '-')}.pdf`;
+
+        // Download PDF
+        pdf.save(fileName);
+
+        // Kembalikan style slide 9 ke semula
+        slide9.style.display = originalSlide9Display;
+        slide9.style.visibility = originalSlide9Visibility;
+        slide9.style.position = '';
+        slide9.style.left = '';
+        slide9.style.top = '';
+
+        // Kembalikan style slide 10 ke semula
+        slide10.style.display = originalSlide10Display;
+        slide10.style.visibility = originalSlide10Visibility;
+        slide10.style.position = '';
+        slide10.style.left = '';
+        slide10.style.top = '';
+
+        // Hapus loading
+        document.body.removeChild(loadingDiv);
+
+        // Tampilkan notifikasi sukses
+        showNotification('✅ PDF Lengkap berhasil didownload!', 'success');
+
+      } catch (error) {
+        console.error('Error generating PDF:', error);
+        
+        // Kembalikan style slide 9 jika ada error
+        const slide9 = document.querySelector('[data-slide="9"]');
+        if (slide9) {
+          slide9.style.display = '';
+          slide9.style.visibility = '';
+          slide9.style.position = '';
+          slide9.style.left = '';
+          slide9.style.top = '';
+        }
+
+        // Kembalikan style slide 10 jika ada error
+        const slide10 = document.querySelector('[data-slide="10"]');
+        if (slide10) {
+          slide10.style.display = '';
+          slide10.style.visibility = '';
+          slide10.style.position = '';
+          slide10.style.left = '';
+          slide10.style.top = '';
+        }
+        
+        // Hapus loading jika ada error
+        const loadingDiv = document.querySelector('[style*="z-index:9999"]');
+        if (loadingDiv) document.body.removeChild(loadingDiv);
+        
+        // Tampilkan pesan error yang lebih detail
+        let errorMessage = 'Terjadi kesalahan saat membuat PDF. ';
+        if (error.message.includes('Screenshot')) {
+          errorMessage += 'Gagal mengambil screenshot. Coba refresh halaman dan ulangi lagi.';
+        } else if (error.message.includes('PNG')) {
+          errorMessage += 'Gagal memproses gambar. Pastikan semua data sudah terisi dengan benar.';
+        } else {
+          errorMessage += 'Silakan coba lagi atau hubungi pengajar jika masalah berlanjut.';
+        }
+        
+        alert(errorMessage);
+        showNotification('❌ Gagal membuat PDF', 'error');
+      }
+    }
+
+    // Fungsi untuk menampilkan notifikasi
+    function showNotification(message, type = 'success') {
+      const notification = document.createElement('div');
+      const bgColor = type === 'success' ? '#10b981' : '#ef4444';
+      notification.style.cssText = `position:fixed;top:20px;right:20px;background:${bgColor};color:white;padding:16px 24px;border-radius:10px;font-weight:700;z-index:10000;box-shadow:0 8px 24px rgba(0,0,0,0.2);animation:slideIn 0.3s ease`;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 300);
+      }, 3000);
+    }
+
+    // CSS untuk animasi notifikasi
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      @keyframes slideOut {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Initial state is already set above via updateSlide(1)
+  </script>
 </body>
 </html>
