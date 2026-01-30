@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Media DataVista - Pertemuan 4</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 18px;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: center;
+      font-size: 15px;
+    }
+    th {
+      background: #f5f7fa;
+      font-weight: 700;
+    }
+    tr:nth-child(even) td {
+      background: #f9fbff;
+    }
+    tr:hover td {
+      background: #e8f0ff;
+    }
+    /* Responsive for overflow */
+    .table-responsive {
+      overflow-x: auto;
+      width: 100%;
+      display: block;
+    }
+    :root {
+      --bg: #f4f8ff;
+      --panel: #ffffff;
+      --primary: #4b8df8;
+      --primary-soft: #6da8ff;
+      --muted: #6b7280;
+      --line: #dbe6ff;
+      --shadow: 0 18px 60px rgba(75, 141, 248, 0.15);
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(107, 168, 255, 0.12), transparent 32%),
+                  radial-gradient(circle at 80% 0%, rgba(75, 141, 248, 0.16), transparent 34%),
+                  var(--bg);
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+    .card-lite {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 60px 20px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      text-align: center;
+    }
+    .genty {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 0.3px;
+      font-weight: 600;
+    }
+    button {
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 700;
+      transition: all 0.22s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
+      color: #ffffff;
+      box-shadow: 0 12px 30px rgba(75, 141, 248, 0.35);
+    }
+    .btn-primary:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 16px 40px rgba(75, 141, 248, 0.45);
+      animation: pulse 0.6s ease;
+    }
+    .btn-ghost {
+      background: #eef2ff;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="slides" id="slides">
+      <!-- Slide 1: Identitas Kelompok -->
+      <section class="slide" data-slide="401" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:18px;font-weight:700;margin-bottom:18px;text-align:center">Identitas Kelompok</div>
+          <div style="margin-bottom:24px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#f9fbff">
+            <label class="genty" style="font-weight:700;display:block;margin-bottom:8px;color:#0f172a">Nama Kelompok:</label>
+            <input type="text" id="groupName" placeholder="Masukkan nama kelompok..." style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif">
+          </div>
+          <div style="margin-bottom:24px">
+            <div class="genty" style="font-weight:700;margin-bottom:14px;color:#0f172a;font-size:16px">Anggota Kelompok:</div>
+            <div id="membersList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px"></div>
+          </div>
+          <div style="margin-top:24px;padding:18px;border:2px dashed #4b8df8;border-radius:14px;background:rgba(75,141,248,0.05)">
+            <div class="genty" style="font-weight:700;margin-bottom:14px;color:#0f172a;font-size:16px">➕ Tambah Anggota Baru</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+              <div>
+                <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">Nama Siswa:</label>
+                <input type="text" id="memberName" placeholder="Nama lengkap..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+              <div>
+                <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">Posisi/Tanggung Jawab:</label>
+                <select id="memberRole" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+                  <option value="Ketua">Ketua Kelompok</option>
+                  <option value="Wakil Ketua">Wakil Ketua</option>
+                  <option value="Sekretaris">Sekretaris</option>
+                  <option value="Bendahara">Bendahara</option>
+                  <option value="Anggota">Anggota Biasa</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="addMember()" style="width:100%;padding:12px 16px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 6px 18px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Tambahkan ke Kelompok</button>
+          </div>
+          <div style="margin-top:24px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#e8f0ff">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div>
+                <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">📅 Tahun Ajaran:</label>
+                <div style="padding:10px 12px;background:#ffffff;border:1px solid var(--line);border-radius:10px;font-size:14px;font-weight:700;color:#0f172a">2025/2026</div>
+              </div>
+              <div>
+                <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">🏫 Sekolah:</label>
+                <input type="text" id="schoolName" placeholder="Nama sekolah..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:12px">
+            <button onclick="updateSlide(402)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide 2: Lembar Kerja Peserta Didik & Tujuan Pembelajaran -->
+      <section class="slide" data-slide="402" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">LEMBAR KERJA PESERTA DIDIK</div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:16px;text-align:center">Pengolahan dan Penyajian Data</div>
+          <div style="margin-bottom:18px;font-size:16px">Setelah menyelesaikan Bab 5 ini, kalian akan bisa:</div>
+          <ol style="font-size:15px;line-height:1.8;margin-bottom:24px;padding-left:22px">
+            <li>A. Memahami konsep statistika dan pentingnya analisis data</li>
+            <li>B. Menghitung statistik pusat (Mean, Median, Modus) secara manual</li>
+            <li>C. Menganalisis sebaran data (Jangkauan, Quartil, IQR)</li>
+            <li>D. Menginterpretasi hasil analisis dengan tepat</li>
+            <li>E. Membuat visualisasi data secara manual atau dengan spreadsheet</li>
+            <li>F. Menghubungkan temuan data dengan pesan kesehatan</li>
+          </ol>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(401)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(403)" class="btn-ghost">→ Selanjutnya</button>
+      </section>
+      <!-- Slide 3: Aktivitas 1 Menghitung Statistik Pusat -->
+      <section class="slide" data-slide="403" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 18px">
+          <div class="genty" style="font-size:19px;font-weight:700;margin-bottom:18px;text-align:center">A. Aktivitas 1: Menghitung Statistik Pusat</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">Gunakan lembar kerja ini untuk menghitung Mean, Median, dan Modus dari data kalian</div>
+          <div style="margin-bottom:10px;font-size:15px">1. Siapkan Data Mentah</div>
+          <div style="margin-bottom:10px;font-size:15px">Salin data durasi penggunaan HP (dalam jam) dari kuesioner yang telah dikumpulkan</div>
+          <div style="overflow-x:auto;margin-bottom:18px">
+            <table style="width:100%;border-collapse:collapse;min-width:700px">
+              <thead>
+                <tr style="background:#f5f5f5">
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Kode Responden</th>
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Durasi Penggunaan HP (Jam)</th>
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Waktu (Pagi/Siang/Malam)</th>
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Tujuan (Belajar/Medss/Main Gim)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><input type="text" style="width:100%"></td><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+                <tr><td><input type="text" style="width:100%"></td><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+                <tr><td><input type="text" style="width:100%"></td><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+                <tr><td><input type="text" style="width:100%"></td><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+                <tr><td><input type="text" style="width:100%"></td><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+                <!-- Tambahkan baris sesuai kebutuhan -->
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">2. Hitung Mean (Rata-rata)</div>
+          <div style="margin-bottom:8px;font-size:15px">Definisi: Nilai rata-rata yang diperoleh dari menjumlahkan seluruh data dan membaginya dengan jumlah data.</div>
+          <div style="margin-bottom:8px;font-size:15px">Rumus: <b>Mean = (Total Durasi)/(Jumlah respondent)</b></div>
+          <div style="margin-bottom:8px;font-size:15px">Hasil = …….. Jam/Hari</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <tr><td style="width:40%">Total Durasi Penggunaan HP</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+            <tr><td>Jumlah Respondent (N)</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
+            <tr><td>Mean (Rata-rata Durasi)</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+          </table>
+          <div style="margin-bottom:10px;font-size:15px">Arti Mean Kalian:</div>
+          <textarea placeholder="Rata-rata siswa di kelas …… menggunakan HP ………….. jam per hari." style="width:100%;min-height:32px;margin-bottom:18px"></textarea>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">3. Hitung Median (Nilai Tengah)</div>
+          <div style="margin-bottom:8px;font-size:15px">Definisi: Nilai yang membagi data yang telah diurutkan menjadi dua bagian sama besar</div>
+          <div style="margin-bottom:8px;font-size:15px">Langkah-langkah:</div>
+          <ol style="font-size:15px;margin-bottom:8px;padding-left:22px">
+            <li>Urutkan data durasi penggunaan HP dari yang terkecil ke terbesar</li>
+            <li>Tentukan posisi Median:</li>
+          </ol>
+          <div style="margin-bottom:8px;font-size:15px">Jika N Ganjil: Posisi Median =</div>
+          <div style="margin-bottom:8px;font-size:15px">Jika N Genap: Median Adalah rata-rata dari data pada posisi</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <tr><td style="width:40%">Data Durasi yang sudah diurutkan</td><td><input type="text" style="width:100%"></td></tr>
+            <tr><td>Posisi Median</td><td><input type="text" style="width:100%"></td></tr>
+            <tr><td>Median (Nilai Tengah Durasi)</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+          </table>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">4. Hitung Modus (Durasi Penggunaan HP Paling Banyak)</div>
+          <div style="margin-bottom:8px;font-size:15px">Definisi: Data atau kategori yang paling sering muncul. Dalam konteks ini, kita mencari Durasi penggunaan HP yang paling banyak dipilih</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th>Durasi Penggunaan HP</th>
+                <th>Jumlah Responden</th>
+                <th>Persentase</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+              <tr><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+              <tr><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-bottom:10px;font-size:15px">Kesimpulan Modus: Tujuan penggunaan HP yang paling banyak dipilih Adalah:</div>
+          <textarea placeholder="Kesimpulan Modus..." style="width:100%;min-height:32px;margin-bottom:18px"></textarea>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">5. Data Ekstrem</div>
+          <div style="margin-bottom:8px;font-size:15px">Temukan durasi penggunaan HP yang paling tinggi dan paling rendah di kelas</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th>Deskripsi</th>
+                <th>Durasi (Jam)</th>
+                <th>Respondent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Durasi Paling Tinggi (Maksimum)</td><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Durasi Paling Rendah (Minimum)</td><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">6. Jangkauan (Range)</div>
+          <div style="margin-bottom:8px;font-size:15px">Definisi: Selisih antara nilai data tertinggi (maksimum) dengan nilai data terendah (minimum). Jangkauan menunjukkan seberapa beragam data penggunaan HP di kelas</div>
+          <div style="margin-bottom:8px;font-size:15px">Rumus: Nmax – Nmin</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <tr><td style="width:40%">Durasi Paling Tinggi</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+            <tr><td>Durasi Paling Rendah</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+            <tr><td>Jangkauan</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+          </table>
+          <div style="margin-bottom:10px;font-size:15px">Analisis jangkauan: (lingkari salah satu)</div>
+          <ul style="font-size:15px;margin-bottom:18px">
+            <li>Jangkauan Kecil: Penggunaan HP di kelas cenderung seragam</li>
+            <li>Jangkauan Besar: Penggunaan HP di kelas cenderung beragam</li>
+          </ul>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">7. Kuartil dan Jangkauan Kuartil (IQR)</div>
+          <div style="margin-bottom:8px;font-size:15px">Definisi Quartil: Kuartil adalah nilai-nilai yang membagi data yang telah diurutkan menjadi empat bagian sama besar. Terdapat tiga quartil:</div>
+          <ul style="font-size:15px;margin-bottom:8px">
+            <li>Q1 (Quartil Bawah): Nilai yang membatasi 25% data terendah.</li>
+            <li>Q2 (Quartil Tengah): Nilai yang membatasi 50% data terendah (sama dengan Median).</li>
+            <li>Q3 (Quartil Atas): Nilai yang membatasi 75% data terendah.</li>
+          </ul>
+          <div style="margin-bottom:8px;font-size:15px">Definisi Jangkauan Kuartil: Jangkauan Kuartil adalah selisih antara Q3 dan Q1. Rumus: IQR = Q3 – Q1</div>
+          <div style="margin-bottom:8px;font-size:15px">Langkah-langkah menghitung kuartil:</div>
+          <ol style="font-size:15px;margin-bottom:8px;padding-left:22px">
+            <li>a. Urutkan data durasi penggunaan HP dari yang terkecil ke terbesar</li>
+            <li>b. Hitung posisi Q1, Q2, dan Q3</li>
+          </ol>
+          <div style="margin-bottom:8px;font-size:15px">Posisi Q1 = (N + 1) * 0,25</div>
+          <div style="margin-bottom:8px;font-size:15px">Posisi Q2 = (N + 1) * 0,50</div>
+          <div style="margin-bottom:8px;font-size:15px">Posisi Q3 = (N + 1) * 0,75</div>
+          <div style="margin-bottom:8px;font-size:15px">c. Jika posisi bukan bilangan bulat, gunakan interpolasi linear antara dua nilai terdekat</div>
+          <div style="margin-bottom:8px;font-size:15px">d. Hitung IQR = Q3 – Q1</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <tr><td style="width:40%">Jumlah Respondent (N)</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
+            <tr><td>Posisi Q1</td><td><input type="text" style="width:100%"></td></tr>
+            <tr><td>Q1</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+            <tr><td>Posisi Q2</td><td><input type="text" style="width:100%"></td></tr>
+            <tr><td>Q2</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+            <tr><td>Posisi Q3</td><td><input type="text" style="width:100%"></td></tr>
+            <tr><td>Q3</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+            <tr><td>IQR</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+          </table>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">8. Identifikasi Data Pencilan (Outlier)</div>
+          <div style="margin-bottom:8px;font-size:15px">Data pencilan adalah nilai yang berada di luar batas berikut:</div>
+          <div style="margin-bottom:8px;font-size:15px">Batas Bawah = Q1 – 1,5 x IQR</div>
+          <div style="margin-bottom:8px;font-size:15px">Batas Atas = Q3 + 1,5 x IQR</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <tr><td style="width:40%">Q1</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+            <tr><td>Q2</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+            <tr><td>Q3</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+            <tr><td>Batas Bawah</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+            <tr><td>Batas Atas</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
+          </table>
+          <div style="margin-bottom:10px;font-size:15px">Data Pencilan yang ditemukan</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th>Durasi (Jam)</th>
+                <th>Jenis Pencilan</th>
+                <th>Respondent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" placeholder="Bawah/Atas" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" placeholder="Bawah/Atas" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" placeholder="Bawah/Atas" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-bottom:10px;font-size:15px">Catatan: Data pencilan tidak harus dihapus, tetapi perlu dianalisis lebih lanjut. Apakah ada alasan khusus mengapa siswa tertentu memiliki durasi penggunaan HP yang sangat tinggi atau sangat rendah?</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">Analisis Quartil dan IQR</div>
+          <ul style="font-size:15px;margin-bottom:8px">
+            <li>a. IQR Kecil: 50% siswa (kelompok tengah) memiliki durasi penggunaan HP yang relatif seragam.</li>
+            <li>b. IQR Besar: 50% siswa (kelompok tengah) memiliki durasi penggunaan HP yang sangat beragam.</li>
+            <li>c. Perbandingan Q1 dengan Q3: Jika Q3 jauh lebih besar dari Q1, berarti ada kecenderungan siswa menggunakan HP lebih lama (distribusi data miring ke kanan).</li>
+          </ul>
+          <div style="margin-bottom:10px;font-size:15px">Setelah menyelesaikan perhitungan Jangkauan dan Kuartil, isilah tabel ringkasan berikut untuk memahami pola sebaran data secara keseluruhan:</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th>Statistik</th>
+                <th>Hasil</th>
+                <th>Interpretasi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Jangkauan (Range)</td><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" placeholder="Seragam/Beragam" style="width:100%"></td></tr>
+              <tr><td>IQR (Q3 – Q1)</td><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" placeholder="Seragam/Beragam" style="width:100%"></td></tr>
+              <tr><td>Jumlah data Pencilan</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="text" placeholder="Ada / Tidak ada" style="width:100%"></td></tr>
+              <tr><td>Posisi Median (Q2)</td><td><input type="text" style="width:100%"></td><td><input type="text" placeholder="Lebih dekat Q1 / Lebih dekat Q3" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(402)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(404)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide 4: Perbedaan Waktu, Frekuensi, Modus, Persentase -->
+      <section class="slide" data-slide="404" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 18px">
+          <div class="genty" style="font-size:19px;font-weight:700;margin-bottom:18px;text-align:center">B. Perbedaan Waktu</div>
+          <div style="margin-bottom:10px;font-size:15px">Karena data ini bukan angka, kita tidak menggunakan rumus penjumlahan, melainkan Teknik Frekuensi dan Modus:</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">1. Data Mentah Perbedaan Waktu Penggunaan HP</div>
+          <div style="margin-bottom:10px;font-size:15px">Salin data perbedaan waktu penggunaan HP (pagi/siang/malam) dari kuesioner yang telah dikumpulkan</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th>Perbedaan waktu (Pagi/Siang/Malam)</th>
+                <th>Jumlah Responden</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Pagi</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
+              <tr><td>Siang</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
+              <tr><td>Malam</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
+              <tr><td style="font-weight:700">Total</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-bottom:14px;font-size:15px">Dalam Statistika, Rata-rata (Mean) hanya bisa dihitung untuk data yang bersifat Numerik (angka yang bisa dijumlahkan), seperti durasi penggunaan HP. Sedangkan untuk Tujuan utama (Belajar, Medss, Gim) dan Waktu Aktif (Pagi, Siang, Malam) adalah Data Kategorik. Data jenis ini tidak bisa dirata-ratakan dengan rumus matematika biasa, melainkan dicari modus atau persentasenya.</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">2. Menemukan Modus (Pilihan Terbanyak)</div>
+          <div style="margin-bottom:10px;font-size:15px">Definisi: Data atau kategori yang paling sering muncul. Dalam konteks ini, kita mencari perbedaan waktu penggunaan HP yang paling banyak dipilih</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th>Waktu Penggunaan HP</th>
+                <th>Jumlah Responden</th>
+                <th>Persentase</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Pagi (06.00 – 12.00)</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+              <tr><td>Siang (12.01 – 18.00)</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+              <tr><td>Malam (18.00 – 24.00)</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+              <tr><td style="font-weight:700">Total</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-bottom:10px;font-size:15px">Kesimpulan Modus: Waktu penggunaan HP yang paling banyak dipilih Adalah:</div>
+          <textarea placeholder="Kesimpulan Modus..." style="width:100%;min-height:32px;margin-bottom:18px"></textarea>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">3. Menghitung Persentase</div>
+          <div style="margin-bottom:10px;font-size:15px">Menghitung persentase (Untuk diagram Lingkaran): Jika ingin menunjukan porsi penggunaan HP dalam bentuk persen (%) di DataVista, gunakan rumus:</div>
+          <div style="margin-bottom:10px;font-size:15px"><b>Persentase = (jumlah orang dalam satu kategori) / (Total seluruh responden) x 100%</b></div>
+          <div style="margin-bottom:18px;font-size:15px">Jika dibuat dalam diagram lingkaran, setiap kategori akan membentuk sektor sesuai persentasenya.</div>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(403)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(405)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide 5: Tujuan Penggunaan HP, Modus, Persentase, Pesan Kesehatan -->
+      <section class="slide" data-slide="405" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 18px">
+          <div class="genty" style="font-size:19px;font-weight:700;margin-bottom:18px;text-align:center">C. Tujuan Penggunaan HP</div>
+          <div style="margin-bottom:10px;font-size:15px">Karena data ini bukan angka, kita tidak menggunakan rumus penjumlahan, melainkan Teknik Frekuensi dan Modus:</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">1. Data Mentah Tujuan Penggunaan HP</div>
+          <div style="margin-bottom:10px;font-size:15px">Salin data tujuan penggunaan HP (Belajar, Medss, Main Gim) dari kuesioner yang telah dikumpulkan</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th>Tujuan Penggunaan HP (Belajar/Medss/Main Gim)</th>
+                <th>Jumlah Responden</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Belajar</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
+              <tr><td>Medas</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
+              <tr><td>Main Gim</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
+              <tr><td style="font-weight:700">Total</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-bottom:14px;font-size:15px">Dalam Statistika, Rata-rata (Mean) hanya bisa dihitung untuk data yang bersifat Numerik (angka yang bisa dijumlahkan), seperti durasi penggunaan HP. Sedangkan untuk Tujuan utama (Belajar, Medss, Gim) dan Waktu Aktif (Pagi, Siang, Malam) adalah Data Kategorik. Data jenis ini tidak bisa dirata-ratakan dengan rumus matematika biasa, melainkan dicari modus atau persentasenya.</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">2. Menemukan Modus (Pilihan Terbanyak)</div>
+          <div style="margin-bottom:10px;font-size:15px">Definisi: Data atau kategori yang paling sering muncul. Dalam konteks ini, kita mencari tujuan penggunaan HP yang paling banyak dipilih</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th>Tujuan Penggunaan HP</th>
+                <th>Jumlah Responden</th>
+                <th>Persentase</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Belajar</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+              <tr><td>Medas</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+              <tr><td>Main Gim</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+              <tr><td style="font-weight:700">Total</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-bottom:10px;font-size:15px">Kesimpulan Modus: Tujuan penggunaan HP yang paling banyak dipilih Adalah:</div>
+          <textarea placeholder="Kesimpulan Modus..." style="width:100%;min-height:32px;margin-bottom:18px"></textarea>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">3. Menghitung Persentase</div>
+          <div style="margin-bottom:10px;font-size:15px">Menghitung persentase (Untuk diagram Lingkaran): Jika ingin menunjukan porsi Tujuan penggunaan HP dalam bentuk persen (%) di DataVista, gunakan rumus:</div>
+          <div style="margin-bottom:10px;font-size:15px"><b>Persentase = (jumlah orang dalam satu kategori) / (Total seluruh responden) x 100%</b></div>
+          <div style="margin-bottom:18px;font-size:15px">Jika dibuat dalam diagram lingkaran, setiap kategori akan membentuk sektor sesuai persentasenya.</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">D. Menghubungkan Data dengan Pesan Kesehatan (Interpretasi)</div>
+          <div style="margin-bottom:10px;font-size:15px">Gunakan hasil olahan data di atas untuk merumuskan pesan kunci infografis</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">1. Analisis durasi Rata-rata</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th>Kondisi Data</th>
+                <th>Pesan Kesehatan yang paling mendesak</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Rata-rata &gt; 3 jam</td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Rata-rata &lt; 3 jam</td><td><input type="text" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">2. Analisis Waktu Penggunaan</div>
+          <div style="margin-bottom:10px;font-size:15px">Hitung persentase responden yang menggunakan HP pada malam hari (misalnya, setelah pukul 20.00).</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th>Waktu Penggunaan</th>
+                <th>Jumlah Responden</th>
+                <th>Persentase</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Pagi/Siang/Sore</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+              <tr><td>Malam hari (&gt; 20.00 WIB)</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+              <tr><td style="font-weight:700">Total</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(404)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(406)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide 6: Persiapan Visualisasi, Validasi Data, Tanda Tangan Tim -->
+      <section class="slide" data-slide="406" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 18px">
+          <div class="genty" style="font-size:19px;font-weight:700;margin-bottom:18px;text-align:center">B. Persiapan Visualisasi</div>
+          <div style="margin-bottom:10px;font-size:15px">Rencanakan visualisasi data yang paling efektif untuk menyampaikan temuan utama</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:8px">1. Diagram Garis (membandingkan Durasi Penggunaan HP)</div>
+          <div style="margin-bottom:8px;font-size:15px">Data yang digunakan: Jumlah Responden untuk Durasi Penggunaan HP</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead><tr style="background:#f5f5f5"><th>Kompnen</th><th>Rencana Visualisasi</th></tr></thead>
+            <tbody>
+              <tr><td>Judul Diagram</td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Sumbu X (Horizontal)</td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Sumbu Y (Vertikal)</td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Pesan Kunci yang ingin disampaikan</td><td><input type="text" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:16px;font-weight:700;margin-bottom:8px">2. Diagram Batang (membandingkan Tujuan Penggunaan HP)</div>
+          <div style="margin-bottom:8px;font-size:15px">Data yang digunakan: Jumlah Responden untuk setiap tujuan (Belajar, Medss, Gim)</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead><tr style="background:#f5f5f5"><th>Kompnen</th><th>Rencana Visualisasi</th></tr></thead>
+            <tbody>
+              <tr><td>Judul Diagram</td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Sumbu X (Horizontal)</td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Sumbu Y (Vertikal)</td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Pesan Kunci yang ingin disampaikan</td><td><input type="text" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:16px;font-weight:700;margin-bottom:8px">3. Diagram Lingkaran (Melihat Persentase Waktu Penggunaan)</div>
+          <div style="margin-bottom:8px;font-size:15px">Data yang digunakan: Persentase Waktu Penggunaan (Pagi/Siang/Malam)</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead><tr style="background:#f5f5f5"><th>Kompnen</th><th>Rencana Visualisasi</th></tr></thead>
+            <tbody>
+              <tr><td>Judul Diagram</td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Segment 1</td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Segment 2</td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Pesan Kunci yang ingin disampaikan</td><td><input type="text" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">Menghadapi Kerumitan Data</div>
+          <ul style="font-size:15px;margin-bottom:14px">
+            <li>Setelah semua perhitungan selesai, minta anggota tim lain untuk mengecek ulang semua angka (Total Durasi, Mean, Median, Jangkauan).</li>
+            <li>Jika data yang terkumpul terasa “aneh” (misalnya, Jangkauan terlalu besar atau Mean sangat tidak masuk akal), segera diskusikan:</li>
+          </ul>
+          <ul style="font-size:15px;margin-bottom:14px;list-style-type:circle;margin-left:24px">
+            <li>Apakah ada kesalahan input data?</li>
+            <li>Apakah ada responden yang memberikan data ekstrim yang perlu dipertimbangkan (misalnya, 10 jam per hari)?</li>
+            <li>Jika perlu, konsultasikan dengan guru pembimbing untuk penyesuaian analisis.</li>
+          </ul>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px">Tanda Tangan TIM</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+            <thead><tr style="background:#f5f5f5"><th>Peran</th><th>Nama Anggota</th><th>Tanda Tangan</th></tr></thead>
+            <tbody>
+              <tr><td>Analisa Data Utama</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Pencatat Data</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Perumusan Pesan</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Desainer Visual</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(405)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="showSelesaiPopup()" class="btn-primary">Selesai</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide berikutnya bisa ditambahkan di bawah ini -->
+    </div>
+  </div>
+  <script>
+    // Navigasi slide: hanya satu slide tampil (class 'active')
+    function showSlideByDataSlide(slideNum) {
+      document.querySelectorAll('.slide').forEach(sl => {
+        if (Number(sl.getAttribute('data-slide')) === slideNum) {
+          sl.classList.add('active');
+          sl.style.display = '';
+        } else {
+          sl.classList.remove('active');
+          sl.style.display = 'none';
+        }
+      });
+      window.scrollTo(0,0);
+    }
+    // Inisialisasi: tampilkan slide pertama (401)
+    document.addEventListener('DOMContentLoaded', function() {
+      showSlideByDataSlide(401);
+    });
+    // Ganti semua tombol updateSlide agar pakai showSlideByDataSlide
+    window.updateSlide = showSlideByDataSlide;
+    // Fungsi tambah anggota (dummy, bisa dikembangkan)
+    function addMember() {
+      // ...fungsi tambah anggota kelompok...
+      alert('Fitur tambah anggota belum diimplementasikan.');
+    }
+
+    // Pop up selesai
+    function showSelesaiPopup() {
+      alert('Pengerjaanmu selesai!');
+      // Jika ingin lanjut ke slide berikutnya, bisa tambahkan:
+      // updateSlide(407);
+    }
+  </script>
+</body>
+</html>

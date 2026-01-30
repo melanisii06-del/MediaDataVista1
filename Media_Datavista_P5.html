@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Media DataVista - Pertemuan 5</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f8ff;
+      --panel: #ffffff;
+      --primary: #4b8df8;
+      --primary-soft: #6da8ff;
+      --muted: #6b7280;
+      --line: #dbe6ff;
+      --shadow: 0 18px 60px rgba(75, 141, 248, 0.15);
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(107, 168, 255, 0.12), transparent 32%),
+                  radial-gradient(circle at 80% 0%, rgba(75, 141, 248, 0.16), transparent 34%),
+                  var(--bg);
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+    .card-lite {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 60px 20px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      text-align: center;
+    }
+    .genty {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 0.3px;
+      font-weight: 600;
+    }
+    button {
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 700;
+      transition: all 0.22s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
+      color: #ffffff;
+      box-shadow: 0 12px 30px rgba(75, 141, 248, 0.35);
+    }
+    .btn-primary:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 16px 40px rgba(75, 141, 248, 0.45);
+      animation: pulse 0.6s ease;
+    }
+    .btn-ghost {
+      background: #eef2ff;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="slides" id="slides">
+      <!-- Slide 1: Identitas Kelompok -->
+      <section class="slide" data-slide="501" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:18px;font-weight:700;margin-bottom:18px;text-align:center">Identitas Kelompok</div>
+          <div style="margin-bottom:24px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#f9fbff">
+            <label class="genty" style="font-weight:700;display:block;margin-bottom:8px;color:#0f172a">Nama Kelompok:</label>
+            <input type="text" id="groupName" placeholder="Masukkan nama kelompok..." style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif">
+          </div>
+          <div style="margin-bottom:24px">
+            <div class="genty" style="font-weight:700;margin-bottom:14px;color:#0f172a;font-size:16px">Anggota Kelompok:</div>
+            <div id="membersList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px"></div>
+          </div>
+          <div style="margin-top:24px;padding:18px;border:2px dashed #4b8df8;border-radius:14px;background:rgba(75,141,248,0.05)">
+            <div class="genty" style="font-weight:700;margin-bottom:14px;color:#0f172a;font-size:16px">➕ Tambah Anggota Baru</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+              <div>
+                <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">Nama Siswa:</label>
+                <input type="text" id="memberName" placeholder="Nama lengkap..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+              <div>
+                <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">Posisi/Tanggung Jawab:</label>
+                <select id="memberRole" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+                  <option value="Ketua">Ketua Kelompok</option>
+                  <option value="Wakil Ketua">Wakil Ketua</option>
+                  <option value="Sekretaris">Sekretaris</option>
+                  <option value="Bendahara">Bendahara</option>
+                  <option value="Anggota">Anggota Biasa</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="addMember()" style="width:100%;padding:12px 16px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 6px 18px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Tambahkan ke Kelompok</button>
+          </div>
+          <div style="margin-top:24px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#e8f0ff">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div>
+                <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">📅 Tahun Ajaran:</label>
+                <div style="padding:10px 12px;background:#ffffff;border:1px solid var(--line);border-radius:10px;font-size:14px;font-weight:700;color:#0f172a">2025/2026</div>
+              </div>
+              <div>
+                <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">🏫 Sekolah:</label>
+                <input type="text" id="schoolName" placeholder="Nama sekolah..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:12px">
+            <button onclick="updateSlide(502)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide 2: Tujuan Pembelajaran dan Petunjuk Kegiatan -->
+      <section class="slide" data-slide="502" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">A. Tujuan Pembelajaran</div>
+          <div style="margin-bottom:18px;font-size:16px">Melalui kegiatan presentasi, refleksi, dan evaluasi proyek ini, peserta didik diharapkan mampu menyajikan hasil analisis data secara runtut dan berbasis bukti, menginterpretasikan informasi statistik untuk pengambilan keputusan, serta merefleksikan pengalaman belajar guna memperkuat literasi statistik dan resiliensi diri.</div>
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:14px;text-align:center">B. Petunjuk Kegiatan</div>
+          <ol style="font-size:15px;line-height:1.8;margin-bottom:24px;padding-left:22px">
+            <li>Lakukan presentasi proyek secara berkelompok sesuai urutan yang ditentukan guru.</li>
+            <li>Dengarkan presentasi kelompok lain dengan sikap saling menghargai.</li>
+            <li>Berikan tanggapan atau pertanyaan secara sopan dan konstruktif.</li>
+            <li>Isilah bagian refleksi dan evaluasi secara jujur berdasarkan pengalaman belajar.</li>
+          </ol>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(501)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(503)" class="btn-primary">Selanjutnya →</button>
+      </section>
+      <!-- Slide 3: Ringkasan Proyek Kelompok -->
+      <section class="slide" data-slide="503" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">C. Ringkasan Proyek Kelompok</div>
+          <div style="margin-bottom:16px;font-size:16px">Tuliskan ringkasan singkat proyek yang telah kalian lakukan</div>
+          <div style="margin-bottom:12px;font-size:15px">1. Fokus data yang dianalisis</div>
+          <textarea placeholder="Fokus data yang dianalisis..." style="width:100%;min-height:36px;margin-bottom:18px"></textarea>
+          <div style="margin-bottom:12px;font-size:15px">2. Jumlah responden</div>
+          <input type="number" min="0" style="width:100%;margin-bottom:18px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif">
+          <div style="margin-bottom:12px;font-size:15px">3. Informasi utama yang ditemukan dari data</div>
+          <textarea placeholder="Informasi utama yang ditemukan..." style="width:100%;min-height:48px;margin-bottom:24px"></textarea>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(502)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(504)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide 4: Penyajian Hasil Statistik -->
+      <section class="slide" data-slide="504" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">D. Penyajian Hasil Statistik</div>
+          <div style="margin-bottom:16px;font-size:16px">Lengkapi tabel berikut berdasarkan hasil analisis data kelompok</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th>Ukuran Statistik</th>
+                <th>Nilai</th>
+                <th>Makna dalam Konteks Penggunaan HP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Rata-rata</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Median</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Modus</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Jangkauan</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+              <tr><td>Kuartil</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(503)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(505)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide 5: Kesimpulan Berbasis Data -->
+      <section class="slide" data-slide="505" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">E. Kesimpulan Berbasis Data</div>
+          <div style="margin-bottom:16px;font-size:16px">Tuliskan kesimpulan utama berdasarkan hasil analisis data</div>
+          <textarea placeholder="Kesimpulan utama..." style="width:100%;min-height:64px;margin-bottom:24px"></textarea>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(504)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(506)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide 6: Refleksi Kelompok -->
+      <section class="slide" data-slide="506" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">F. Refleksi Kelompok</div>
+          <div style="margin-bottom:16px;font-size:16px">Jawablah pertanyaan berikut secara berkelompok</div>
+          <div style="margin-bottom:10px;font-size:15px">1. Hal paling menantang selama mengerjakan proyek ini adalah:</div>
+          <textarea placeholder="Jawaban..." style="width:100%;min-height:48px;margin-bottom:18px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">2. Cara kelompok mengatasi tantangan tersebut</div>
+          <textarea placeholder="Jawaban..." style="width:100%;min-height:48px;margin-bottom:18px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">3. Pelajaran penting yang diperoleh dari kerja kelompok</div>
+          <textarea placeholder="Jawaban..." style="width:100%;min-height:48px;margin-bottom:24px"></textarea>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(505)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(507)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide 7: Evaluasi Diri Terhadap Proyek -->
+      <section class="slide" data-slide="507" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">G. Evaluasi Diri Terhadap Proyek</div>
+          <div style="margin-bottom:16px;font-size:16px">Berilah tanda centang (✓) sesuai dengan kondisi diri anda</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th>Pernyataan</th>
+                <th style="width:80px">Ya</th>
+                <th style="width:80px">Tidak</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Saya berperan aktif dalam kelompok</td>
+                <td style="text-align:center"><input type="checkbox" name="aktif" value="ya"></td>
+                <td style="text-align:center"><input type="checkbox" name="aktif" value="tidak"></td>
+              </tr>
+              <tr>
+                <td>Saya memahami data yang dianalisis</td>
+                <td style="text-align:center"><input type="checkbox" name="paham" value="ya"></td>
+                <td style="text-align:center"><input type="checkbox" name="paham" value="tidak"></td>
+              </tr>
+              <tr>
+                <td>Saya berani menyampaikan pendapat</td>
+                <td style="text-align:center"><input type="checkbox" name="berani" value="ya"></td>
+                <td style="text-align:center"><input type="checkbox" name="berani" value="tidak"></td>
+              </tr>
+              <tr>
+                <td>Saya tidak mudah menyerah saat mengalami kesulitan</td>
+                <td style="text-align:center"><input type="checkbox" name="pantang" value="ya"></td>
+                <td style="text-align:center"><input type="checkbox" name="pantang" value="tidak"></td>
+              </tr>
+              <tr>
+                <td>Saya menggunakan data untuk menarik Kesimpulan</td>
+                <td style="text-align:center"><input type="checkbox" name="data" value="ya"></td>
+                <td style="text-align:center"><input type="checkbox" name="data" value="tidak"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(506)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="showSelesaiPopup()" class="btn-primary">Selesai</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide berikutnya bisa ditambahkan di bawah ini -->
+    </div>
+  </div>
+  <script>
+    // Navigasi slide: hanya satu slide tampil (class 'active')
+    function showSlideByDataSlide(slideNum) {
+      document.querySelectorAll('.slide').forEach(sl => {
+        if (Number(sl.getAttribute('data-slide')) === slideNum) {
+          sl.classList.add('active');
+          sl.style.display = '';
+        } else {
+          sl.classList.remove('active');
+          sl.style.display = 'none';
+        }
+      });
+      window.scrollTo(0,0);
+    }
+    // Inisialisasi: tampilkan slide pertama (501)
+    document.addEventListener('DOMContentLoaded', function() {
+      showSlideByDataSlide(501);
+    });
+    // Ganti semua tombol updateSlide agar pakai showSlideByDataSlide
+    window.updateSlide = showSlideByDataSlide;
+    // Fungsi tambah anggota (dummy, bisa dikembangkan)
+    function addMember() {
+      // ...fungsi tambah anggota kelompok...
+      alert('Fitur tambah anggota belum diimplementasikan.');
+    }
+
+    // Pop up selesai
+    function showSelesaiPopup() {
+      alert('Pengerjaanmu selesai!');
+    }
+  </script>
+</body>
+</html>

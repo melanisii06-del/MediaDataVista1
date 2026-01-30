@@ -1,0 +1,421 @@
+  
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Media DataVista - Pertemuan 3</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f8ff;
+      --panel: #ffffff;
+      --primary: #4b8df8;
+      --primary-soft: #6da8ff;
+      --muted: #6b7280;
+      --line: #dbe6ff;
+      --shadow: 0 18px 60px rgba(75, 141, 248, 0.15);
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(107, 168, 255, 0.12), transparent 32%),
+                  radial-gradient(circle at 80% 0%, rgba(75, 141, 248, 0.16), transparent 34%),
+                  var(--bg);
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+    .card-lite {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 60px 20px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      text-align: center;
+    }
+    .genty {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 0.3px;
+      font-weight: 600;
+    }
+    button {
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 700;
+      transition: all 0.22s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
+      color: #ffffff;
+      box-shadow: 0 12px 30px rgba(75, 141, 248, 0.35);
+    }
+    .btn-primary:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 16px 40px rgba(75, 141, 248, 0.45);
+      animation: pulse 0.6s ease;
+    }
+    .btn-ghost {
+      background: #eef2ff;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+  </style>
+</head>
+<body>
+  <div class="shell"></div>
+    <div class="slides" id="slides">
+      <!-- Slide 1: Identitas Kelompok -->
+      <section class="slide" data-slide="301" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:18px;font-weight:700;margin-bottom:18px;text-align:center">Identitas Kelompok</div>
+          <div style="margin-bottom:24px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#f9fbff">
+            <label class="genty" style="font-weight:700;display:block;margin-bottom:8px;color:#0f172a">Nama Kelompok:</label>
+            <input type="text" id="groupName" placeholder="Masukkan nama kelompok..." style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif">
+          </div>
+          <div style="margin-bottom:24px">
+            <div class="genty" style="font-weight:700;margin-bottom:14px;color:#0f172a;font-size:16px">Anggota Kelompok:</div>
+            <div id="membersList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px"></div>
+          </div>
+          <div style="margin-top:24px;padding:18px;border:2px dashed #4b8df8;border-radius:14px;background:rgba(75,141,248,0.05)">
+            <div class="genty" style="font-weight:700;margin-bottom:14px;color:#0f172a;font-size:16px">➕ Tambah Anggota Baru</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+              <div>
+                <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">Nama Siswa:</label>
+                <input type="text" id="memberName" placeholder="Nama lengkap..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+              <div>
+                <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">Posisi/Tanggung Jawab:</label>
+                <select id="memberRole" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+                  <option value="Ketua">Ketua Kelompok</option>
+                  <option value="Wakil Ketua">Wakil Ketua</option>
+                  <option value="Sekretaris">Sekretaris</option>
+                  <option value="Bendahara">Bendahara</option>
+                  <option value="Anggota">Anggota Biasa</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="addMember()" style="width:100%;padding:12px 16px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 6px 18px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Tambahkan ke Kelompok</button>
+          </div>
+          <div style="margin-top:24px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#e8f0ff">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div>
+                <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">📅 Tahun Ajaran:</label>
+                <div style="padding:10px 12px;background:#ffffff;border:1px solid var(--line);border-radius:10px;font-size:14px;font-weight:700;color:#0f172a">2025/2026</div>
+              </div>
+              <div>
+                <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">🏫 Sekolah:</label>
+                <input type="text" id="schoolName" placeholder="Nama sekolah..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:12px">
+            <button onclick="updateSlide(302)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide kedua: Tujuan Pembelajaran -->
+      <section class="slide" data-slide="302" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">Tujuan Pembelajaran</div>
+          <div style="margin-bottom:16px;font-size:16px">Setelah menyelesaikan LKPD ini, kalian akan mampu:</div>
+          <ol style="font-size:15px;line-height:1.8;margin-bottom:24px;padding-left:22px">
+            <li>Memahami konsep pengumpulan data dan pentingnya data berkualitas</li>
+            <li>Membedakan antara populasi dan sampel dalam penelitian</li>
+            <li>Mengumpulkan data secara sistematis sesuai dengan rencana</li>
+            <li>Menerapkan etika pengumpulan data (kerahasiaan, informed consent, privasi)</li>
+            <li>Menangani masalah-masalah yang mungkin terjadi di lapangan</li>
+            <li>Memastikan data lengkap, akurat, dan siap untuk dianalisis</li>
+            <li>Mendokumentasikan proses pengumpulan data</li>
+            <li>Menunjukkan sikap teliti, jujur, sabar, dan pantang menyerah</li>
+          </ol>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(301)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(303)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide ketiga: Aktivitas 1 Persiapan Mental dan Motivasi -->
+      <section class="slide" data-slide="303" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">AKTIVITAS 1: Persiapan Mental dan Motivasi</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px">Langkah 1: Refleksi Awal</div>
+          <div style="margin-bottom:10px;font-size:15px">Sebelum kalian terjun ke lapangan untuk mengumpulkan data, mari kita refleksikan dulu:</div>
+          <div style="margin-bottom:10px;font-size:15px">1. Mengapa pengumpulan data penting untuk proyek ini?</div>
+          <textarea placeholder="Jawaban Anda..." style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">2. Apa yang membuat kalian antusias untuk mengumpulkan data?</div>
+          <textarea placeholder="Jawaban Anda..." style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">3. Apa yang membuat kalian khawatir atau ragu?</div>
+          <textarea placeholder="Jawaban Anda..." style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px">Langkah 2: Motivasi Tim</div>
+          <div style="margin-bottom:10px;font-size:15px">Diskusikan dalam kelompok:</div>
+          <textarea placeholder="Hasil diskusi motivasi tim..." style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:24px"></textarea>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(302)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(304)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide keempat: Aktivitas 2 Memahami Populasi dan Sampel -->
+      <section class="slide" data-slide="304" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">AKTIVITAS 2: Memahami Populasi dan Sampel</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px">Langkah 1: Tentukan Populasi</div>
+          <div style="margin-bottom:10px;font-size:15px">Populasi penelitian kalian adalah:</div>
+          <textarea placeholder="Deskripsi populasi..." style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">Jumlah total populasi: <input type="number" min="0" style="width:120px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px;margin-left:8px"></div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px;margin-top:18px">Langkah 2: Verifikasi Sampel</div>
+          <div style="margin-bottom:10px;font-size:15px">Berdasarkan perencanaan di Bab sebelumnya:</div>
+          <div style="margin-bottom:10px;font-size:15px">Jumlah sampel yang direncanakan: <input type="number" min="0" style="width:120px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px;margin-left:8px"></div>
+          <div style="margin-bottom:10px;font-size:15px">Persentase sampel: <input type="number" min="0" max="100" style="width:80px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px;margin-left:8px"> %</div>
+          <div style="margin-bottom:10px;font-size:15px">Apakah sampel ini representatif?</div>
+          <textarea placeholder="Refleksi representatif sampel..." style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px">Langkah 3: Daftar Responden</div>
+          <div style="margin-bottom:10px;font-size:15px">Tulis daftar responden yang akan disurvei:</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th style="border:1px solid var(--line);padding:8px;font-size:15px">No</th>
+                <th style="border:1px solid var(--line);padding:8px;font-size:15px">Nama/Kode Responden</th>
+                <th style="border:1px solid var(--line);padding:8px;font-size:15px">Jenis Kelamin</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border:1px solid var(--line);padding:8px;text-align:center">1</td>
+                <td style="border:1px solid var(--line);padding:8px"><input type="text" style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"></td>
+                <td style="border:1px solid var(--line);padding:8px"><select style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"><option value="">Pilih</option><option value="L">L</option><option value="P">P</option></select></td>
+              </tr>
+              <tr>
+                <td style="border:1px solid var(--line);padding:8px;text-align:center">2</td>
+                <td style="border:1px solid var(--line);padding:8px"><input type="text" style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"></td>
+                <td style="border:1px solid var(--line);padding:8px"><select style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"><option value="">Pilih</option><option value="L">L</option><option value="P">P</option></select></td>
+              </tr>
+              <tr>
+                <td style="border:1px solid var(--line);padding:8px;text-align:center">3</td>
+                <td style="border:1px solid var(--line);padding:8px"><input type="text" style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"></td>
+                <td style="border:1px solid var(--line);padding:8px"><select style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"><option value="">Pilih</option><option value="L">L</option><option value="P">P</option></select></td>
+              </tr>
+              <tr>
+                <td style="border:1px solid var(--line);padding:8px;text-align:center">4</td>
+                <td style="border:1px solid var(--line);padding:8px"><input type="text" style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"></td>
+                <td style="border:1px solid var(--line);padding:8px"><select style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"><option value="">Pilih</option><option value="L">L</option><option value="P">P</option></select></td>
+              </tr>
+              <tr>
+                <td style="border:1px solid var(--line);padding:8px;text-align:center">5</td>
+                <td style="border:1px solid var(--line);padding:8px"><input type="text" style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"></td>
+                <td style="border:1px solid var(--line);padding:8px"><select style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"><option value="">Pilih</option><option value="L">L</option><option value="P">P</option></select></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(303)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(305)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide kelima: Aktivitas 3 Persiapan Pengumpulan Data -->
+      <section class="slide" data-slide="305" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">AKTIVITAS 3: Persiapan Pengumpulan Data</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px">Langkah 1: Persiapan Instrumen</div>
+          <div style="margin-bottom:10px;font-size:15px">Pastikan instrumen pengumpulan data sudah siap:</div>
+          <div style="margin-bottom:8px;font-size:15px"><label><input type="checkbox"> Kuesioner sudah dicetak atau siap dalam format digital</label></div>
+          <div style="margin-bottom:8px;font-size:15px"><label><input type="checkbox"> Pertanyaan sudah jelas dan mudah dipahami</label></div>
+          <div style="margin-bottom:8px;font-size:15px"><label><input type="checkbox"> Pilihan jawaban sudah ditentukan dengan jelas</label></div>
+          <div style="margin-bottom:18px;font-size:15px"><label><input type="checkbox"> Instrumen sudah disetujui oleh guru</label></div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px">Langkah 2: Persiapan Peran</div>
+          <div style="margin-bottom:10px;font-size:15px">Pastikan setiap anggota tim tahu perannya:</div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+            <thead>
+              <tr style="background:#f5f5f5">
+                <th style="border:1px solid var(--line);padding:8px;font-size:15px">Peran</th>
+                <th style="border:1px solid var(--line);padding:8px;font-size:15px">Nama Anggota</th>
+                <th style="border:1px solid var(--line);padding:8px;font-size:15px">Tugas Utama</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border:1px solid var(--line);padding:8px">Pencari Data</td>
+                <td style="border:1px solid var(--line);padding:8px"><input type="text" style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"></td>
+                <td style="border:1px solid var(--line);padding:8px">Bertemu responden dan mengumpulkan data</td>
+              </tr>
+              <tr>
+                <td style="border:1px solid var(--line);padding:8px">Pencatat Data</td>
+                <td style="border:1px solid var(--line);padding:8px"><input type="text" style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"></td>
+                <td style="border:1px solid var(--line);padding:8px">Mencatat jawaban responden</td>
+              </tr>
+              <tr>
+                <td style="border:1px solid var(--line);padding:8px">Pengecek Data</td>
+                <td style="border:1px solid var(--line);padding:8px"><input type="text" style="width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px"></td>
+                <td style="border:1px solid var(--line);padding:8px">Memastikan data lengkap dan jelas</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px">Langkah 3: Persiapan Logistik</div>
+          <div style="margin-bottom:10px;font-size:15px">Pastikan semua perlengkapan sudah siap:</div>
+          <div style="margin-bottom:8px;font-size:15px">• <label><input type="checkbox"> Kuesioner sudah dicetak/siap digital</label></div>
+          <div style="margin-bottom:8px;font-size:15px">• <label><input type="checkbox"> Alat tulis (pulpen, pensil) sudah siap</label></div>
+          <div style="margin-bottom:8px;font-size:15px">• <label><input type="checkbox"> Clipboard atau alas tulis sudah siap</label></div>
+          <div style="margin-bottom:8px;font-size:15px">• <label><input type="checkbox"> Daftar responden sudah siap</label></div>
+          <div style="margin-bottom:24px;font-size:15px">• <label><input type="checkbox"> Jadwal pengumpulan data sudah disepakati</label></div>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(304)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(306)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide keenam: Aktivitas 4 Pengumpulan Data di Lapangan -->
+      <section class="slide" data-slide="306" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 12px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">AKTIVITAS 4 : Pengumpulan Data di Lapangan</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px">Catat Progres Pengumpulan Data</div>
+          <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:12px">
+            <button onclick="showSelesaiPopup()" class="btn-primary">Selesai</button>
+          </div>
+              <thead>
+                <tr style="background:#f5f5f5">
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">No.</th>
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Kode Responden</th>
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Durasi</th>
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Waktu</th>
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Tujuan</th>
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Catatan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- 40 rows for 40 students -->
+                <tr><td style="border:1px solid var(--line);padding:6px;text-align:center">1</td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td></tr>
+                <tr><td style="border:1px solid var(--line);padding:6px;text-align:center">2</td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td></tr>
+                <tr><td style="border:1px solid var(--line);padding:6px;text-align:center">3</td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td></tr>
+                <!-- ...rows 4-39 omitted for brevity... -->
+                <tr><td style="border:1px solid var(--line);padding:6px;text-align:center">40</td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td><td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td></tr>
+                <tr style="background:#f5f5f5;font-weight:700">
+                  <td colspan="2" style="border:1px solid var(--line);padding:6px;text-align:right">Total</td>
+                  <td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td>
+                  <td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td>
+                  <td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td>
+                  <td style="border:1px solid var(--line);padding:6px"><input type="text" style="width:100%;font-size:14px"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(305)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(307)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide ketujuh: Aktivitas 5 Resiliensi dan Pembelajaran -->
+      <section class="slide" data-slide="307" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">AKTIVITAS 5: Resiliensi dan Pembelajaran</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px">Langkah 1: Tantangan yang Dihadapi</div>
+          <div style="margin-bottom:10px;font-size:15px">Apa saja tantangan yang kalian hadapi selama pengumpulan data?</div>
+          <div style="margin-bottom:8px;font-size:15px">Tantangan 1:</div>
+          <textarea placeholder="Tantangan 1..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:10px"></textarea>
+          <div style="margin-bottom:8px;font-size:15px">Tantangan 2:</div>
+          <textarea placeholder="Tantangan 2..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:10px"></textarea>
+          <div style="margin-bottom:8px;font-size:15px">Tantangan 3:</div>
+          <textarea placeholder="Tantangan 3..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px">Langkah 2: Cara Mengatasi Tantangan</div>
+          <div style="margin-bottom:10px;font-size:15px">Bagaimana cara kalian mengatasi tantangan tersebut?</div>
+          <div style="margin-bottom:8px;font-size:15px">Untuk Tantangan 1:</div>
+          <textarea placeholder="Solusi Tantangan 1..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:10px"></textarea>
+          <div style="margin-bottom:8px;font-size:15px">Untuk Tantangan 2:</div>
+          <textarea placeholder="Solusi Tantangan 2..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:10px"></textarea>
+          <div style="margin-bottom:8px;font-size:15px">Untuk Tantangan 3:</div>
+          <textarea placeholder="Solusi Tantangan 3..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px">Langkah 3: Pembelajaran dari Tantangan</div>
+          <div style="margin-bottom:10px;font-size:15px">Apa yang kalian pelajari dari tantangan tersebut?</div>
+          <div style="margin-bottom:8px;font-size:15px">Pembelajaran 1:</div>
+          <textarea placeholder="Pembelajaran 1..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:10px"></textarea>
+          <div style="margin-bottom:8px;font-size:15px">Pembelajaran 2:</div>
+          <textarea placeholder="Pembelajaran 2..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:10px"></textarea>
+          <div style="margin-bottom:8px;font-size:15px">Pembelajaran 3:</div>
+          <textarea placeholder="Pembelajaran 3..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="font-size:16px;font-weight:700;margin-bottom:12px">Langkah 4: Resiliensi Tim</div>
+          <div style="margin-bottom:10px;font-size:15px">Bagaimana tim kalian menunjukkan resiliensi?</div>
+          <textarea placeholder="Refleksi resiliensi tim..." style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:24px"></textarea>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(306)" class="btn-ghost">← Sebelumnya</button>
+            <button onclick="updateSlide(308)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      <!-- Slide kedelapan: Aktivitas 6 Refleksi Pengumpulan Data -->
+      <section class="slide" data-slide="308" style="display:none">
+        <div class="card-lite" style="text-align:left;padding:32px 24px">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">AKTIVITAS 6: Refleksi Pengumpulan Data</div>
+          <div style="font-size:15px;margin-bottom:18px">Jawab pertanyaan-pertanyaan berikut secara jujur:</div>
+          <div style="margin-bottom:10px;font-size:15px">1. Apa yang paling sulit dalam pengumpulan data ini?</div>
+          <textarea placeholder="Jawaban saya..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">2. Apa yang paling mudah dalam pengumpulan data ini?</div>
+          <textarea placeholder="Jawaban saya..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">3. Bagaimana perasaan saya saat bertemu responden?</div>
+          <textarea placeholder="Jawaban saya..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">4. Apa yang saya pelajari dari proses pengumpulan data ini?</div>
+          <textarea placeholder="Jawaban saya..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">5. Bagaimana saya menunjukkan sikap teliti, jujur, dan pantang menyerah?</div>
+          <textarea placeholder="Jawaban saya..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">6. Apakah pengumpulan data berjalan sesuai dengan rencana?</div>
+          <textarea placeholder="Jawaban kelompok..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">7. Apa kekuatan tim kita dalam pengumpulan data?</div>
+          <textarea placeholder="Jawaban kelompok..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">8. Apa kelemahan tim kita dan bagaimana cara memperbaikinya?</div>
+          <textarea placeholder="Jawaban kelompok..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">9. Apakah semua anggota tim berkontribusi secara aktif?</div>
+          <textarea placeholder="Jawaban kelompok..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          <div style="margin-bottom:10px;font-size:15px">10. Apa yang ingin kalian lakukan berbeda di masa depan?</div>
+          <textarea placeholder="Jawaban kelompok..." style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:24px"></textarea>
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+            <button onclick="updateSlide(307)" class="btn-ghost">← Sebelumnya</button>
+            <button id="btnSelesaiP3" class="btn-primary" onclick="selesaiPertemuan3(this)">Selesai</button>
+          </div>
+          <script>
+            function selesaiPertemuan3(btn) {
+              btn.disabled = true;
+              btn.innerText = 'Sudah Selesai';
+              alert('Pertemuan ini sudah selesai dikerjakan!');
+            }
+          </script>
+        </div>
+      </section>
+  <script>
+    // Navigasi slide: hanya satu slide tampil (class 'active')
+    function showSlideByDataSlide(slideNum) {
+      document.querySelectorAll('.slide').forEach(sl => {
+        if (Number(sl.getAttribute('data-slide')) === slideNum) {
+          sl.classList.add('active');
+          sl.style.display = '';
+        } else {
+          sl.classList.remove('active');
+          sl.style.display = 'none';
+        }
+      });
+      window.scrollTo(0,0);
+    }
+    // Inisialisasi: tampilkan slide pertama (301)
+    document.addEventListener('DOMContentLoaded', function() {
+      showSlideByDataSlide(301);
+    });
+    // Ganti semua tombol updateSlide agar pakai showSlideByDataSlide
+    window.updateSlide = showSlideByDataSlide;
+    // Fungsi tambah anggota (dummy, bisa dikembangkan)
+    function addMember() {
+      // ...fungsi tambah anggota kelompok...
+      alert('Fitur tambah anggota belum diimplementasikan.');
+    }
+
+    // Pop up selesai
+    function showSelesaiPopup() {
+      alert('Pengerjaanmu selesai!');
+    }
+  </script>
+</body>
+</html>
