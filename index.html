@@ -1,3 +1,4 @@
+    
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -141,6 +142,7 @@
       padding: 60px 20px;
       box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
       text-align: center;
+      position: relative;
     }
 
     .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 16px; }
@@ -219,10 +221,20 @@
       </div>
     </div>
 
+    <!-- Navigasi Sementara ke Pertemuan 1 -->
+    <div style="position:fixed;top:18px;right:18px;z-index:9999">
+      <button onclick="updateSlide(91)" style="padding:10px 18px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;box-shadow:0 4px 12px rgba(75,141,248,0.3);font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer">🔎 Cek Pertemuan 1</button>
+    </div>
     <div class="card">
       <div class="grid-head">
-        <div style="width: 100%; text-align: center;">
-          <h1 class="title" style="color: #4b8df8;">Media DataVista</h1>
+        <div style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:8px;position:relative;">
+          <div style="display:flex;align-items:center;gap:10px;min-width:120px;">
+            <img src="../upi.jpeg" alt="Logo UPI" title="Universitas Pendidikan Indonesia" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'" style="height:38px;width:auto;">
+            <span class="genty" style="display:none;font-weight:700;color:#0f172a">UPI</span>
+            <img src="../dv.jpeg" alt="Logo DataVista" title="DataVista" style="height:48px;width:auto;">
+          </div>
+          <h1 class="title" style="color: #4b8df8;margin:0;position:absolute;left:37%;transform:translateX(-50%);text-align:center;width:max-content;">Media DataVista</h1>
+          <div style="min-width:120px;"></div>
         </div>
       </div>
 
@@ -237,13 +249,48 @@
             </div>
           </div>
         </section>
+        <!-- Slide LKPD Tahap Pertanyaan Mendasar - Pertemuan 1 -->
+        <section class="slide" data-slide="911">
+          <div class="card-lite" style="text-align:left;padding:32px 24px;position:absolute;left:50%;transform:translateX(-50%);top:220px;width:90%;z-index:10;box-shadow:0 8px 32px rgba(75,141,248,0.13);">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:18px;text-align:center">LEMBAR KERJA PESERTA DIDIK (LKPD)<br>TAHAP PERTANYAAN MENDASAR</div>
+            <div style="margin-bottom:18px">
+              <table style="width:100%;font-size:15px;margin-bottom:18px">
+                <tr><td style="width:160px;font-weight:700">Mata Pelajaran</td><td>: Matematika (Statistika)</td></tr>
+                <tr><td style="font-weight:700">Kelas/Fase</td><td>: VIII/ Fase D</td></tr>
+                <tr><td style="font-weight:700">Model</td><td>: Project-Based Learning</td></tr>
+                <tr><td style="font-weight:700">Proyek</td><td>: Analisis Data Penggunaan HP Siswa SMP</td></tr>
+              </table>
+              <div style="margin-bottom:14px">
+                <span style="font-weight:700">A. Tujuan Kegiatan</span>
+                <ol style="margin-top:8px;margin-bottom:0;padding-left:20px">
+                  <li>Mengidentifikasi fenomena penggunaan HP sebagai masalah yang dapat dikaji dengan statistika</li>
+                  <li>Merumuskan pertanyaan berbasis data untuk penelitian</li>
+                  <li>Memahami pentingnya literasi statistik dan data dalam kehidupan sehari-hari</li>
+                  <li>Menunjukkan sikap terbuka, berani, dan siap menghadapi tantangan proyek</li>
+                </ol>
+              </div>
+              <div>
+                <span style="font-weight:700">B. Petunjuk Kegiatan</span>
+                <ol style="margin-top:8px;margin-bottom:0;padding-left:20px">
+                  <li>Amati ilustrasi atau fenomena penggunaan HP yang disajikan oleh guru</li>
+                  <li>Diskusikan fenomena tersebut bersama kelompok</li>
+                  <li>Jawablah setiap pertanyaan dengan jujur dan berdasarkan hasil diskusi</li>
+                  <li>Gunakan bahasa yang jelas dan logis</li>
+                </ol>
+              </div>
+            </div>
+            <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+              <button onclick="updateSlide(91)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Identitas Kelompok</button>
+              <button onclick="updateSlide(912)" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Aktivitas 1 →</button>
+            </div>
+          </div>
+        </section>
 
         <section class="slide" data-slide="2">
           <div class="card-lite" style="text-align:center;padding:32px 24px;position:relative">
             <button aria-label="Kembali ke Halaman Awal" onclick="updateSlide(1)" title="Beranda" style="position:absolute;top:12px;left:12px;border:none;background:transparent;cursor:pointer;font-size:18px;line-height:1">🏠</button>
 
-            <img src="logo upi.jpg" alt="Logo UPI" title="Universitas Pendidikan Indonesia" onerror="this.style.display='none';document.getElementById('logo-upi-fallback').style.display='inline-block'" style="position:absolute;top:12px;right:12px;height:36px;width:auto">
-            <span id="logo-upi-fallback" class="genty" style="display:none;position:absolute;top:12px;right:12px;font-weight:700;color:#0f172a">UPI</span>
+            <!-- Logo sudah di lapisan atas, tidak perlu di sini lagi -->
 
             <p class="genty" style="font-size:22px;margin:0 0 20px 0;line-height:1.5">Pengembangan Bahan Ajar <em>Project-Based Learning</em> Berbantuan Media Digital DataVista untuk Penguatan Literasi Statistik serta Resiliensi Siswa SMP</p>
 
@@ -407,7 +454,7 @@
           <div class="card-lite" style="text-align:left;padding:32px 24px">
             <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">🗺️ Peta Konsep</div>
             <div class="img-placeholder" style="padding:12px">
-              <img src="pk2.jpeg" alt="Peta Konsep DataVista (pk2)" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+              <img src="../pk2.jpeg" alt="Peta Konsep DataVista (pk2)" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
             </div>
 
             <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
@@ -435,63 +482,92 @@
         </section>
 
         <section class="slide" data-slide="9">
-          <div class="card-lite" style="text-align:left;padding:32px 24px">
-            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:20px;text-align:center">🚀 Proyek: Data Kelompok</div>
-            <div style="margin-bottom:20px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#f9fbff;text-align:center">
-              <p class="genty" style="font-size:14px;color:#0f172a;margin:0">Kamu baru memulai! Semangat menyelesaikan 6 misi di atas secara berurutan</p>
-            </div>
-
-            <div style="margin-bottom:24px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#f9fbff">
-              <label class="genty" style="font-weight:700;display:block;margin-bottom:8px;color:#0f172a">Nama Kelompok:</label>
-              <input type="text" id="groupName" placeholder="Masukkan nama kelompok..." style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif">
-            </div>
-
-            <div style="margin-bottom:24px">
-              <div class="genty" style="font-weight:700;margin-bottom:14px;color:#0f172a;font-size:16px">Anggota Kelompok:</div>
-              <div id="membersList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px"></div>
-            </div>
-
-            <div style="margin-top:24px;padding:18px;border:2px dashed #4b8df8;border-radius:14px;background:rgba(75,141,248,0.05)">
-              <div class="genty" style="font-weight:700;margin-bottom:14px;color:#0f172a;font-size:16px">➕ Tambah Anggota Baru</div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
-                <div>
-                  <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">Nama Siswa:</label>
-                  <input type="text" id="memberName" placeholder="Nama lengkap..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
-                </div>
-                <div>
-                  <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">Posisi/Tanggung Jawab:</label>
-                  <select id="memberRole" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
-                    <option value="">-- Pilih Posisi --</option>
-                    <option value="Ketua">Ketua Kelompok</option>
-                    <option value="Wakil Ketua">Wakil Ketua</option>
-                    <option value="Sekretaris">Sekretaris</option>
-                    <option value="Bendahara">Bendahara</option>
-                    <option value="Anggota">Anggota Biasa</option>
-                  </select>
-                </div>
+            <div class="card-lite" style="text-align:left;padding:32px 24px">
+              <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:20px;text-align:center">🚀 Proyek: Daftar Isi Pertemuan</div>
+              <div class="toc-grid" style="margin-bottom:32px">
+                <button class="toc-item genty" onclick="updateSlide(91)">Pertemuan 1</button>
+                <button class="toc-item genty" onclick="updateSlide(92)">Pertemuan 2</button>
+                <button class="toc-item genty" onclick="updateSlide(93)">Pertemuan 3</button>
+                <button class="toc-item genty" onclick="updateSlide(94)">Pertemuan 4</button>
+                <button class="toc-item genty" onclick="updateSlide(95)">Pertemuan 5</button>
               </div>
-              <button onclick="addMember()" style="width:100%;padding:12px 16px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 6px 18px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Tambahkan ke Kelompok</button>
-            </div>
-
-            <div style="margin-top:24px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#e8f0ff">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-                <div>
-                  <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">📅 Tahun Ajaran:</label>
-                  <div style="padding:10px 12px;background:#ffffff;border:1px solid var(--line);border-radius:10px;font-size:14px;font-weight:700;color:#0f172a">2025/2026</div>
-                </div>
-                <div>
-                  <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">🏫 Sekolah:</label>
-                  <input type="text" id="schoolName" placeholder="Nama sekolah..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
-                </div>
+              <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+                <button onclick="updateSlide(8)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Materi</button>
+                <button onclick="markSlideAsRead(9); updateTocButtons(); updateSlide(10);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Kalkulator Statistik →</button>
+              </div>
+              <!-- Draf Daftar Kelompok, jangan dihapus! -->
+              <div id="draft-daftar-kelompok" style="display:none">
+                <!-- ...daftar kelompok lama disimpan di sini... -->
               </div>
             </div>
-
-            <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
-              <button onclick="updateSlide(8)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Materi</button>
-              <button onclick="markSlideAsRead(9); updateTocButtons(); updateSlide(10);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Kalkulator Statistik →</button>
-            </div>
-          </div>
         </section>
+
+          <!-- Placeholder 5 pertemuan proyek -->
+          <section class="slide" data-slide="91">
+            <div class="card-lite" style="text-align:left;padding:32px 24px">
+              <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:20px;text-align:center">📁 Proyek - Pertemuan 1</div>
+              <!-- Form Identitas Kelompok -->
+              <div class="genty" style="font-size:18px;font-weight:700;margin-bottom:18px;text-align:center">Identitas Kelompok</div>
+              <div style="margin-bottom:24px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#f9fbff">
+                <label class="genty" style="font-weight:700;display:block;margin-bottom:8px;color:#0f172a">Nama Kelompok:</label>
+                <input type="text" id="groupName" placeholder="Masukkan nama kelompok..." style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+              <div style="margin-bottom:24px">
+                <div class="genty" style="font-weight:700;margin-bottom:14px;color:#0f172a;font-size:16px">Anggota Kelompok:</div>
+                <div id="membersList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px"></div>
+              </div>
+              <div style="margin-top:24px;padding:18px;border:2px dashed #4b8df8;border-radius:14px;background:rgba(75,141,248,0.05)">
+                <div class="genty" style="font-weight:700;margin-bottom:14px;color:#0f172a;font-size:16px">➕ Tambah Anggota Baru</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+                  <div>
+                    <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">Nama Siswa:</label>
+                    <input type="text" id="memberName" placeholder="Nama lengkap..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+                  </div>
+                  <div>
+                    <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">Posisi/Tanggung Jawab:</label>
+                    <select id="memberRole" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+                      <option value="">-- Pilih Posisi --</option>
+                      <option value="Ketua">Ketua Kelompok</option>
+                      <option value="Wakil Ketua">Wakil Ketua</option>
+                      <option value="Sekretaris">Sekretaris</option>
+                      <option value="Bendahara">Bendahara</option>
+                      <option value="Anggota">Anggota Biasa</option>
+                    </select>
+                  </div>
+                </div>
+                <button onclick="addMember()" style="width:100%;padding:12px 16px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 6px 18px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Tambahkan ke Kelompok</button>
+              </div>
+              <div style="margin-top:24px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#e8f0ff">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                  <div>
+                    <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">📅 Tahun Ajaran:</label>
+                    <div style="padding:10px 12px;background:#ffffff;border:1px solid var(--line);border-radius:10px;font-size:14px;font-weight:700;color:#0f172a">2025/2026</div>
+                  </div>
+                  <div>
+                    <label class="genty" style="font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:6px">🏫 Sekolah:</label>
+                    <input type="text" id="schoolName" placeholder="Nama sekolah..." style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+                <button onclick="updateSlide(9)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Daftar Proyek</button>
+                <button onclick="updateSlide(911)" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">LKPD →</button>
+              </div>
+            </div>
+          </section>
+          <section class="slide" data-slide="92">
+            <iframe src="Media_Datavista_P2.html" style="width:100%;height:85vh;border:none;border-radius:12px;" loading="lazy"></iframe>
+          </section>
+      <!-- Selesai slide pertemuan 2 -->
+          <section class="slide" data-slide="93">
+            <iframe src="Media_Datavista_P3.html" style="width:100%;height:85vh;border:none;border-radius:12px;" loading="lazy"></iframe>
+          </section>
+          <section class="slide" data-slide="94">
+           <iframe src="Media_Datavista_P4.html" style="width:100%;height:85vh;border:none;border-radius:12px;" loading="lazy"></iframe>
+          </section>
+          <section class="slide" data-slide="95">
+             <iframe src="Media_Datavista_P5.html" style="width:100%;height:85vh;border:none;border-radius:12px;" loading="lazy"></iframe>
+          </section>
 
         <section class="slide" data-slide="10">
           <div class="card-lite" style="text-align:left;padding:32px 24px">
@@ -539,7 +615,7 @@
           <div class="card-lite" style="text-align:left;padding:32px 24px">
             <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Mean</div>
             <div class="img-placeholder" style="padding:12px">
-              <img src="rata.png" alt="Mean" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+              <img src="../rata.png" alt="Mean" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
             </div>
             <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
               Diagram Batang tersebut menggambarkan pasien Covid-19 yang sembuh dari 5 Provinsi di Indonesia. Berapakah nilai rata-ratanya?<br><br>
@@ -547,24 +623,33 @@
               <strong>Langkah pertama,</strong> data yang ada di diagram batang diubah dalam bentuk tabel, seperti berikut ini.
             </div>
             <div class="img-placeholder" style="padding:12px;margin-top:14px">
-              <img src="rata2.png" alt="Langkah Kedua Mean" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+              <img src="../rata2.png" alt="Langkah Kedua Mean" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
             </div>
             <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
               <strong>Langkah kedua,</strong> jumlahkan semua data tersebut, bagilah dengan banyak data, dalam hal ini karena ada 5 Provinsi, maka banyak ada ada 5. Hasil dari Pembagian tersebut menunjukkan nilai rata-rata dari Pasien yang sembuh Covid-19 untuk 5 Provinsi
             </div>
             <div class="img-placeholder" style="padding:12px;margin-top:14px">
-              <img src="rata3-1.png" alt="Langkah Kedua Mean - Perhitungan" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+              <img src="../rata3-1.png" alt="Langkah Kedua Mean - Perhitungan" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
             </div>
             <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
               Untuk menentukan rata-rata dari suatu data yang cukup banyak dapat digunakan dengan cara menjumlahkan hasil kali antara data dengan frekuensinya setelah itu dibagi dengan banyak data yang ada. Dalam bentuk umum dapat ditulis,
             </div>
             <div class="img-placeholder" style="padding:12px;margin-top:14px">
-              <img src="rata4.png" alt="Rumus Mean" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+              <img src="../rata4.png" alt="Rumus Mean" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
             </div>
           </div>
         </section>
 
         <section class="slide" data-slide="12">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:14px">Modus</div>
+            <div class="img-placeholder" style="padding:12px">
+              <img src="../modus.png" alt="Modus" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+            </div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Untuk memahami modus dari suatu data, coba perhatikan data kasus Positif Covid-19 di salah satu Provinsi di Indonesia pada gambar 6.2. Dalam grafik tersebut dipaparkan data kasus Covid-19 di salah satu Provinsi di Indonesia mulai bulan Maret 2020 sampai April 2022. Dari tabel tersebut terlihat jelas bahwa data terendah pada bulan Maret 2020 dan data tertinggi pada bulan Juli 2021 sebesar 9.651 kasus. <strong>Modus dari suatu data adalah data yang sering muncul.</strong> Dengan demikian, kalian dapat menentukan modus pada gambar 6.3 yaitu data yang sering muncul pada bulan Juli 2021, yaitu sebesar 9.651 kasus, sehingga modus dari diagram tersebut adalah Juli 2021.
+            </div>
+          </div>
           <div class="card-lite" style="text-align:left;padding:32px 24px">
             <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Median</div>
             <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
@@ -575,7 +660,7 @@
               <strong>Langkah pertama</strong> yaitu mengurutkan data tersebut dari data terkecil sampai data terbesar<br>
               <strong>Langkah kedua</strong> yaitu pasangkan data yang sudah terurut dari sisi luar ke sisi dalam, sehingga menyisakan satu data tunggal<br>
               <div style="margin-top:12px;padding:10px;border-radius:8px;background:#f9fbff;display:flex;justify-content:center">
-                <img src="median.png" alt="Median Data Ganjil" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 4px 12px rgba(15,23,42,0.1)">
+                <img src="/images/median.png" alt="Median Data Ganjil" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 4px 12px rgba(15,23,42,0.1)">
               </div>
               <strong>Langkah ketiga</strong> yaitu<br>
               Data bagian tengah yang tidak memiliki pasangan dinamakan dengan Median.
@@ -594,10 +679,33 @@
           <div class="card-lite" style="text-align:left;padding:32px 24px">
             <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:14px">Modus</div>
             <div class="img-placeholder" style="padding:12px">
-              <img src="modus.png" alt="Modus" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+              <img src="../modus.png" alt="Modus" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
             </div>
             <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
               Untuk memahami modus dari suatu data, coba perhatikan data kasus Positif Covid-19 di salah satu Provinsi di Indonesia pada gambar 6.2. Dalam grafik tersebut dipaparkan data kasus Covid-19 di salah satu Provinsi di Indonesia mulai bulan Maret 2020 sampai April 2022. Dari tabel tersebut terlihat jelas bahwa data terendah pada bulan Maret 2020 dan data tertinggi pada bulan Juli 2021 sebesar 9.651 kasus. <strong>Modus dari suatu data adalah data yang sering muncul.</strong> Dengan demikian, kalian dapat menentukan modus pada gambar 6.3 yaitu data yang sering muncul pada bulan Juli 2021, yaitu sebesar 9.651 kasus, sehingga modus dari diagram tersebut adalah Juli 2021.
+            </div>
+          </div>
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Median</div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Median dari kumpulan data merupakan suatu nilai data yang terletak di tengah-tengah kumpulan data yang telah diurutkan. Jadi, terdapat 50% dari banyak data yang nilai-nilainya lebih tinggi atau sama dengan median dan 50% dari banyak data yang nilai-nilainya kurang dari atau sama dengan median. Median dari kumpulan data yang jumlahnya ganjil dan data yang jumlahnya genap memiliki cara yang tidak sama.
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>a. Menentukan Median data ganjil</strong><br>
+              <strong>Langkah pertama</strong> yaitu mengurutkan data tersebut dari data terkecil sampai data terbesar<br>
+              <strong>Langkah kedua</strong> yaitu pasangkan data yang sudah terurut dari sisi luar ke sisi dalam, sehingga menyisakan satu data tunggal<br>
+              <div style="margin-top:12px;padding:10px;border-radius:8px;background:#f9fbff;display:flex;justify-content:center">
+                <img src="/images/median.png" alt="Median Data Ganjil" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 4px 12px rgba(15,23,42,0.1)">
+              </div>
+              <strong>Langkah ketiga</strong> yaitu<br>
+              Data bagian tengah yang tidak memiliki pasangan dinamakan dengan Median.
+            </div>
+            <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              <strong>b. Menentukan Median data genap</strong><br>
+              <strong>Langkah pertama</strong> yaitu mengurutkan data tersebut dari data terkecil sampai data terbesar<br>
+              <strong>Langkah kedua</strong> yaitu pasangkan data yang sudah terurut dari sisi luar ke sisi dalam, sehingga menyisakan satu data tunggal<br>
+              <strong>Langkah ketiga</strong> yaitu<br>
+              Karena ada dua data pada bagian tengah, maka nilai median berada di tengah-tengah kedua data tersebut. Cara menentukan median adalah dengan membagi dua jumlah dari dua data pada bagian tengah. Data bagian tengah yang tidak memiliki pasangan dinamakan dengan Median.
             </div>
           </div>
         </section>
@@ -609,13 +717,19 @@
               Jangkauan (range) adalah selisih antara data terbesar dan data terkecil. Jangkauan digunakan untuk mengukur penyebaran data yang paling sederhana.
             </div>
             <div class="img-placeholder" style="padding:12px;margin-top:14px">
-              <img src="jk.png" alt="Jangkauan" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+              <img src="../jk.png" alt="Jangkauan" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
             </div>
             <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
               Gambar diagram garis tersebut menggambarkan perkembangan produksi beras di Indonesia dalam satuan Ribuan Ton untuk tahun 2020 (garis hijau) dan tahun 2021 (garis merah). Dalam diagram garis tersebut terlihat bahwa produksi beras Indonesia mengalami kenaikan dan penurunan pada bulan-bulan tertentu. Selisih produksi beras tertinggi dan terendah dalam setahun dapat ditentukan dengan cara mengurangi data tertinggi dengan data terendah
             </div>
             <div class="genty" style="margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
               Selisih dari data tertinggi dengan data terendah dinamakan dengan Jangkauan. Jadi, jangkauan dapat diartikan dengan mengurangi data tertinggi dengan data terendah, maka dapat disimpulkan bahwa Jangkauan adalah selisih antara nilai data terbesar dengan nilai data terkecil. Jangkauan diperoleh dengan mengurangi data terbesar dengan data terkecil
+            </div>
+          </div>
+           <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">Kuartil</div>
+            <div class="genty" style="margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#ffffff;text-align:left;font-size:15px;line-height:1.7;color:#0f172a">
+              Ukuran penyebaran data yang kedua adalah kuartil. Jika median adalah membagi data yang diurutkan menjadi dua kelompok yang sama banyak, maka kuartil adalah membagi data yang diurutkan menjadi empat yang sama banyak, sehingga masing-masing kelompok terdiri atas ¼ bagian data. Ada tiga jenis kuartil, yaitu kuartil pertama/kuartil bawah (Q1), kuartil kedua/kuartil tengah atau median (Q2), dan kuartil ketiga/kuartil atas (Q3).
             </div>
           </div>
         </section>
@@ -692,8 +806,365 @@
             </div>
           </div>
         </section>
-
-        
+          <section class="slide" data-slide="912">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">C. Aktivitas 1: Mengamati Fenomena</div>
+            <div style="margin-bottom:18px;font-size:16px">Perhatikan fenomena berikut!</div>
+            <div style="margin-bottom:18px;font-size:15px;font-weight:700">Pertanyaan Refleksi:</div>
+            <div style="margin-bottom:18px">
+              <div style="margin-bottom:8px;font-size:15px">1. Apa yang kamu lihat dalam infografis tersebut?</div>
+              <textarea placeholder="Tulis jawabanmu di sini..." style="width:100%;min-height:60px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:16px"></textarea>
+              <div style="margin-bottom:8px;font-size:15px">2. Apa perbedaan utama dalam penggunaan HP yang ditunjukkan infografis?</div>
+              <textarea placeholder="Tulis jawabanmu di sini..." style="width:100%;min-height:60px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:16px"></textarea>
+              <div style="margin-bottom:8px;font-size:15px">3. Apakah pola penggunaan HP dalam infografis tersebut sesuai dengan pengalaman kalian di kelas?</div>
+              <div style="margin-bottom:10px">
+                <label style="display:block;margin-bottom:6px;font-size:14px">
+                  <input type="radio" name="refleksi3" value="Ya, sangat sesuai" style="margin-right:8px">Ya, sangat sesuai
+                </label>
+                <label style="display:block;margin-bottom:6px;font-size:14px">
+                  <input type="radio" name="refleksi3" value="Cukup sesuai" style="margin-right:8px">Cukup sesuai
+                </label>
+                <label style="display:block;margin-bottom:6px;font-size:14px">
+                  <input type="radio" name="refleksi3" value="Kurang sesuai" style="margin-right:8px">Kurang sesuai
+                </label>
+                <label style="display:block;margin-bottom:6px;font-size:14px">
+                  <input type="radio" name="refleksi3" value="Tidak sesuai" style="margin-right:8px">Tidak sesuai
+                </label>
+              </div>
+              <div style="margin-bottom:8px;font-size:15px">Jelaskan alasan kalian:</div>
+              <textarea placeholder="Tulis alasanmu di sini..." style="width:100%;min-height:60px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical"></textarea>
+            </div>
+            <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+              <button onclick="updateSlide(911)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← LKPD</button>
+              <button onclick="updateSlide(913)" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Aktivitas 2 →</button>
+            </div>
+          </div>
+        </section>
+                        <!-- Slide Aktivitas 2: Memahami Dampak Kesehatan - Pertemuan 1 -->
+                <section class="slide" data-slide="913">
+                  <div class="card-lite" style="text-align:left;padding:32px 24px">
+                    <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">D. Aktivitas 2: Memahami Dampak Kesehatan dari Penggunaan HP</div>
+                    <div style="margin-bottom:16px;font-size:15px">Diskusi kelompok tentang dampak kesehatan</div>
+                    <div style="margin-bottom:12px;font-weight:700">Bacalah informasi berikut:</div>
+                    <div style="margin-bottom:10px;font-size:15px;font-weight:700">Dampak Penggunaan HP yang Berlebihan</div>
+                    <div style="margin-bottom:8px;font-size:15px;font-weight:700">Dampak Fisik:</div>
+                    <ul style="margin-top:0;margin-bottom:12px;padding-left:22px;font-size:15px">
+                      <li>Kelelahan mata akibat paparan cahaya biru</li>
+                      <li>Sakit leher dan bahu dari posisi membungkuk</li>
+                      <li>Kram tangan dan jari dari penggunaan yang terus-menerus</li>
+                      <li>Gangguan postur tubuh</li>
+                    </ul>
+                    <div style="margin-bottom:8px;font-size:15px;font-weight:700">Dampak Mental:</div>
+                    <ul style="margin-top:0;margin-bottom:16px;padding-left:22px;font-size:15px">
+                      <li>Gangguan tidur akibat cahaya biru di malam hari</li>
+                      <li>Penurunan konsentrasi dan prestasi akademik</li>
+                      <li>Kecanduan dan ketergantungan pada HP</li>
+                      <li>Penurunan interaksi sosial tatap muka</li>
+                      <li>Meningkatnya kecemasan dan depresi</li>
+                    </ul>
+                    <div style="margin-bottom:14px;font-size:15px;font-weight:700">Diskusikan dalam kelompok:</div>
+                    <div style="margin-bottom:10px;font-size:15px">1. Dampak kesehatan mana yang paling sering kalian rasakan atau lihat pada teman-teman?</div>
+                    <div style="margin-bottom:6px;font-size:14px;font-weight:600">Dampak fisik:</div>
+                    <textarea placeholder="Tulis jawabanmu di sini..." style="width:100%;min-height:50px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:12px"></textarea>
+                    <div style="margin-bottom:6px;font-size:14px;font-weight:600">Dampak mental:</div>
+                    <textarea placeholder="Tulis jawabanmu di sini..." style="width:100%;min-height:50px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:16px"></textarea>
+                    <div style="margin-bottom:10px;font-size:15px">2. Mengapa penting untuk mengetahui pola penggunaan HP di atas?</div>
+                    <textarea placeholder="Tulis jawabanmu di sini..." style="width:100%;min-height:50px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:16px"></textarea>
+                    <div style="margin-bottom:10px;font-size:15px">3. Bagaimana data tentang penggunaan HP dapat membantu kita membuat pilihan yang lebih sehat?</div>
+                    <textarea placeholder="Tulis jawabanmu di sini..." style="width:100%;min-height:50px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical"></textarea>
+                    <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+                      <button onclick="updateSlide(912)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Aktivitas 1</button>
+                      <button onclick="updateSlide(914)" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Aktivitas 3 →</button>
+                    </div>
+                  </div>
+                </section>
+                 <!-- Slide Aktivitas 3: Memahami Pertanyaan Mendasar Proyek - Pertemuan 1 -->
+        <section class="slide" data-slide="914">
+          <div class="card-lite" style="text-align:left;padding:32px 24px">
+            <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">E. Aktivitas 3: Memahami Pertanyaan Mendasar Proyek</div>
+            <div style="margin-bottom:14px;font-size:15px;font-weight:700">1. Baca Pertanyaan Mendasar</div>
+            <div style="margin-bottom:16px;font-size:15px">Pertanyaan Mendasar Proyek:<br><span style="display:inline-block;margin-top:8px;font-style:italic;font-weight:600;color:#4b8df8">“Bagaimana pola penggunaan HP siswa kelas VIII dan apa maknanya jika dianalisis menggunakan ukuran pemusatan dan penyebaran data?”</span></div>
+            <div style="margin-bottom:14px;font-size:15px;font-weight:700">2. Pahami setiap bagian pertanyaan</div>
+            <div style="overflow-x:auto;margin-bottom:18px">
+              <table style="width:100%;border-collapse:collapse;font-size:14px;text-align:left">
+                <tr style="background:#e8f0ff;font-weight:700">
+                  <th style="padding:10px 8px;border:1px solid var(--line)">Bagian Pertanyaan</th>
+                  <th style="padding:10px 8px;border:1px solid var(--line)">Penjelasan</th>
+                  <th style="padding:10px 8px;border:1px solid var(--line)">Contoh</th>
+                </tr>
+                <tr>
+                  <td style="padding:8px;border:1px solid var(--line)">Pola Penggunaan HP</td>
+                  <td style="padding:8px;border:1px solid var(--line)">Cara siswa menggunakan HP dalam kehidupan sehari-hari</td>
+                  <td style="padding:8px;border:1px solid var(--line)">Durasi, waktu, tujuan penggunaan</td>
+                </tr>
+                <tr>
+                  <td style="padding:8px;border:1px solid var(--line)">Siswa kelas VIII</td>
+                  <td style="padding:8px;border:1px solid var(--line)">Populasi yang akan diteliti</td>
+                  <td style="padding:8px;border:1px solid var(--line)">Semua siswa di kelas VIII</td>
+                </tr>
+                <tr>
+                  <td style="padding:8px;border:1px solid var(--line)">Ukuran pemusatan data</td>
+                  <td style="padding:8px;border:1px solid var(--line)">Nilai yang mewakili pusat data (mean, median, modus)</td>
+                  <td style="padding:8px;border:1px solid var(--line)">Rata-rata durasi penggunaan HP</td>
+                </tr>
+                <tr>
+                  <td style="padding:8px;border:1px solid var(--line)">Penyebaran data</td>
+                  <td style="padding:8px;border:1px solid var(--line)">Seberapa beragam data (jangkauan, kuartil, IQR)</td>
+                  <td style="padding:8px;border:1px solid var(--line)">Perbedaan durasi antara siswa yang paling banyak dan paling sedikit</td>
+                </tr>
+              </table>
+            </div>
+            <div style="margin-bottom:14px;font-size:15px;font-weight:700">3. Jawab Pertanyaan Pemahaman</div>
+            <div style="margin-bottom:10px;font-size:15px">a. Menurut kalian, apa yang dimaksud dengan pola penggunaan HP?</div>
+            <textarea placeholder="Tulis jawabanmu di sini..." style="width:100%;min-height:50px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+            <div style="margin-bottom:10px;font-size:15px">b. Mengapa kita perlu menganalisis data menggunakan ukuran pemusatan (Mean, Median, Modus)?</div>
+            <textarea placeholder="Tulis jawabanmu di sini..." style="width:100%;min-height:50px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+            <div style="margin-bottom:10px;font-size:15px">c. Mengapa kita juga perlu menganalisis penyebaran data (Jangkauan, Kuartil)?</div>
+            <textarea placeholder="Tulis jawabanmu di sini..." style="width:100%;min-height:50px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+            <div style="margin-bottom:10px;font-size:15px">d. Bagaimana jawaban atas pertanyaan mendasar ini dapat membantu kita membuat keputusan yang lebih baik tentang penggunaan HP?</div>
+            <textarea placeholder="Tulis jawabanmu di sini..." style="width:100%;min-height:50px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical"></textarea>
+            <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+              <button onclick="updateSlide(913)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Aktivitas 2</button>
+                  <button onclick="updateSlide(915)" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Aktivitas 4 →</button>
+            </div>
+          </div>
+        </section>
+         <!-- Slide Aktivitas 4: Mengidentifikasi Data yang Diperlukan - Pertemuan 1 -->
+                <section class="slide" data-slide="915">
+                  <div class="card-lite" style="text-align:left;padding:32px 24px">
+                    <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">F. Aktivitas 4: Mengidentifikasi Data yang Diperlukan</div>
+                    <div style="margin-bottom:14px;font-size:15px;font-weight:700">1. Tentukan data yang perlu dikumpulkan</div>
+                    <div style="margin-bottom:12px;font-size:15px">Untuk menjawab pertanyaan mendasar, data apa saja yang perlu dikumpulkan?</div>
+                    <div style="overflow-x:auto;margin-bottom:16px">
+                      <table style="width:100%;border-collapse:collapse;font-size:14px;text-align:left">
+                        <tr style="background:#e8f0ff;font-weight:700">
+                          <th style="padding:10px 8px;border:1px solid var(--line)">Jenis Data</th>
+                          <th style="padding:10px 8px;border:1px solid var(--line)">Contoh Pertanyaan</th>
+                          <th style="padding:10px 8px;border:1px solid var(--line)">Alasan Penting</th>
+                        </tr>
+                        <tr>
+                          <td style="padding:8px;border:1px solid var(--line)">Durasi Penggunaan HP</td>
+                          <td style="padding:8px;border:1px solid var(--line)"></td>
+                          <td style="padding:8px;border:1px solid var(--line)"></td>
+                        </tr>
+                        <tr>
+                          <td style="padding:8px;border:1px solid var(--line)">Waktu Penggunaan HP</td>
+                          <td style="padding:8px;border:1px solid var(--line)"></td>
+                          <td style="padding:8px;border:1px solid var(--line)"></td>
+                        </tr>
+                        <tr>
+                          <td style="padding:8px;border:1px solid var(--line)">Tujuan Penggunaan HP</td>
+                          <td style="padding:8px;border:1px solid var(--line)"></td>
+                          <td style="padding:8px;border:1px solid var(--line)"></td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div style="margin-bottom:10px;font-size:15px">Diskusikan dalam kelompok dan tambahkan data lain yang mungkin diperlukan:</div>
+                    <div style="margin-bottom:18px">
+                      <label for="data-tambahan" style="font-size:14px">Data tambahan yang diperlukan:</label>
+                      <textarea id="data-tambahan" placeholder="………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical"></textarea>
+                    </div>
+                    <div style="margin-bottom:14px;font-size:15px;font-weight:700">2. Jelaskan pentingnya setiap data</div>
+                    <div style="margin-bottom:10px;font-size:15px">Untuk setiap jenis data, jelaskan mengapa penting untuk dianalisis:</div>
+                    <div style="margin-bottom:8px;font-size:15px">a. Durasi Penggunaan HP<br><span style="font-size:14px">Penting karena:</span></div>
+                    <textarea placeholder="………………………………………………………………………………" style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:12px"></textarea>
+                    <div style="margin-bottom:8px;font-size:15px">b. Waktu Penggunaan HP<br><span style="font-size:14px">Penting karena:</span></div>
+                    <textarea placeholder="………………………………………………………………………………" style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:12px"></textarea>
+                    <div style="margin-bottom:8px;font-size:15px">c. Tujuan Penggunaan HP<br><span style="font-size:14px">Penting karena:</span></div>
+                    <textarea placeholder="………………………………………………………………………………" style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical"></textarea>
+                    <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+                      <button onclick="updateSlide(914)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Aktivitas 3</button>
+                      <button onclick="updateSlide(916)" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Berikutnya →</button>
+                    </div>
+                  </div>
+                </section>
+                 <!-- Slide Aktivitas 5: Prediksi dan Dugaan Awal - Pertemuan 1 -->
+                      <section class="slide" data-slide="916">
+                        <div class="card-lite" style="text-align:left;padding:32px 24px">
+                          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">G. Aktivitas 5: Prediksi dan Dugaan Awal</div>
+                          <div style="margin-bottom:14px;font-size:15px;font-weight:700">1. Sebelum mengumpulkan data, buat prediksi tentang apa yang mungkin kalian temukan.</div>
+                          <div style="margin-bottom:12px;font-size:15px">Prediksi ini berdasarkan pengalaman dan pengamatan kalian selama ini.</div>
+                          <div style="overflow-x:auto;margin-bottom:16px">
+                            <table style="width:100%;border-collapse:collapse;font-size:14px;text-align:left">
+                              <tr style="background:#e8f0ff;font-weight:700">
+                                <th style="padding:10px 8px;border:1px solid var(--line)">No</th>
+                                <th style="padding:10px 8px;border:1px solid var(--line)">Komponen Analisis</th>
+                                <th style="padding:10px 8px;border:1px solid var(--line)">Prediksi Kalian</th>
+                                <th style="padding:10px 8px;border:1px solid var(--line)">Alasan</th>
+                              </tr>
+                              <tr>
+                                <td style="padding:8px;border:1px solid var(--line)">1</td>
+                                <td style="padding:8px;border:1px solid var(--line)">Prediksi Mean (Rata-rata Durasi)</td>
+                                <td style="padding:8px;border:1px solid var(--line)">Berapa jam? .............</td>
+                                <td style="padding:8px;border:1px solid var(--line)"></td>
+                              </tr>
+                              <tr>
+                                <td style="padding:8px;border:1px solid var(--line)">2</td>
+                                <td style="padding:8px;border:1px solid var(--line)">Prediksi Modus (Tujuan Dominan)</td>
+                                <td style="padding:8px;border:1px solid var(--line)">Belajar/Medsos/Gim</td>
+                                <td style="padding:8px;border:1px solid var(--line)"></td>
+                              </tr>
+                              <tr>
+                                <td style="padding:8px;border:1px solid var(--line)">3</td>
+                                <td style="padding:8px;border:1px solid var(--line)">Prediksi Modus (Waktu Dominan)</td>
+                                <td style="padding:8px;border:1px solid var(--line)">Pagi/Siang/Sore/Malam</td>
+                                <td style="padding:8px;border:1px solid var(--line)"></td>
+                              </tr>
+                              <tr>
+                                <td style="padding:8px;border:1px solid var(--line)">4</td>
+                                <td style="padding:8px;border:1px solid var(--line)">Prediksi Jangkauan</td>
+                                <td style="padding:8px;border:1px solid var(--line)">Dari …… jam hingga …… jam</td>
+                                <td style="padding:8px;border:1px solid var(--line)"></td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div style="margin-bottom:14px;font-size:15px;font-weight:700">2. Jelaskan alasan prediksi</div>
+                          <div style="margin-bottom:10px;font-size:15px">Untuk setiap prediksi, jelaskan mengapa kalian membuat prediksi tersebut:</div>
+                          <div style="margin-bottom:8px;font-size:15px">1. Mengapa kalian memprediksi rata-rata durasi penggunaan HP sebesar …… Jam?</div>
+                          <textarea placeholder="……………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:12px"></textarea>
+                          <div style="margin-bottom:8px;font-size:15px">2. Mengapa kalian memprediksi tujuan dominan adalah ……………..?</div>
+                          <textarea placeholder="……………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:12px"></textarea>
+                          <div style="margin-bottom:8px;font-size:15px">3. Mengapa kalian memprediksi waktu dominan adalah ……………..?</div>
+                          <textarea placeholder="……………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical"></textarea>
+                          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+                            <button onclick="updateSlide(915)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Aktivitas 4</button>
+                            <button onclick="updateSlide(917)" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Berikutnya →</button>
+                          </div>
+                        </div>
+                      </section>
+                       <!-- Slide Aktivitas 6: Mengidentifikasi Tantangan dan Solusi - Pertemuan 1 -->
+                            <section class="slide" data-slide="917">
+                              <div class="card-lite" style="text-align:left;padding:32px 24px">
+                                <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">H. Aktivitas 6: Mengidentifikasi Tantangan dan Solusi</div>
+                                <div style="margin-bottom:14px;font-size:15px;font-weight:700">1. Identifikasi Tantangan Potensial</div>
+                                <div style="margin-bottom:12px;font-size:15px">Ketika mengumpulkan data dari teman-teman, apa saja tantangan yang mungkin dihadapi?</div>
+                                <div style="overflow-x:auto;margin-bottom:16px">
+                                  <table style="width:100%;border-collapse:collapse;font-size:14px;text-align:left">
+                                    <tr style="background:#e8f0ff;font-weight:700">
+                                      <th style="padding:10px 8px;border:1px solid var(--line)">No</th>
+                                      <th style="padding:10px 8px;border:1px solid var(--line)">Tantangan Potensial</th>
+                                      <th style="padding:10px 8px;border:1px solid var(--line)">Dampak</th>
+                                      <th style="padding:10px 8px;border:1px solid var(--line)">Solusi</th>
+                                    </tr>
+                                    <tr>
+                                      <td style="padding:8px;border:1px solid var(--line)">1</td>
+                                      <td style="padding:8px;border:1px solid var(--line)">Responden tidak jujur dalam menjawab</td>
+                                      <td style="padding:8px;border:1px solid var(--line)">Data tidak akurat</td>
+                                      <td style="padding:8px;border:1px solid var(--line)">Jaminan kerahasiaan dengan menggunakan kode responden</td>
+                                    </tr>
+                                    <tr>
+                                      <td style="padding:8px;border:1px solid var(--line)">2</td>
+                                      <td style="padding:8px;border:1px solid var(--line)">Responden sibuk atau tidak tersedia</td>
+                                      <td style="padding:8px;border:1px solid var(--line)">Data tidak lengkap</td>
+                                      <td style="padding:8px;border:1px solid var(--line)"></td>
+                                    </tr>
+                                    <tr>
+                                      <td style="padding:8px;border:1px solid var(--line)">3</td>
+                                      <td style="padding:8px;border:1px solid var(--line)"></td>
+                                      <td style="padding:8px;border:1px solid var(--line)"></td>
+                                      <td style="padding:8px;border:1px solid var(--line)"></td>
+                                    </tr>
+                                    <tr>
+                                      <td style="padding:8px;border:1px solid var(--line)">4</td>
+                                      <td style="padding:8px;border:1px solid var(--line)"></td>
+                                      <td style="padding:8px;border:1px solid var(--line)"></td>
+                                      <td style="padding:8px;border:1px solid var(--line)"></td>
+                                    </tr>
+                                    <tr>
+                                      <td style="padding:8px;border:1px solid var(--line)">5</td>
+                                      <td style="padding:8px;border:1px solid var(--line)"></td>
+                                      <td style="padding:8px;border:1px solid var(--line)"></td>
+                                      <td style="padding:8px;border:1px solid var(--line)"></td>
+                                    </tr>
+                                  </table>
+                                </div>
+                                <div style="margin-bottom:14px;font-size:15px;font-weight:700">2. Diskusikan Solusi</div>
+                                <div style="margin-bottom:10px;font-size:15px">Untuk setiap tantangan, diskusikan dalam kelompok!</div>
+                                <div style="margin-bottom:8px;font-size:15px">Tantangan 1: Responden tidak jujur<br><span style="font-size:14px">Solusi:</span></div>
+                                <textarea placeholder="……………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:12px"></textarea>
+                                <div style="margin-bottom:8px;font-size:15px">Tantangan 2:<br><span style="font-size:14px">Solusi:</span></div>
+                                <textarea placeholder="……………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:12px"></textarea>
+                                <div style="margin-bottom:8px;font-size:15px">Tantangan 3:<br><span style="font-size:14px">Solusi:</span></div>
+                                <textarea placeholder="……………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:12px"></textarea>
+                                <div style="margin-bottom:8px;font-size:15px">Tantangan 4:<br><span style="font-size:14px">Solusi:</span></div>
+                                <textarea placeholder="……………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:32px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical"></textarea>
+                                <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+                                  <button onclick="updateSlide(916)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Aktivitas 5</button>
+                                  <button onclick="updateSlide(918)" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Berikutnya →</button>
+                                </div>
+                              </div>
+                            </section>
+                            <!-- Slide Aktivitas 7: Memahami Literasi Statistik dan Resiliensi - Pertemuan 1 -->
+                                  <section class="slide" data-slide="918">
+                                    <div class="card-lite" style="text-align:left;padding:32px 24px">
+                                      <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">I. Aktivitas 7: Memahami Literasi Statistik dan Resiliensi</div>
+                                      <div style="margin-bottom:14px;font-size:15px;font-weight:700">1. Apa itu Literasi Statistik?</div>
+                                      <div style="margin-bottom:12px;font-size:15px">Literasi Statistik adalah kemampuan untuk memahami, menginterpretasi, dan menggunakan informasi statistik dalam kehidupan sehari-hari. Ini termasuk kemampuan untuk:</div>
+                                      <ul style="margin-bottom:16px;font-size:15px;padding-left:22px">
+                                        <li>Mengumpulkan data dengan benar</li>
+                                        <li>Menganalisis data menggunakan metode statistik</li>
+                                        <li>Menginterpretasi hasil analisis dengan benar</li>
+                                        <li>Membuat keputusan berdasarkan data</li>
+                                      </ul>
+                                      <div style="margin-bottom:10px;font-size:15px;font-weight:700">Pertanyaan Refleksi:</div>
+                                      <div style="margin-bottom:8px;font-size:15px">A. Bagaimana proyek ini akan membantu kalian mengembangkan literasi statistik?</div>
+                                      <textarea placeholder="………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+                                      <div style="margin-bottom:8px;font-size:15px">B. Mengapa literasi statistik penting dalam kehidupan modern?</div>
+                                      <textarea placeholder="………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+                                      <div style="margin-bottom:14px;font-size:15px;font-weight:700">2. Apa itu Resiliensi?</div>
+                                      <div style="margin-bottom:12px;font-size:15px">Resiliensi adalah kemampuan untuk menghadapi tantangan, bangkit dari kegagalan, dan terus maju meskipun mengalami kesulitan. Dalam proyek ini, resiliensi berarti:</div>
+                                      <ul style="margin-bottom:16px;font-size:15px;padding-left:22px">
+                                        <li>Tidak mudah menyerah ketika menghadapi kesulitan</li>
+                                        <li>Mencari solusi kreatif untuk mengatasi masalah</li>
+                                        <li>Belajar dari kesalahan dan terus berkembang</li>
+                                        <li>Bekerja sama dengan tim untuk mengatasi tantangan</li>
+                                      </ul>
+                                      <div style="margin-bottom:10px;font-size:15px;font-weight:700">Pertanyaan Refleksi:</div>
+                                      <div style="margin-bottom:8px;font-size:15px">A. Apa tantangan yang mungkin akan kalian hadapi dalam proyek ini?</div>
+                                      <textarea placeholder="………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+                                      <div style="margin-bottom:8px;font-size:15px">B. Bagaimana kalian akan menunjukkan resiliensi ketika menghadapi tantangan tersebut?</div>
+                                      <textarea placeholder="………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+                                      <div style="margin-bottom:8px;font-size:15px">C. Siapa dalam tim kalian yang dapat membantu kalian ketika menghadapi kesulitan?</div>
+                                      <textarea placeholder="………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical"></textarea>
+                                      <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+                                        <button onclick="updateSlide(917)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Aktivitas 6</button>
+                                        <button onclick="updateSlide(919)" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">berikutnya →</button>
+                                      </div>
+                                    </div>
+                                  </section>
+                                   <!-- Slide Aktivitas 8: Refleksi Awal - Pertemuan 1 -->
+                                          <section class="slide" data-slide="919">
+                                            <div class="card-lite" style="text-align:left;padding:32px 24px">
+                                              <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">J. Aktivitas 8: Refleksi Awal</div>
+                                              <div style="margin-bottom:14px;font-size:15px">Jawab pertanyaan-pertanyaan berikut secara jujur dan mendalam</div>
+                                              <div style="margin-bottom:8px;font-size:15px">1. Mengapa statistika diperlukan untuk memahami kebiasaan penggunaan HP secara objektif?</div>
+                                              <textarea placeholder="…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+                                              <div style="margin-bottom:8px;font-size:15px">2. Apa manfaat menggunakan data nyata dibandingkan hanya berdasarkan pendapat pribadi?</div>
+                                              <textarea placeholder="…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+                                              <div style="margin-bottom:8px;font-size:15px">3. Apa yang paling menarik bagi saya tentang proyek ini?</div>
+                                              <textarea placeholder="…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+                                              <div style="margin-bottom:8px;font-size:15px">4. Apa yang paling membuat saya khawatir atau ragu tentang proyek ini?</div>
+                                              <textarea placeholder="…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+                                              <div style="margin-bottom:8px;font-size:15px">5. Bagaimana kelompok kami akan memastikan semua anggota berkontribusi secara aktif?</div>
+                                              <textarea placeholder="…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:14px"></textarea>
+                                              <div style="margin-bottom:8px;font-size:15px">6. Apa yang ingin kelompok kami pelajari dari proyek ini?</div>
+                                              <textarea placeholder="…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………" style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:24px"></textarea>
+                                              <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">CHECKLIST PENYELESAIAN LKPD</div>
+                                                          <div style="margin-bottom:10px;font-size:15px">Pastikan kalian telah menyelesaikan semua aktivitas:</div>
+                                                          <div style="font-size:15px;line-height:1.8;margin-bottom:10px">
+                                                            <label><input type="checkbox"> Aktivitas 1: Observasi Fenomena Penggunaan HP</label><br>
+                                                            <label><input type="checkbox"> Aktivitas 2: Memahami Dampak Kesehatan</label><br>
+                                                            <label><input type="checkbox"> Aktivitas 3: Memahami Pertanyaan Mendasar Proyek</label><br>
+                                                            <label><input type="checkbox"> Aktivitas 4: Mengidentifikasi Data yang Diperlukan</label><br>
+                                                            <label><input type="checkbox"> Aktivitas 5: Prediksi dan Dugaan Awal</label><br>
+                                                            <label><input type="checkbox"> Aktivitas 6: Mengidentifikasi Tantangan dan Solusi</label><br>
+                                                            <label><input type="checkbox"> Aktivitas 7: Memahami Literasi Statistik dan Resiliensi</label><br>
+                                                            <label><input type="checkbox"> Aktivitas 8: Refleksi Awal</label>
+                                                          </div>
+                                              <div style="margin-top:24px;display:flex;justify-content:flex-start;gap:12px">
+                                                <button onclick="updateSlide(918)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Aktivitas 7</button>
+                                              </div>
+                                          </section>
       </div>
     </div>
 
@@ -849,6 +1320,82 @@
     }
 
     function updateSlide(target) {
+      // Jika tombol Ukuran Pemusatan (Mean, Median, Modus) ditekan, tampilkan slide 11, 12, dan 13 secara berurutan
+      if (target === 11) {
+        // Tampilkan slide 11 (Mean) terlebih dahulu
+        const indexMean = resolveSlideIndex(11);
+        slides.forEach(sl => sl.classList.remove('active'));
+        slides[indexMean].classList.add('active');
+        current = indexMean;
+
+        // Aktifkan tombol next untuk ke Median dan Modus
+        prevBtn.style.visibility = 'visible';
+        nextBtn.style.visibility = 'visible';
+        prevBtn.disabled = true;
+        nextBtn.disabled = false;
+        backBtn.style.visibility = 'visible';
+
+        // Simpan handler default
+        const defaultNext = nextBtn.onclick;
+        const defaultPrev = prevBtn.onclick;
+
+        nextBtn.onclick = function() {
+          if (current === indexMean) {
+            // Ke Median
+            const indexMedian = resolveSlideIndex(12);
+            slides.forEach(sl => sl.classList.remove('active'));
+            slides[indexMedian].classList.add('active');
+            current = indexMedian;
+            prevBtn.disabled = false;
+            nextBtn.disabled = false;
+          } else if (current === resolveSlideIndex(12)) {
+            // Ke Modus
+            const indexModus = resolveSlideIndex(13);
+            slides.forEach(sl => sl.classList.remove('active'));
+            slides[indexModus].classList.add('active');
+            current = indexModus;
+            nextBtn.disabled = true;
+          }
+        };
+        prevBtn.onclick = function() {
+          if (current === resolveSlideIndex(13)) {
+            // Kembali ke Median
+            const indexMedian = resolveSlideIndex(12);
+            slides.forEach(sl => sl.classList.remove('active'));
+            slides[indexMedian].classList.add('active');
+            current = indexMedian;
+            nextBtn.disabled = false;
+          } else if (current === resolveSlideIndex(12)) {
+            // Kembali ke Mean
+            slides.forEach(sl => sl.classList.remove('active'));
+            slides[indexMean].classList.add('active');
+            current = indexMean;
+            prevBtn.disabled = true;
+          }
+        };
+
+        // Kembalikan handler default jika keluar dari rangkaian 11-12-13
+        function restoreDefaultNav() {
+          nextBtn.onclick = defaultNext;
+          prevBtn.onclick = defaultPrev;
+        }
+        // Deteksi jika user keluar dari slide 11-13
+        const observer = new MutationObserver(() => {
+          const slideNum = Number(slides[current].dataset.slide);
+          if (slideNum < 11 || slideNum > 13) {
+            restoreDefaultNav();
+            observer.disconnect();
+          }
+        });
+        observer.observe(document.querySelector('.slides'), { subtree: true, attributes: true, attributeFilter: ['class'] });
+        // Tombol back kembali ke Daftar Isi
+        backBtn.onclick = function() {
+          updateSlide(8);
+        };
+        return;
+      }
+
+      // Default: navigasi slide seperti biasa
       const index = resolveSlideIndex(target);
       const slideNumber = Number(slides[index].dataset.slide);
       slides.forEach(sl => sl.classList.remove('active'));
@@ -1753,6 +2300,16 @@
     document.head.appendChild(style);
 
     // Initial state is already set above via updateSlide(1)
+
+    // Deteksi hash saat halaman dimuat, agar #slide-9 langsung ke slide 9
+    window.addEventListener('DOMContentLoaded', function() {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith('#slide-')) {
+        const slideNum = Number(hash.replace('#slide-', ''));
+        if (!isNaN(slideNum)) updateSlide(slideNum);
+      }
+    });
   </script>
 </body>
 </html>
+
