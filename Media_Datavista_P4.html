@@ -539,6 +539,7 @@
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(405)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="showSelesaiPopup()" class="btn-primary">Selesai</button>
+            <button id="downloadPDFBtn" onclick="downloadPDF()" class="btn-primary">Download PDF</button>
           </div>
         </div>
       </section>
@@ -567,8 +568,119 @@
     window.updateSlide = showSlideByDataSlide;
     // Fungsi tambah anggota (dummy, bisa dikembangkan)
     function addMember() {
-      // ...fungsi tambah anggota kelompok...
-      alert('Fitur tambah anggota belum diimplementasikan.');
+      const nameInput = document.getElementById('memberName');
+      const roleInput = document.getElementById('memberRole');
+      const membersList = document.getElementById('membersList');
+      const name = nameInput.value.trim();
+      const role = roleInput.value;
+      if (!name) {
+        alert('Nama anggota tidak boleh kosong!');
+        nameInput.focus();
+        return;
+      }
+      // Buat elemen anggota
+      const div = document.createElement('div');
+      div.className = 'anggota-item';
+      div.style = 'padding:10px 12px;background:#f4f8ff;border:1px solid #dbe6ff;border-radius:10px;margin-bottom:6px;display:flex;align-items:center;gap:8px;';
+      const namaSpan = document.createElement('span');
+      namaSpan.className = 'anggota-nama';
+      namaSpan.textContent = name;
+      namaSpan.style = 'font-weight:600;color:#1e293b;';
+      const roleSpan = document.createElement('span');
+      roleSpan.className = 'anggota-role';
+      roleSpan.textContent = '('+role+')';
+      roleSpan.style = 'font-size:13px;color:#64748b;';
+      // Tombol hapus anggota
+      const delBtn = document.createElement('button');
+      delBtn.textContent = '✕';
+      delBtn.title = 'Hapus anggota';
+      delBtn.style = 'margin-left:auto;background:#e2e8f0;color:#334155;border:none;border-radius:6px;padding:2px 8px;cursor:pointer;font-size:13px;';
+      delBtn.onclick = function() {
+        membersList.removeChild(div);
+      };
+      div.appendChild(namaSpan);
+      div.appendChild(roleSpan);
+      div.appendChild(delBtn);
+      membersList.appendChild(div);
+      // Reset input
+      nameInput.value = '';
+      nameInput.focus();
+    }
+
+    // Fungsi Download PDF
+    async function downloadPDF() {
+      if (typeof window.jspdf === 'undefined') {
+        await loadScript('tools/libs/jspdf.umd.min.js');
+      }
+      if (typeof window.html2canvas === 'undefined') {
+        await loadScript('tools/libs/html2canvas.min.js');
+      }
+      const { jsPDF } = window.jspdf;
+
+      // Ambil data identitas
+      const groupName = document.getElementById('groupName')?.value || '-';
+      const schoolName = document.getElementById('schoolName')?.value || '-';
+      // Ambil anggota kelompok (dari #membersList, fallback: kosong)
+      let anggota = [];
+      document.querySelectorAll('#membersList .anggota-nama').forEach(el => {
+        anggota.push(el.textContent.trim());
+      });
+      if (anggota.length === 0) anggota.push('-');
+
+      // Ambil semua textarea (urut sesuai tampilan)
+      const textareas = document.querySelectorAll('textarea');
+      // Ambil semua input (type text/number)
+      const inputs = document.querySelectorAll('section.slide input[type="text"], section.slide input[type="number"]');
+
+      // Siapkan PDF
+      const doc = new jsPDF();
+      let y = 15;
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(16);
+      doc.text('HASIL PENGERJAAN KELOMPOK', 105, y, { align: 'center' });
+      y += 10;
+      doc.setFontSize(11);
+      doc.setFont('helvetica','normal');
+      doc.text('Nama Kelompok: ' + groupName, 15, y);
+      y += 7;
+      doc.text('Sekolah: ' + schoolName, 15, y);
+      y += 7;
+      doc.text('Anggota Kelompok:', 15, y);
+      y += 6;
+      anggota.forEach((nama, idx) => {
+        doc.text('- ' + nama, 20, y);
+        y += 6;
+      });
+      y += 2;
+      doc.setFont('helvetica','bold');
+      doc.text('Jawaban:', 15, y);
+      doc.setFont('helvetica','normal');
+      y += 7;
+      textareas.forEach((ta, idx) => {
+        doc.text((idx+1)+'. ' + (ta.value || '-'), 15, y, { maxWidth: 180 });
+        y += 8;
+      });
+      y += 2;
+      doc.setFont('helvetica','bold');
+      doc.text('Input Lain:', 15, y);
+      doc.setFont('helvetica','normal');
+      y += 7;
+      inputs.forEach((inp, idx) => {
+        doc.text((idx+1)+'. ' + (inp.value || '-'), 15, y, { maxWidth: 180 });
+        y += 8;
+      });
+      doc.save('hasil_kelompok.pdf');
+    }
+
+    // Loader eksternal script
+    function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
     }
 
     // Pop up selesai
