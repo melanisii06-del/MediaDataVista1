@@ -275,16 +275,16 @@
         <div class="card-lite" style="text-align:left;padding:32px 12px">
           <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">AKTIVITAS 4 : Pengumpulan Data di Lapangan</div>
           <div style="font-size:16px;font-weight:700;margin-bottom:12px">Catat Progres Pengumpulan Data</div>
-          <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:12px">
-            <button onclick="showSelesaiPopup()" class="btn-primary">Selesai</button>
-          </div>
+          <div style="margin-bottom:10px;font-size:14px;color:var(--muted)">Isi data sesuai hasil pengumpulan di lapangan.</div>
+          <div style="margin:16px 0 18px;border:1px solid var(--line);border-radius:12px;background:#ffffff;overflow:auto;padding:8px">
+            <table style="width:100%;border-collapse:collapse;min-width:760px">
               <thead>
                 <tr style="background:#f5f5f5">
                   <th style="border:1px solid var(--line);padding:6px;font-size:14px">No.</th>
                   <th style="border:1px solid var(--line);padding:6px;font-size:14px">Kode Responden</th>
-                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Durasi</th>
-                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Waktu</th>
-                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Tujuan</th>
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Durasi (menit)</th>
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Jam</th>
+                  <th style="border:1px solid var(--line);padding:6px;font-size:14px">Metode</th>
                   <th style="border:1px solid var(--line);padding:6px;font-size:14px">Catatan</th>
                 </tr>
               </thead>
@@ -305,6 +305,7 @@
               </tbody>
             </table>
           </div>
+4
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(305)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="updateSlide(307)" class="btn-primary">Selanjutnya →</button>
@@ -376,7 +377,6 @@
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(307)" class="btn-ghost">← Sebelumnya</button>
             <button id="btnSelesaiP3" class="btn-primary" onclick="selesaiPertemuan3(this)">Selesai</button>
-            <button onclick="updateSlide(1001)" style="padding:12px 24px;background:linear-gradient(135deg,#10b981,#34d399);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Penyajian Data</button>
             <button id="downloadPDFBtn" onclick="downloadPDF()" class="btn-primary">Download PDF</button>
           </div>
           <script>
