@@ -134,22 +134,336 @@
             <button onclick="updateSlide(501)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="updateSlide(503)" class="btn-primary">Selanjutnya →</button>
       </section>
-      <!-- Slide 3: Ringkasan Proyek Kelompok -->
+      <!-- Slide 3: Presentasi Ringkasan Proyek Kelompok -->
       <section class="slide" data-slide="503" style="display:none">
-        <div class="card-lite" style="text-align:left;padding:32px 24px">
-          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">C. Ringkasan Proyek Kelompok</div>
-          <div style="margin-bottom:16px;font-size:16px">Tuliskan ringkasan singkat proyek yang telah kalian lakukan</div>
-          <div style="margin-bottom:12px;font-size:15px">1. Fokus data yang dianalisis</div>
-          <textarea placeholder="Fokus data yang dianalisis..." style="width:100%;min-height:36px;margin-bottom:18px"></textarea>
-          <div style="margin-bottom:12px;font-size:15px">2. Jumlah responden</div>
-          <input type="number" min="0" style="width:100%;margin-bottom:18px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif">
-          <div style="margin-bottom:12px;font-size:15px">3. Informasi utama yang ditemukan dari data</div>
-          <textarea placeholder="Informasi utama yang ditemukan..." style="width:100%;min-height:48px;margin-bottom:24px"></textarea>
-          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+        <div style="padding:32px 24px;max-height:calc(100vh - 200px);overflow-y:auto">
+          <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:20px;text-align:center;color:#0f172a">C. Presentasi Ringkasan Proyek Kelompok</div>
+          <div style="margin-bottom:28px;font-size:15px;color:#6b7280;text-align:center">Pilih kelompok yang presentasi, upload file, dan kelompok lain dapat memberikan komentar</div>
+          
+          <!-- Pilih Kelompok Presentasi -->
+          <div style="background:linear-gradient(135deg,#4b8df8,#6da8ff);padding:20px;border-radius:16px;margin-bottom:24px;text-align:center">
+            <label style="color:white;font-weight:700;font-size:15px;display:block;margin-bottom:12px">👥 Kelompok yang Presentasi:</label>
+            <select id="presentingGroup" onchange="switchPresentingGroup()" style="width:100%;max-width:300px;padding:12px 16px;border:none;border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;cursor:pointer">
+              <option value="">-- Pilih Kelompok --</option>
+              <option value="Kelompok 1">Kelompok 1</option>
+              <option value="Kelompok 2">Kelompok 2</option>
+              <option value="Kelompok 3">Kelompok 3</option>
+              <option value="Kelompok 4">Kelompok 4</option>
+              <option value="Kelompok 5">Kelompok 5</option>
+              <option value="Kelompok 6">Kelompok 6</option>
+            </select>
+          </div>
+          
+          <div id="presentationArea"></div>
+          
+          <div style="margin-top:32px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(502)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="updateSlide(504)" class="btn-primary">Selanjutnya →</button>
           </div>
         </div>
+        
+        <style>
+          .presentation-card {
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+            border: 2px solid var(--line);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(75, 141, 248, 0.12);
+            transition: all 0.3s ease;
+          }
+          .presentation-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 12px 32px rgba(75, 141, 248, 0.2);
+            transform: translateY(-4px);
+          }
+          .group-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 16px;
+          }
+          .upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            background: rgba(75, 141, 248, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+          }
+          .upload-area:hover {
+            background: rgba(75, 141, 248, 0.1);
+            border-color: var(--primary-soft);
+          }
+          .file-input {
+            display: none;
+          }
+          .file-preview {
+            margin-bottom: 12px;
+            max-height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+          }
+          .file-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+          .comments-section {
+            background: #f9fbff;
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 16px;
+            max-height: 250px;
+            overflow-y: auto;
+          }
+          .comment-item {
+            background: white;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            border-left: 3px solid var(--primary);
+          }
+          .comment-author {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 13px;
+            margin-bottom: 4px;
+          }
+          .comment-text {
+            color: #0f172a;
+            line-height: 1.4;
+          }
+          .comment-time {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 6px;
+          }
+          .comment-card {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(75, 141, 248, 0.08);
+          }
+          .comment-textarea {
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            resize: none;
+            height: 60px;
+          }
+          .btn-comment {
+            padding: 8px 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+          .btn-comment:hover {
+            background: var(--primary-soft);
+            transform: translateY(-1px);
+          }
+          .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 8px;
+          }
+          .status-done {
+            background: #dcfce7;
+            color: #15803d;
+          }
+          .status-pending {
+            background: #fef3c7;
+            color: #b45309;
+          }
+        </style>
+        
+        <script>
+          // Data storage untuk presentasi kelompok
+          if (!window.groupPresentations) {
+            window.groupPresentations = {
+              'Kelompok 1': { file: null, fileName: '', comments: [], fileType: '' },
+              'Kelompok 2': { file: null, fileName: '', comments: [], fileType: '' },
+              'Kelompok 3': { file: null, fileName: '', comments: [], fileType: '' },
+              'Kelompok 4': { file: null, fileName: '', comments: [], fileType: '' },
+              'Kelompok 5': { file: null, fileName: '', comments: [], fileType: '' },
+              'Kelompok 6': { file: null, fileName: '', comments: [], fileType: '' }
+            };
+          }
+          
+          function switchPresentingGroup() {
+            const select = document.getElementById('presentingGroup');
+            const groupName = select.value;
+            const container = document.getElementById('presentationArea');
+            
+            if (!groupName) {
+              container.innerHTML = '<div style="text-align:center;color:#9ca3af;padding:40px 0;font-size:15px">👆 Pilih kelompok yang akan presentasi</div>';
+              return;
+            }
+            
+            const groups = ['Kelompok 1', 'Kelompok 2', 'Kelompok 3', 'Kelompok 4', 'Kelompok 5', 'Kelompok 6'];
+            const otherGroups = groups.filter(g => g !== groupName);
+            
+            container.innerHTML = `
+              <!-- Upload Area -->
+              <div style="background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);border:2px solid var(--line);border-radius:16px;padding:24px;margin-bottom:24px;box-shadow:0 8px 24px rgba(75,141,248,0.12)">
+                <div style="font-weight:700;font-size:18px;margin-bottom:16px;text-align:center;color:#0f172a">📤 Upload Presentasi</div>
+                
+                <div class="upload-area" onclick="document.getElementById('mainFileInput').click()">
+                  <input type="file" id="mainFileInput" class="file-input" accept="image/*,.pdf,.ppt,.pptx" onchange="handleFileUpload('${groupName}', this)">
+                  <div style="font-size:40px;margin-bottom:12px">📤</div>
+                  <div style="font-weight:700;color:#0f172a;margin-bottom:6px;font-size:16px">Klik atau Drag File ke Sini</div>
+                  <div style="font-size:14px;color:#6b7280">Foto, PDF, atau PowerPoint (Max 10MB)</div>
+                </div>
+                
+                <div id="mainFilePreview"></div>
+                <div id="mainStatus" style="text-align:center;margin-top:12px"></div>
+              </div>
+              
+              <!-- Comments Section -->
+              <div style="background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);border:2px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 8px 24px rgba(75,141,248,0.12)">
+                <div style="font-weight:700;font-size:18px;margin-bottom:16px;text-align:center;color:#0f172a">💬 Komentar dari Kelompok Lain</div>
+                
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px">
+                  ${otherGroups.map(g => `
+                    <div class="comment-card">
+                      <div style="background:linear-gradient(135deg,#6da8ff,#4b8df8);color:white;padding:10px;border-radius:10px;font-weight:700;text-align:center;margin-bottom:12px;font-size:14px">${g}</div>
+                      <div id="commentsList_${g.replace(' ', '_')}" style="min-height:100px;margin-bottom:12px;padding:12px;background:#f9fbff;border-radius:10px;max-height:180px;overflow-y:auto"></div>
+                      <textarea id="commentText_${g.replace(' ', '_')}" class="comment-textarea" placeholder="Tulis komentar..." style="width:100%;margin-bottom:8px"></textarea>
+                      <button class="btn-comment" onclick="submitComment('${groupName}', '${g}')" style="width:100%">Kirim Komentar</button>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+            
+            updateMainFilePreview(groupName);
+            updateMainStatus(groupName);
+            otherGroups.forEach(g => updateCommentsListForGroup(groupName, g));
+          }
+          
+          function handleFileUpload(groupName, input) {
+            if (input.files && input.files[0]) {
+              const file = input.files[0];
+              const reader = new FileReader();
+              
+              window.groupPresentations[groupName].fileName = file.name;
+              window.groupPresentations[groupName].fileType = file.type;
+              
+              reader.onload = function(e) {
+                window.groupPresentations[groupName].file = e.target.result;
+                updateMainFilePreview(groupName);
+                updateMainStatus(groupName);
+              };
+              reader.readAsDataURL(file);
+            }
+          }
+          
+          function submitComment(targetGroup, commenterGroup) {
+            const commentText = document.getElementById('commentText_' + commenterGroup.replace(' ', '_'));
+            const text = commentText.value.trim();
+            
+            if (!text) {
+              alert('Silakan tulis komentar Anda');
+              return;
+            }
+            
+            if (!window.groupPresentations[targetGroup].comments) {
+              window.groupPresentations[targetGroup].comments = [];
+            }
+            
+            window.groupPresentations[targetGroup].comments.push({
+              commenter: commenterGroup,
+              text: text,
+              timestamp: new Date().toLocaleString('id-ID', { hour: '2-digit', minute: '2-digit' })
+            });
+            
+            commentText.value = '';
+            updateCommentsListForGroup(targetGroup, commenterGroup);
+          }
+          
+          function updateCommentsListForGroup(targetGroup, commenterGroup) {
+            const listDiv = document.getElementById('commentsList_' + commenterGroup.replace(' ', '_'));
+            if (!listDiv) return;
+            
+            const comments = window.groupPresentations[targetGroup].comments || [];
+            const groupComments = comments.filter(c => c.commenter === commenterGroup);
+            
+            if (groupComments.length === 0) {
+              listDiv.innerHTML = '<div style="color:#9ca3af;font-size:12px;text-align:center;padding:10px 0">Belum ada komentar</div>';
+            } else {
+              listDiv.innerHTML = groupComments.map(c => `
+                <div style="background:white;padding:10px;border-radius:8px;margin-bottom:8px;border-left:3px solid var(--primary)">
+                  <div style="font-size:12px;color:#0f172a;line-height:1.4;margin-bottom:4px">${c.text}</div>
+                  <div style="font-size:10px;color:#9ca3af">${c.timestamp}</div>
+                </div>
+              `).join('');
+            }
+          }
+          
+          function updateMainFilePreview(groupName) {
+            const previewDiv = document.getElementById('mainFilePreview');
+            if (!previewDiv) return;
+            
+            const data = window.groupPresentations[groupName];
+            if (data.file) {
+              if (data.fileType.startsWith('image/')) {
+                previewDiv.innerHTML = `
+                  <div class="file-preview" style="margin-top:16px">
+                    <img src="${data.file}" alt="Preview" style="width:100%;max-height:300px;object-fit:contain;border-radius:12px">
+                  </div>
+                  <div style="font-size:14px;color:#6b7280;text-align:center;margin-top:12px">✓ ${data.fileName}</div>
+                `;
+              } else {
+                previewDiv.innerHTML = `
+                  <div style="background:#f0f4ff;padding:20px;border-radius:12px;text-align:center;margin-top:16px">
+                    <div style="font-size:36px;margin-bottom:12px">📎</div>
+                    <div style="font-size:14px;color:#0f172a;font-weight:700;word-break:break-word">${data.fileName}</div>
+                  </div>
+                `;
+              }
+            } else {
+              previewDiv.innerHTML = '';
+            }
+          }
+          
+          function updateMainStatus(groupName) {
+            const statusDiv = document.getElementById('mainStatus');
+            if (!statusDiv) return;
+            
+            const hasFile = window.groupPresentations[groupName].file !== null;
+            
+            if (hasFile) {
+              statusDiv.innerHTML = '<div class="status-badge status-done">✓ Presentasi Sudah Diupload</div>';
+            } else {
+              statusDiv.innerHTML = '<div class="status-badge status-pending">⏳ Menunggu Upload File</div>';
+            }
+          }
+          
+          // Initialize presentation area saat halaman dimuat
+          setTimeout(function() {
+            const container = document.getElementById('presentationArea');
+            if (container) {
+              container.innerHTML = '<div style="text-align:center;color:#9ca3af;padding:40px 0;font-size:15px">👆 Pilih kelompok yang akan presentasi</div>';
+            }
+          }, 100);
+        </script>
       </section>
       <!-- Slide 4: Penyajian Hasil Statistik -->
       <section class="slide" data-slide="504" style="display:none">
@@ -251,12 +565,232 @@
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(506)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="showSelesaiPopup()" class="btn-primary">Selesai</button>
-            <button onclick="updateSlide(1001)" style="padding:12px 24px;background:linear-gradient(135deg,#10b981,#34d399);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Penyajian Data</button>
             <button id="downloadPDFBtn" onclick="downloadPDF()" class="btn-primary">Download PDF</button>
           </div>
         </div>
       </section>
-      <!-- Slide berikutnya bisa ditambahkan di bawah ini -->
+      <!-- Slide 1001: Chart Generator -->
+      <section class="slide" data-slide="1001" style="display:none">
+        <div style="padding:32px 24px;max-height:calc(100vh - 100px);overflow-y:auto">
+          <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:20px;text-align:center;color:#0f172a">📊 Chart Generator - Penyajian Data</div>
+          <div style="margin-bottom:20px;font-size:14px;color:#6b7280;text-align:center">Buat visualisasi data untuk presentasi Anda</div>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+            <!-- Input Data Section -->
+            <div style="background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);border:1px solid var(--line);border-radius:16px;padding:20px">
+              <div style="font-weight:700;font-size:16px;margin-bottom:16px;color:#0f172a">📝 Input Data</div>
+              
+              <div style="margin-bottom:14px">
+                <label style="font-weight:700;font-size:13px;display:block;margin-bottom:6px">Label/Kategori (pisahkan dengan koma)</label>
+                <input type="text" id="chartLabels" placeholder="Kategori A, Kategori B, Kategori C" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+              
+              <div style="margin-bottom:14px">
+                <label style="font-weight:700;font-size:13px;display:block;margin-bottom:6px">Data/Nilai (pisahkan dengan koma)</label>
+                <input type="text" id="chartValues" placeholder="10, 20, 30" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+              
+              <div style="margin-bottom:14px">
+                <label style="font-weight:700;font-size:13px;display:block;margin-bottom:6px">Judul Chart</label>
+                <input type="text" id="chartTitle" placeholder="Contoh: Durasi Penggunaan HP" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+              
+              <div style="margin-bottom:16px">
+                <label style="font-weight:700;font-size:13px;display:block;margin-bottom:6px">Jenis Chart</label>
+                <select id="chartType" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif">
+                  <option value="bar">📊 Diagram Batang</option>
+                  <option value="line">📈 Diagram Garis</option>
+                  <option value="doughnut">🥧 Diagram Lingkaran</option>
+                  <option value="radar">🎯 Diagram Radar</option>
+                </select>
+              </div>
+              
+              <button onclick="generateChart()" style="width:100%;padding:12px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                ✨ Buat Chart
+              </button>
+            </div>
+            
+            <!-- Chart Preview -->
+            <div style="background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column">
+              <div style="font-weight:700;font-size:16px;margin-bottom:16px;color:#0f172a">👁️ Preview</div>
+              <div id="chartPreviewContainer" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:300px;background:#f9fbff;border-radius:12px;border:1px dashed var(--line)">
+                <div style="text-align:center;color:#9ca3af">
+                  <div style="font-size:32px;margin-bottom:8px">📊</div>
+                  <div>Isi data dan klik "Buat Chart"</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Chart Data Table Preview -->
+          <div style="margin-top:20px;background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);border:1px solid var(--line);border-radius:16px;padding:20px">
+            <div style="font-weight:700;font-size:16px;margin-bottom:12px;color:#0f172a">📋 Preview Data Tabel</div>
+            <div id="tablePreviewContainer" style="max-height:200px;overflow-y:auto"></div>
+          </div>
+          
+          <!-- Action Buttons -->
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <button onclick="updateSlide(507)" class="btn-ghost" style="flex:1">← Kembali</button>
+            <button onclick="downloadChartPDF()" class="btn-primary" style="flex:1">📥 Download Chart</button>
+            <button onclick="resetChartForm()" style="flex:1;padding:12px 16px;background:#f3f4f6;color:#0f172a;border:1px solid var(--line);border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s ease" onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">🔄 Reset</button>
+          </div>
+        </div>
+        
+        <style>
+          #chartPreviewContainer canvas {
+            max-width: 100%;
+            height: auto;
+          }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        <script>
+          let currentChartInstance = null;
+          
+          function generateChart() {
+            const labelsInput = document.getElementById('chartLabels').value;
+            const valuesInput = document.getElementById('chartValues').value;
+            const chartTitle = document.getElementById('chartTitle').value || 'Chart';
+            const chartType = document.getElementById('chartType').value;
+            
+            if (!labelsInput.trim() || !valuesInput.trim()) {
+              alert('Silakan isi data label dan nilai terlebih dahulu');
+              return;
+            }
+            
+            const labels = labelsInput.split(',').map(l => l.trim());
+            const values = valuesInput.split(',').map(v => {
+              const num = parseFloat(v.trim());
+              return isNaN(num) ? 0 : num;
+            });
+            
+            if (labels.length !== values.length) {
+              alert('Jumlah label harus sama dengan jumlah nilai');
+              return;
+            }
+            
+            updateTablePreview(labels, values);
+            renderChart(labels, values, chartTitle, chartType);
+          }
+          
+          function updateTablePreview(labels, values) {
+            const container = document.getElementById('tablePreviewContainer');
+            let html = '<table style="width:100%;border-collapse:collapse">';
+            html += '<thead><tr style="background:#f5f5f5"><th style="padding:10px;text-align:left;border:1px solid var(--line)">Kategori</th><th style="padding:10px;text-align:center;border:1px solid var(--line)">Nilai</th></tr></thead>';
+            html += '<tbody>';
+            
+            labels.forEach((label, idx) => {
+              html += `<tr><td style="padding:10px;border:1px solid var(--line)">${label}</td><td style="padding:10px;text-align:center;border:1px solid var(--line);font-weight:700">${values[idx]}</td></tr>`;
+            });
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+          }
+          
+          function renderChart(labels, values, title, type) {
+            const container = document.getElementById('chartPreviewContainer');
+            
+            // Generate random colors
+            const bgColors = labels.map(() => {
+              const hue = Math.random() * 360;
+              return `hsl(${hue}, 70%, 60%)`;
+            });
+            
+            const borderColors = labels.map(() => {
+              const hue = Math.random() * 360;
+              return `hsl(${hue}, 70%, 40%)`;
+            });
+            
+            // Destroy previous chart
+            if (currentChartInstance) {
+              currentChartInstance.destroy();
+            }
+            
+            // Create canvas
+            container.innerHTML = '<canvas id="dynamicChart"></canvas>';
+            const canvas = document.getElementById('dynamicChart');
+            
+            const chartConfig = {
+              type: type,
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: title,
+                  data: values,
+                  backgroundColor: type === 'line' ? 'rgba(75, 141, 248, 0.1)' : bgColors,
+                  borderColor: type === 'line' ? '#4b8df8' : borderColors,
+                  borderWidth: type === 'line' ? 3 : 1,
+                  fill: type === 'line' ? true : false,
+                  tension: 0.4
+                }]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                  legend: {
+                    display: type !== 'bar' && type !== 'line',
+                    position: 'bottom'
+                  },
+                  title: {
+                    display: true,
+                    text: title,
+                    font: { size: 16, weight: 'bold' }
+                  }
+                },
+                scales: type === 'line' || type === 'bar' ? {
+                  y: {
+                    beginAtZero: true,
+                    ticks: {
+                      stepSize: Math.ceil(Math.max(...values) / 5)
+                    }
+                  }
+                } : undefined
+              }
+            };
+            
+            currentChartInstance = new Chart(canvas, chartConfig);
+          }
+          
+          function downloadChartPDF() {
+            if (!currentChartInstance) {
+              alert('Silakan buat chart terlebih dahulu');
+              return;
+            }
+            
+            const canvas = document.getElementById('dynamicChart');
+            if (!canvas) {
+              alert('Chart tidak ditemukan');
+              return;
+            }
+            
+            const imageData = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = imageData;
+            link.download = 'chart_' + new Date().getTime() + '.png';
+            link.click();
+          }
+          
+          function resetChartForm() {
+            document.getElementById('chartLabels').value = '';
+            document.getElementById('chartValues').value = '';
+            document.getElementById('chartTitle').value = '';
+            document.getElementById('chartType').value = 'bar';
+            document.getElementById('chartPreviewContainer').innerHTML = `
+              <div style="text-align:center;color:#9ca3af">
+                <div style="font-size:32px;margin-bottom:8px">📊</div>
+                <div>Isi data dan klik "Buat Chart"</div>
+              </div>
+            `;
+            document.getElementById('tablePreviewContainer').innerHTML = '';
+            
+            if (currentChartInstance) {
+              currentChartInstance.destroy();
+              currentChartInstance = null;
+            }
+          }
+        </script>
+      </section>
     </div>
   </div>
   <script>
