@@ -92,11 +92,317 @@
       border: 1px solid #cbd5e1;
       box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
     }
+    
+    /* Modal Kalkulator */
+    .calc-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .calc-modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .calc-content {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .calc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--line);
+    }
+    
+    .calc-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .calc-close {
+      background: #fee2e2;
+      color: #dc2626;
+      border: none;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    
+    .calc-close:hover {
+      background: #dc2626;
+      color: white;
+      transform: rotate(90deg);
+    }
+    
+    .calc-input-section {
+      margin-bottom: 20px;
+    }
+    
+    .calc-input-section label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--muted);
+    }
+    
+    .calc-input-section textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      resize: vertical;
+      min-height: 60px;
+    }
+    
+    .calc-input-section textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .calc-btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    
+    .calc-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(75, 141, 248, 0.4);
+    }
+    
+    .calc-result {
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .calc-result.show {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .calc-final-answer {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      padding: 18px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+    }
+    
+    .calc-steps {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    
+    .calc-steps h3 {
+      color: var(--primary);
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+    
+    .calc-step {
+      background: white;
+      padding: 12px;
+      border-left: 4px solid var(--primary);
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    
+    .calc-step-number {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 26px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+    
+    .calc-highlight {
+      color: var(--primary);
+      font-weight: 700;
+    }
+    
+    .calc-formula {
+      background: #fef3c7;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 8px 0;
+      font-family: 'Courier New', monospace;
+      border-left: 4px solid #f59e0b;
+      font-size: 14px;
+    }
+    
+    .calc-data-display {
+      background: #e0f2fe;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 8px 0;
+      font-family: 'Courier New', monospace;
+      border-left: 4px solid var(--primary);
+      font-size: 14px;
+    }
+    
+    .btn-calc-trigger {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 8px;
+      margin-bottom: 12px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+    
+    .btn-calc-trigger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+    }
   </style>
 </head>
 <body>
   <div class="shell">
     <div class="slides" id="slides">
+      
+      <!-- Modal Kalkulator Mean -->
+      <div id="calcModalMean" class="calc-modal">
+        <div class="calc-content">
+          <div class="calc-header">
+            <div class="calc-title">🧮 Kalkulator Mean (Rata-rata)</div>
+            <button class="calc-close" onclick="closeCalcModal('mean')">×</button>
+          </div>
+          <div class="calc-input-section">
+            <label>Masukkan Data (pisahkan dengan koma atau spasi):</label>
+            <textarea id="dataMean" placeholder="Contoh: 5, 7, 3, 8, 5, 9"></textarea>
+          </div>
+          <button class="calc-btn" onclick="calculateStatMean()">Hitung Mean</button>
+          <div id="resultMean" class="calc-result"></div>
+        </div>
+      </div>
+      
+      <!-- Modal Kalkulator Median -->
+      <div id="calcModalMedian" class="calc-modal">
+        <div class="calc-content">
+          <div class="calc-header">
+            <div class="calc-title">🧮 Kalkulator Median (Nilai Tengah)</div>
+            <button class="calc-close" onclick="closeCalcModal('median')">×</button>
+          </div>
+          <div class="calc-input-section">
+            <label>Masukkan Data (pisahkan dengan koma atau spasi):</label>
+            <textarea id="dataMedian" placeholder="Contoh: 5, 7, 3, 8, 5, 9"></textarea>
+          </div>
+          <button class="calc-btn" onclick="calculateStatMedian()">Hitung Median</button>
+          <div id="resultMedian" class="calc-result"></div>
+        </div>
+      </div>
+      
+      <!-- Modal Kalkulator Modus -->
+      <div id="calcModalModus" class="calc-modal">
+        <div class="calc-content">
+          <div class="calc-header">
+            <div class="calc-title">🧮 Kalkulator Modus</div>
+            <button class="calc-close" onclick="closeCalcModal('modus')">×</button>
+          </div>
+          <div class="calc-input-section">
+            <label>Masukkan Data (pisahkan dengan koma atau spasi):</label>
+            <textarea id="dataModus" placeholder="Contoh: 5, 7, 3, 8, 5, 9, 3, 8, 5"></textarea>
+          </div>
+          <button class="calc-btn" onclick="calculateStatModus()">Hitung Modus</button>
+          <div id="resultModus" class="calc-result"></div>
+        </div>
+      </div>
+      
+      <!-- Modal Kalkulator Jangkauan -->
+      <div id="calcModalJangkauan" class="calc-modal">
+        <div class="calc-content">
+          <div class="calc-header">
+            <div class="calc-title">🧮 Kalkulator Jangkauan (Range)</div>
+            <button class="calc-close" onclick="closeCalcModal('jangkauan')">×</button>
+          </div>
+          <div class="calc-input-section">
+            <label>Masukkan Data (pisahkan dengan koma atau spasi):</label>
+            <textarea id="dataJangkauan" placeholder="Contoh: 5, 7, 3, 8, 5, 9"></textarea>
+          </div>
+          <button class="calc-btn" onclick="calculateStatJangkauan()">Hitung Jangkauan</button>
+          <div id="resultJangkauan" class="calc-result"></div>
+        </div>
+      </div>
+      
+      <!-- Modal Kalkulator Kuartil -->
+      <div id="calcModalKuartil" class="calc-modal">
+        <div class="calc-content">
+          <div class="calc-header">
+            <div class="calc-title">🧮 Kalkulator Kuartil (Q1, Q2, Q3)</div>
+            <button class="calc-close" onclick="closeCalcModal('kuartil')">×</button>
+          </div>
+          <div class="calc-input-section">
+            <label>Masukkan Data (pisahkan dengan koma atau spasi):</label>
+            <textarea id="dataKuartil" placeholder="Contoh: 5, 7, 3, 8, 5, 9, 3, 8, 5, 6, 7, 8"></textarea>
+          </div>
+          <button class="calc-btn" onclick="calculateStatKuartil()">Hitung Kuartil</button>
+          <div id="resultKuartil" class="calc-result"></div>
+        </div>
+      </div>
+      
       <!-- Slide 1: Identitas Kelompok -->
       <section class="slide" data-slide="401" style="display:none">
         <div class="card-lite" style="text-align:left;padding:32px 24px">
@@ -192,9 +498,9 @@
             </table>
           </div>
           <div style="font-size:16px;font-weight:700;margin-bottom:10px">2. Hitung Mean (Rata-rata)</div>
-          <div style="margin-bottom:8px;font-size:15px">Definisi: Nilai rata-rata yang diperoleh dari menjumlahkan seluruh data dan membaginya dengan jumlah data.</div>
-          <div style="margin-bottom:8px;font-size:15px">Rumus: <b>Mean = (Total Durasi)/(Jumlah respondent)</b></div>
+          <div style="margin-bottom:8px;font-size:15px">💡 <i>Gunakan kalkulator di bawah untuk membantu perhitungan, lalu isi hasilnya ke tabel</i></div>
           <div style="margin-bottom:8px;font-size:15px">Hasil = …….. Jam/Hari</div>
+          <button class="btn-calc-trigger" onclick="openCalcModal('mean')">🧮 Buka Kalkulator Mean</button>
           <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
             <tr><td style="width:40%">Total Durasi Penggunaan HP</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
             <tr><td>Jumlah Respondent (N)</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
@@ -203,21 +509,16 @@
           <div style="margin-bottom:10px;font-size:15px">Arti Mean Kalian:</div>
           <textarea placeholder="Rata-rata siswa di kelas …… menggunakan HP ………….. jam per hari." style="width:100%;min-height:32px;margin-bottom:18px"></textarea>
           <div style="font-size:16px;font-weight:700;margin-bottom:10px">3. Hitung Median (Nilai Tengah)</div>
-          <div style="margin-bottom:8px;font-size:15px">Definisi: Nilai yang membagi data yang telah diurutkan menjadi dua bagian sama besar</div>
-          <div style="margin-bottom:8px;font-size:15px">Langkah-langkah:</div>
-          <ol style="font-size:15px;margin-bottom:8px;padding-left:22px">
-            <li>Urutkan data durasi penggunaan HP dari yang terkecil ke terbesar</li>
-            <li>Tentukan posisi Median:</li>
-          </ol>
-          <div style="margin-bottom:8px;font-size:15px">Jika N Ganjil: Posisi Median =</div>
-          <div style="margin-bottom:8px;font-size:15px">Jika N Genap: Median Adalah rata-rata dari data pada posisi</div>
+          <div style="margin-bottom:8px;font-size:15px">💡 <i>Gunakan kalkulator untuk melihat langkah-langkahnya</i></div>
+          <button class="btn-calc-trigger" onclick="openCalcModal('median')">🧮 Buka Kalkulator Median</button>
           <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
             <tr><td style="width:40%">Data Durasi yang sudah diurutkan</td><td><input type="text" style="width:100%"></td></tr>
             <tr><td>Posisi Median</td><td><input type="text" style="width:100%"></td></tr>
             <tr><td>Median (Nilai Tengah Durasi)</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
           </table>
           <div style="font-size:16px;font-weight:700;margin-bottom:10px">4. Hitung Modus (Durasi Penggunaan HP Paling Banyak)</div>
-          <div style="margin-bottom:8px;font-size:15px">Definisi: Data atau kategori yang paling sering muncul. Dalam konteks ini, kita mencari Durasi penggunaan HP yang paling banyak dipilih</div>
+          <div style="margin-bottom:8px;font-size:15px">💡 <i>Pelajari cara menghitung modus dengan kalkulator</i></div>
+          <button class="btn-calc-trigger" onclick="openCalcModal('modus')">🧮 Buka Kalkulator Modus</button>
           <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
             <thead>
               <tr style="background:#f5f5f5">
@@ -250,8 +551,8 @@
             </tbody>
           </table>
           <div style="font-size:16px;font-weight:700;margin-bottom:10px">6. Jangkauan (Range)</div>
-          <div style="margin-bottom:8px;font-size:15px">Definisi: Selisih antara nilai data tertinggi (maksimum) dengan nilai data terendah (minimum). Jangkauan menunjukkan seberapa beragam data penggunaan HP di kelas</div>
-          <div style="margin-bottom:8px;font-size:15px">Rumus: Nmax – Nmin</div>
+          <div style="margin-bottom:8px;font-size:15px">💡 <i>Lihat cara menghitung jangkauan dengan kalkulator</i></div>
+          <button class="btn-calc-trigger" onclick="openCalcModal('jangkauan')">🧮 Buka Kalkulator Jangkauan</button>
           <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
             <tr><td style="width:40%">Durasi Paling Tinggi</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
             <tr><td>Durasi Paling Rendah</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
@@ -263,23 +564,8 @@
             <li>Jangkauan Besar: Penggunaan HP di kelas cenderung beragam</li>
           </ul>
           <div style="font-size:16px;font-weight:700;margin-bottom:10px">7. Kuartil dan Jangkauan Kuartil (IQR)</div>
-          <div style="margin-bottom:8px;font-size:15px">Definisi Quartil: Kuartil adalah nilai-nilai yang membagi data yang telah diurutkan menjadi empat bagian sama besar. Terdapat tiga quartil:</div>
-          <ul style="font-size:15px;margin-bottom:8px">
-            <li>Q1 (Quartil Bawah): Nilai yang membatasi 25% data terendah.</li>
-            <li>Q2 (Quartil Tengah): Nilai yang membatasi 50% data terendah (sama dengan Median).</li>
-            <li>Q3 (Quartil Atas): Nilai yang membatasi 75% data terendah.</li>
-          </ul>
-          <div style="margin-bottom:8px;font-size:15px">Definisi Jangkauan Kuartil: Jangkauan Kuartil adalah selisih antara Q3 dan Q1. Rumus: IQR = Q3 – Q1</div>
-          <div style="margin-bottom:8px;font-size:15px">Langkah-langkah menghitung kuartil:</div>
-          <ol style="font-size:15px;margin-bottom:8px;padding-left:22px">
-            <li>a. Urutkan data durasi penggunaan HP dari yang terkecil ke terbesar</li>
-            <li>b. Hitung posisi Q1, Q2, dan Q3</li>
-          </ol>
-          <div style="margin-bottom:8px;font-size:15px">Posisi Q1 = (N + 1) * 0,25</div>
-          <div style="margin-bottom:8px;font-size:15px">Posisi Q2 = (N + 1) * 0,50</div>
-          <div style="margin-bottom:8px;font-size:15px">Posisi Q3 = (N + 1) * 0,75</div>
-          <div style="margin-bottom:8px;font-size:15px">c. Jika posisi bukan bilangan bulat, gunakan interpolasi linear antara dua nilai terdekat</div>
-          <div style="margin-bottom:8px;font-size:15px">d. Hitung IQR = Q3 – Q1</div>
+          <div style="margin-bottom:8px;font-size:15px">💡 <i>Pelajari cara menghitung kuartil Q1, Q2, Q3 dengan kalkulator</i></div>
+          <button class="btn-calc-trigger" onclick="openCalcModal('kuartil')">🧮 Buka Kalkulator Kuartil</button>
           <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
             <tr><td style="width:40%">Jumlah Respondent (N)</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
             <tr><td>Posisi Q1</td><td><input type="text" style="width:100%"></td></tr>
@@ -290,33 +576,7 @@
             <tr><td>Q3</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
             <tr><td>IQR</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
           </table>
-          <div style="font-size:16px;font-weight:700;margin-bottom:10px">8. Identifikasi Data Pencilan (Outlier)</div>
-          <div style="margin-bottom:8px;font-size:15px">Data pencilan adalah nilai yang berada di luar batas berikut:</div>
-          <div style="margin-bottom:8px;font-size:15px">Batas Bawah = Q1 – 1,5 x IQR</div>
-          <div style="margin-bottom:8px;font-size:15px">Batas Atas = Q3 + 1,5 x IQR</div>
-          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
-            <tr><td style="width:40%">Q1</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
-            <tr><td>Q2</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
-            <tr><td>Q3</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
-            <tr><td>Batas Bawah</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
-            <tr><td>Batas Atas</td><td><input type="number" min="0" step="any" style="width:100%"></td></tr>
-          </table>
-          <div style="margin-bottom:10px;font-size:15px">Data Pencilan yang ditemukan</div>
-          <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
-            <thead>
-              <tr style="background:#f5f5f5">
-                <th>Durasi (Jam)</th>
-                <th>Jenis Pencilan</th>
-                <th>Respondent</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" placeholder="Bawah/Atas" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
-              <tr><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" placeholder="Bawah/Atas" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
-              <tr><td><input type="number" min="0" step="any" style="width:100%"></td><td><input type="text" placeholder="Bawah/Atas" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
-            </tbody>
-          </table>
-          <div style="margin-bottom:10px;font-size:15px">Catatan: Data pencilan tidak harus dihapus, tetapi perlu dianalisis lebih lanjut. Apakah ada alasan khusus mengapa siswa tertentu memiliki durasi penggunaan HP yang sangat tinggi atau sangat rendah?</div>
+         
           <div style="font-size:16px;font-weight:700;margin-bottom:10px">Analisis Quartil dan IQR</div>
           <ul style="font-size:15px;margin-bottom:8px">
             <li>a. IQR Kecil: 50% siswa (kelompok tengah) memiliki durasi penggunaan HP yang relatif seragam.</li>
@@ -411,28 +671,29 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>Belajar</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
-              <tr><td>Medas</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
-              <tr><td>Main Gim</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
-              <tr><td style="font-weight:700">Total</td><td><input type="number" min="0" step="1" style="width:100%"></td></tr>
+              <tr><td>Belajar</td><td><input type="number" min="0" step="1" style="width:100%" id="tujuan1_belajar" oninput="calcTotalTujuan1()"></td></tr>
+              <tr><td>Medas</td><td><input type="number" min="0" step="1" style="width:100%" id="tujuan1_medas" oninput="calcTotalTujuan1()"></td></tr>
+              <tr><td>Main Gim</td><td><input type="number" min="0" step="1" style="width:100%" id="tujuan1_gim" oninput="calcTotalTujuan1()"></td></tr>
+              <tr><td style="font-weight:700">Total</td><td><input type="number" min="0" step="1" style="width:100%;background:#e8f0ff;font-weight:700" id="tujuan1_total" readonly></td></tr>
             </tbody>
           </table>
           <div style="margin-bottom:14px;font-size:15px">Dalam Statistika, Rata-rata (Mean) hanya bisa dihitung untuk data yang bersifat Numerik (angka yang bisa dijumlahkan), seperti durasi penggunaan HP. Sedangkan untuk Tujuan utama (Belajar, Medss, Gim) dan Waktu Aktif (Pagi, Siang, Malam) adalah Data Kategorik. Data jenis ini tidak bisa dirata-ratakan dengan rumus matematika biasa, melainkan dicari modus atau persentasenya.</div>
           <div style="font-size:16px;font-weight:700;margin-bottom:10px">2. Menemukan Modus (Pilihan Terbanyak)</div>
           <div style="margin-bottom:10px;font-size:15px">Definisi: Data atau kategori yang paling sering muncul. Dalam konteks ini, kita mencari tujuan penggunaan HP yang paling banyak dipilih</div>
+          <div style="margin-bottom:8px;font-size:14px;color:#059669">💡 <i>Persentase akan otomatis terhitung saat Anda memasukkan jumlah responden</i></div>
           <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
             <thead>
               <tr style="background:#f5f5f5">
                 <th>Tujuan Penggunaan HP</th>
                 <th>Jumlah Responden</th>
-                <th>Persentase</th>
+                <th>Persentase (%)</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td>Belajar</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
-              <tr><td>Medas</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
-              <tr><td>Main Gim</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
-              <tr><td style="font-weight:700">Total</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+              <tr><td>Belajar</td><td><input type="number" min="0" step="1" style="width:100%" id="tujuan2_belajar" oninput="calcPersenTujuan2()"></td><td><input type="text" style="width:100%;background:#e8f0ff;text-align:center;font-weight:600" id="tujuan2_belajar_persen" readonly></td></tr>
+              <tr><td>Medas</td><td><input type="number" min="0" step="1" style="width:100%" id="tujuan2_medas" oninput="calcPersenTujuan2()"></td><td><input type="text" style="width:100%;background:#e8f0ff;text-align:center;font-weight:600" id="tujuan2_medas_persen" readonly></td></tr>
+              <tr><td>Main Gim</td><td><input type="number" min="0" step="1" style="width:100%" id="tujuan2_gim" oninput="calcPersenTujuan2()"></td><td><input type="text" style="width:100%;background:#e8f0ff;text-align:center;font-weight:600" id="tujuan2_gim_persen" readonly></td></tr>
+              <tr><td style="font-weight:700">Total</td><td><input type="text" style="width:100%;background:#e8f0ff;font-weight:700;text-align:center" id="tujuan2_total" readonly></td><td><input type="text" style="width:100%;text-align:center;font-weight:700" id="tujuan2_total_persen" readonly></td></tr>
             </tbody>
           </table>
           <div style="margin-bottom:10px;font-size:15px">Kesimpulan Modus: Tujuan penggunaan HP yang paling banyak dipilih Adalah:</div>
@@ -458,18 +719,19 @@
           </table>
           <div style="font-size:15px;font-weight:700;margin-bottom:8px">2. Analisis Waktu Penggunaan</div>
           <div style="margin-bottom:10px;font-size:15px">Hitung persentase responden yang menggunakan HP pada malam hari (misalnya, setelah pukul 20.00).</div>
+          <div style="margin-bottom:8px;font-size:14px;color:#059669">💡 <i>Persentase akan otomatis terhitung saat Anda memasukkan jumlah responden</i></div>
           <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
             <thead>
               <tr style="background:#f5f5f5">
                 <th>Waktu Penggunaan</th>
                 <th>Jumlah Responden</th>
-                <th>Persentase</th>
+                <th>Persentase (%)</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td>Pagi/Siang/Sore</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
-              <tr><td>Malam hari (&gt; 20.00 WIB)</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
-              <tr><td style="font-weight:700">Total</td><td><input type="number" min="0" step="1" style="width:100%"></td><td><input type="number" min="0" max="100" step="any" style="width:100%"></td></tr>
+              <tr><td>Pagi/Siang/Sore</td><td><input type="number" min="0" step="1" style="width:100%" id="waktu_siang" oninput="calcPersenWaktu()"></td><td><input type="text" style="width:100%;background:#e8f0ff;text-align:center;font-weight:600" id="waktu_siang_persen" readonly></td></tr>
+              <tr><td>Malam hari (&gt; 20.00 WIB)</td><td><input type="number" min="0" step="1" style="width:100%" id="waktu_malam" oninput="calcPersenWaktu()"></td><td><input type="text" style="width:100%;background:#e8f0ff;text-align:center;font-weight:600" id="waktu_malam_persen" readonly></td></tr>
+              <tr><td style="font-weight:700">Total</td><td><input type="text" style="width:100%;background:#e8f0ff;font-weight:700;text-align:center" id="waktu_total" readonly></td><td><input type="text" style="width:100%;text-align:center;font-weight:700" id="waktu_total_persen" readonly></td></tr>
             </tbody>
           </table>
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
@@ -544,7 +806,228 @@
           </div>
         </div>
       </section>
-      <!-- Slide berikutnya bisa ditambahkan di bawah ini -->
+      <!-- Slide 1001: Chart Generator -->
+      <section class="slide" data-slide="1001" style="display:none">
+        <div style="padding:32px 24px;max-height:calc(100vh - 100px);overflow-y:auto">
+          <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:20px;text-align:center;color:#0f172a">📊 Chart Generator - Penyajian Data</div>
+          <div style="margin-bottom:20px;font-size:14px;color:#6b7280;text-align:center">Buat visualisasi data untuk presentasi Anda</div>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+            <!-- Input Data Section -->
+            <div style="background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);border:1px solid var(--line);border-radius:16px;padding:20px">
+              <div style="font-weight:700;font-size:16px;margin-bottom:16px;color:#0f172a">📝 Input Data</div>
+              
+              <div style="margin-bottom:14px">
+                <label style="font-weight:700;font-size:13px;display:block;margin-bottom:6px">Label/Kategori (pisahkan dengan koma)</label>
+                <input type="text" id="chartLabels" placeholder="Kategori A, Kategori B, Kategori C" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+              
+              <div style="margin-bottom:14px">
+                <label style="font-weight:700;font-size:13px;display:block;margin-bottom:6px">Data/Nilai (pisahkan dengan koma)</label>
+                <input type="text" id="chartValues" placeholder="10, 20, 30" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+              
+              <div style="margin-bottom:14px">
+                <label style="font-weight:700;font-size:13px;display:block;margin-bottom:6px">Judul Chart</label>
+                <input type="text" id="chartTitle" placeholder="Contoh: Durasi Penggunaan HP" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif">
+              </div>
+              
+              <div style="margin-bottom:16px">
+                <label style="font-weight:700;font-size:13px;display:block;margin-bottom:6px">Jenis Chart</label>
+                <select id="chartType" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif">
+                  <option value="bar">📊 Diagram Batang</option>
+                  <option value="line">📈 Diagram Garis</option>
+                  <option value="doughnut">🥧 Diagram Lingkaran</option>
+                  <option value="radar">🎯 Diagram Radar</option>
+                </select>
+              </div>
+              
+              <button onclick="generateChart()" style="width:100%;padding:12px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                ✨ Buat Chart
+              </button>
+            </div>
+            
+            <!-- Chart Preview -->
+            <div style="background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column">
+              <div style="font-weight:700;font-size:16px;margin-bottom:16px;color:#0f172a">👁️ Preview</div>
+              <div id="chartPreviewContainer" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:300px;background:#f9fbff;border-radius:12px;border:1px dashed var(--line)">
+                <div style="text-align:center;color:#9ca3af">
+                  <div style="font-size:32px;margin-bottom:8px">📊</div>
+                  <div>Isi data dan klik "Buat Chart"</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Chart Data Table Preview -->
+          <div style="margin-top:20px;background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);border:1px solid var(--line);border-radius:16px;padding:20px">
+            <div style="font-weight:700;font-size:16px;margin-bottom:12px;color:#0f172a">📋 Preview Data Tabel</div>
+            <div id="tablePreviewContainer" style="max-height:200px;overflow-y:auto"></div>
+          </div>
+          
+          <!-- Action Buttons -->
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <button onclick="updateSlide(406)" class="btn-ghost" style="flex:1">← Kembali</button>
+            <button onclick="downloadChartPDF()" class="btn-primary" style="flex:1">📥 Download Chart</button>
+            <button onclick="resetChartForm()" style="flex:1;padding:12px 16px;background:#f3f4f6;color:#0f172a;border:1px solid var(--line);border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s ease" onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">🔄 Reset</button>
+          </div>
+        </div>
+        
+        <style>
+          #chartPreviewContainer canvas {
+            max-width: 100%;
+            height: auto;
+          }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        <script>
+          let currentChartInstance = null;
+          
+          function generateChart() {
+            const labelsInput = document.getElementById('chartLabels').value;
+            const valuesInput = document.getElementById('chartValues').value;
+            const chartTitle = document.getElementById('chartTitle').value || 'Chart';
+            const chartType = document.getElementById('chartType').value;
+            
+            if (!labelsInput.trim() || !valuesInput.trim()) {
+              alert('Silakan isi data label dan nilai terlebih dahulu');
+              return;
+            }
+            
+            const labels = labelsInput.split(',').map(l => l.trim());
+            const values = valuesInput.split(',').map(v => {
+              const num = parseFloat(v.trim());
+              return isNaN(num) ? 0 : num;
+            });
+            
+            if (labels.length !== values.length) {
+              alert('Jumlah label harus sama dengan jumlah nilai');
+              return;
+            }
+            
+            updateTablePreview(labels, values);
+            renderChart(labels, values, chartTitle, chartType);
+          }
+          
+          function updateTablePreview(labels, values) {
+            const container = document.getElementById('tablePreviewContainer');
+            let html = '<table style="width:100%;border-collapse:collapse">';
+            html += '<thead><tr style="background:#f5f5f5"><th style="padding:10px;text-align:left;border:1px solid var(--line)">Kategori</th><th style="padding:10px;text-align:center;border:1px solid var(--line)">Nilai</th></tr></thead>';
+            html += '<tbody>';
+            
+            labels.forEach((label, idx) => {
+              html += `<tr><td style="padding:10px;border:1px solid var(--line)">${label}</td><td style="padding:10px;text-align:center;border:1px solid var(--line);font-weight:700">${values[idx]}</td></tr>`;
+            });
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+          }
+          
+          function renderChart(labels, values, title, type) {
+            const container = document.getElementById('chartPreviewContainer');
+            
+            // Generate random colors
+            const bgColors = labels.map(() => {
+              const hue = Math.random() * 360;
+              return `hsl(${hue}, 70%, 60%)`;
+            });
+            
+            const borderColors = labels.map(() => {
+              const hue = Math.random() * 360;
+              return `hsl(${hue}, 70%, 40%)`;
+            });
+            
+            // Destroy previous chart
+            if (currentChartInstance) {
+              currentChartInstance.destroy();
+            }
+            
+            // Create canvas
+            container.innerHTML = '<canvas id="dynamicChart"></canvas>';
+            const canvas = document.getElementById('dynamicChart');
+            
+            const chartConfig = {
+              type: type,
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: title,
+                  data: values,
+                  backgroundColor: type === 'line' ? 'rgba(75, 141, 248, 0.1)' : bgColors,
+                  borderColor: type === 'line' ? '#4b8df8' : borderColors,
+                  borderWidth: type === 'line' ? 3 : 1,
+                  fill: type === 'line' ? true : false,
+                  tension: 0.4
+                }]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                  legend: {
+                    display: type !== 'bar' && type !== 'line',
+                    position: 'bottom'
+                  },
+                  title: {
+                    display: true,
+                    text: title,
+                    font: { size: 16, weight: 'bold' }
+                  }
+                },
+                scales: type === 'line' || type === 'bar' ? {
+                  y: {
+                    beginAtZero: true,
+                    ticks: {
+                      stepSize: Math.ceil(Math.max(...values) / 5)
+                    }
+                  }
+                } : undefined
+              }
+            };
+            
+            currentChartInstance = new Chart(canvas, chartConfig);
+          }
+          
+          function downloadChartPDF() {
+            if (!currentChartInstance) {
+              alert('Silakan buat chart terlebih dahulu');
+              return;
+            }
+            
+            const canvas = document.getElementById('dynamicChart');
+            if (!canvas) {
+              alert('Chart tidak ditemukan');
+              return;
+            }
+            
+            const imageData = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = imageData;
+            link.download = 'chart_' + new Date().getTime() + '.png';
+            link.click();
+          }
+          
+          function resetChartForm() {
+            document.getElementById('chartLabels').value = '';
+            document.getElementById('chartValues').value = '';
+            document.getElementById('chartTitle').value = '';
+            document.getElementById('chartType').value = 'bar';
+            document.getElementById('chartPreviewContainer').innerHTML = `
+              <div style="text-align:center;color:#9ca3af">
+                <div style="font-size:32px;margin-bottom:8px">📊</div>
+                <div>Isi data dan klik "Buat Chart"</div>
+              </div>
+            `;
+            document.getElementById('tablePreviewContainer').innerHTML = '';
+            
+            if (currentChartInstance) {
+              currentChartInstance.destroy();
+              currentChartInstance = null;
+            }
+          }
+        </script>
+      </section>
     </div>
   </div>
   <script>
@@ -689,6 +1172,471 @@
       alert('Pengerjaanmu selesai!');
       // Jika ingin lanjut ke slide berikutnya, bisa tambahkan:
       // updateSlide(407);
+    }
+    
+    // ========================================
+    // FUNGSI KALKULATOR STATISTIK
+    // ========================================
+    
+    // Buka modal kalkulator
+    function openCalcModal(type) {
+      const modal = document.getElementById('calcModal' + type.charAt(0).toUpperCase() + type.slice(1));
+      if (modal) {
+        modal.classList.add('active');
+      }
+    }
+    
+    // Tutup modal kalkulator
+    function closeCalcModal(type) {
+      const modal = document.getElementById('calcModal' + type.charAt(0).toUpperCase() + type.slice(1));
+      if (modal) {
+        modal.classList.remove('active');
+      }
+    }
+    
+    // Helper: Parse data
+    function parseData(input) {
+      const numbers = input
+        .split(/[,\s]+/)
+        .map(str => str.trim())
+        .filter(str => str !== '')
+        .map(str => parseFloat(str));
+      
+      if (numbers.some(isNaN)) {
+        return null;
+      }
+      return numbers;
+    }
+    
+    // MEAN
+    function calculateStatMean() {
+      const input = document.getElementById('dataMean').value.trim();
+      const data = parseData(input);
+      
+      if (!data || data.length === 0) {
+        alert('❌ Data tidak valid! Pastikan Anda memasukkan angka.');
+        return;
+      }
+      
+      const n = data.length;
+      const sum = data.reduce((acc, val) => acc + val, 0);
+      const mean = sum / n;
+      
+      let html = `
+        <div class="calc-final-answer">Mean = ${mean.toFixed(2)}</div>
+        <div class="calc-steps">
+          <h3>📝 Langkah-langkah Perhitungan:</h3>
+          <div class="calc-step">
+            <span class="calc-step-number">1</span>
+            Data yang dimasukkan: <div class="calc-data-display">${data.join(', ')}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">2</span>
+            Jumlah data (n) = <span class="calc-highlight">${n}</span>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">3</span>
+            Jumlahkan semua data:<br>
+            <div class="calc-formula">${data.join(' + ')} = ${sum}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">4</span>
+            Bagi jumlah dengan banyak data:<br>
+            <div class="calc-formula">Mean = ${sum} ÷ ${n} = ${mean.toFixed(2)}</div>
+          </div>
+        </div>
+      `;
+      
+      const resultDiv = document.getElementById('resultMean');
+      resultDiv.innerHTML = html;
+      resultDiv.classList.add('show');
+    }
+    
+    // MEDIAN
+    function calculateStatMedian() {
+      const input = document.getElementById('dataMedian').value.trim();
+      const data = parseData(input);
+      
+      if (!data || data.length === 0) {
+        alert('❌ Data tidak valid! Pastikan Anda memasukkan angka.');
+        return;
+      }
+      
+      const sorted = [...data].sort((a, b) => a - b);
+      const n = sorted.length;
+      const isEven = n % 2 === 0;
+      
+      let median, medianCalc;
+      if (isEven) {
+        const mid1 = sorted[n/2 - 1];
+        const mid2 = sorted[n/2];
+        median = (mid1 + mid2) / 2;
+        medianCalc = `Median = (${mid1} + ${mid2}) ÷ 2 = ${median}`;
+      } else {
+        median = sorted[Math.floor(n/2)];
+        medianCalc = `Median = data ke-${Math.floor(n/2) + 1} = ${median}`;
+      }
+      
+      let html = `
+        <div class="calc-final-answer">Median = ${median}</div>
+        <div class="calc-steps">
+          <h3>📝 Langkah-langkah Perhitungan:</h3>
+          <div class="calc-step">
+            <span class="calc-step-number">1</span>
+            Data asli: <div class="calc-data-display">${data.join(', ')}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">2</span>
+            Urutkan data dari terkecil ke terbesar:
+            <div class="calc-data-display">${sorted.join(', ')}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">3</span>
+            Jumlah data (n) = <span class="calc-highlight">${n}</span> ${isEven ? '(GENAP)' : '(GANJIL)'}
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">4</span>
+            ${isEven 
+              ? `Karena jumlah data genap, median adalah rata-rata dari 2 data tengah:<br><div class="calc-formula">Posisi tengah: data ke-${n/2} dan ke-${n/2 + 1}<br>Nilai: ${sorted[n/2 - 1]} dan ${sorted[n/2]}</div>`
+              : `Karena jumlah data ganjil, median adalah data di tengah:<br><div class="calc-formula">Posisi tengah: data ke-${Math.floor(n/2) + 1}<br>Nilai: ${sorted[Math.floor(n/2)]}</div>`
+            }
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">5</span>
+            <div class="calc-formula">${medianCalc}</div>
+          </div>
+        </div>
+      `;
+      
+      const resultDiv = document.getElementById('resultMedian');
+      resultDiv.innerHTML = html;
+      resultDiv.classList.add('show');
+    }
+    
+    // MODUS
+    function calculateStatModus() {
+      const input = document.getElementById('dataModus').value.trim();
+      const data = parseData(input);
+      
+      if (!data || data.length === 0) {
+        alert('❌ Data tidak valid! Pastikan Anda memasukkan angka.');
+        return;
+      }
+      
+      const frequency = {};
+      data.forEach(num => {
+        frequency[num] = (frequency[num] || 0) + 1;
+      });
+      
+      const maxFreq = Math.max(...Object.values(frequency));
+      const modes = Object.keys(frequency)
+        .filter(key => frequency[key] === maxFreq)
+        .map(Number)
+        .sort((a, b) => a - b);
+      
+      let freqTable = '<table style="width:100%;border-collapse:collapse;margin:10px 0;">';
+      freqTable += '<tr style="background:var(--primary);color:white;"><th style="padding:8px;border:1px solid #ddd;">Nilai</th><th style="padding:8px;border:1px solid #ddd;">Frekuensi</th></tr>';
+      
+      Object.keys(frequency)
+        .map(Number)
+        .sort((a, b) => a - b)
+        .forEach(num => {
+          const isMode = frequency[num] === maxFreq;
+          freqTable += `<tr style="${isMode ? 'background:#fef3c7;font-weight:700;' : 'background:white;'}">
+            <td style="padding:8px;border:1px solid #ddd;text-align:center;">${num}</td>
+            <td style="padding:8px;border:1px solid #ddd;text-align:center;">${frequency[num]} ${isMode ? '⭐' : ''}</td>
+          </tr>`;
+        });
+      freqTable += '</table>';
+      
+      let modeResult;
+      if (maxFreq === 1) {
+        modeResult = 'Tidak ada modus (semua data muncul sekali)';
+      } else if (modes.length === 1) {
+        modeResult = `Modus = ${modes[0]} (muncul ${maxFreq} kali)`;
+      } else {
+        modeResult = `Modus = ${modes.join(', ')} (masing-masing muncul ${maxFreq} kali)`;
+      }
+      
+      let html = `
+        <div class="calc-final-answer">${modeResult}</div>
+        <div class="calc-steps">
+          <h3>📝 Langkah-langkah Perhitungan:</h3>
+          <div class="calc-step">
+            <span class="calc-step-number">1</span>
+            Data yang dimasukkan: <div class="calc-data-display">${data.join(', ')}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">2</span>
+            Hitung frekuensi (berapa kali) setiap nilai muncul:
+            ${freqTable}
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">3</span>
+            Frekuensi tertinggi = <span class="calc-highlight">${maxFreq}</span>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">4</span>
+            ${maxFreq === 1 
+              ? `Semua nilai muncul 1 kali, sehingga <span class="calc-highlight">tidak ada modus</span>`
+              : `Nilai yang muncul paling sering (${maxFreq} kali):<br><div class="calc-formula">${modes.join(', ')}</div>`
+            }
+          </div>
+        </div>
+      `;
+      
+      const resultDiv = document.getElementById('resultModus');
+      resultDiv.innerHTML = html;
+      resultDiv.classList.add('show');
+    }
+    
+    // JANGKAUAN
+    function calculateStatJangkauan() {
+      const input = document.getElementById('dataJangkauan').value.trim();
+      const data = parseData(input);
+      
+      if (!data || data.length === 0) {
+        alert('❌ Data tidak valid! Pastikan Anda memasukkan angka.');
+        return;
+      }
+      
+      const sorted = [...data].sort((a, b) => a - b);
+      const min = Math.min(...data);
+      const max = Math.max(...data);
+      const range = max - min;
+      
+      let html = `
+        <div class="calc-final-answer">Jangkauan = ${range}</div>
+        <div class="calc-steps">
+          <h3>📝 Langkah-langkah Perhitungan:</h3>
+          <div class="calc-step">
+            <span class="calc-step-number">1</span>
+            Data yang dimasukkan: <div class="calc-data-display">${data.join(', ')}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">2</span>
+            Urutkan data: <div class="calc-data-display">${sorted.join(', ')}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">3</span>
+            Cari nilai terkecil (minimum):<br>
+            <div class="calc-formula">Min = ${min}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">4</span>
+            Cari nilai terbesar (maksimum):<br>
+            <div class="calc-formula">Max = ${max}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">5</span>
+            Hitung jangkauan (selisih max dan min):<br>
+            <div class="calc-formula">Jangkauan = ${max} - ${min} = ${range}</div>
+          </div>
+        </div>
+      `;
+      
+      const resultDiv = document.getElementById('resultJangkauan');
+      resultDiv.innerHTML = html;
+      resultDiv.classList.add('show');
+    }
+    
+    // KUARTIL
+    function calculateStatKuartil() {
+      const input = document.getElementById('dataKuartil').value.trim();
+      const data = parseData(input);
+      
+      if (!data || data.length === 0) {
+        alert('❌ Data tidak valid! Pastikan Anda memasukkan angka.');
+        return;
+      }
+      
+      const sorted = [...data].sort((a, b) => a - b);
+      const n = sorted.length;
+      
+      // Hitung Q2 (Median)
+      const Q2 = n % 2 === 0 
+        ? (sorted[n/2 - 1] + sorted[n/2]) / 2 
+        : sorted[Math.floor(n/2)];
+      
+      // Hitung Q1
+      const lowerHalf = n % 2 === 0 
+        ? sorted.slice(0, n/2)
+        : sorted.slice(0, Math.floor(n/2));
+      
+      const Q1 = lowerHalf.length % 2 === 0
+        ? (lowerHalf[lowerHalf.length/2 - 1] + lowerHalf[lowerHalf.length/2]) / 2
+        : lowerHalf[Math.floor(lowerHalf.length/2)];
+      
+      // Hitung Q3
+      const upperHalf = n % 2 === 0
+        ? sorted.slice(n/2)
+        : sorted.slice(Math.floor(n/2) + 1);
+      
+      const Q3 = upperHalf.length % 2 === 0
+        ? (upperHalf[upperHalf.length/2 - 1] + upperHalf[upperHalf.length/2]) / 2
+        : upperHalf[Math.floor(upperHalf.length/2)];
+      
+      const IQR = Q3 - Q1;
+      
+      let html = `
+        <div class="calc-final-answer">Q1 = ${Q1} | Q2 = ${Q2} | Q3 = ${Q3}</div>
+        <div class="calc-steps">
+          <h3>📝 Langkah-langkah Perhitungan:</h3>
+          <div class="calc-step">
+            <span class="calc-step-number">1</span>
+            Data asli: <div class="calc-data-display">${data.join(', ')}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">2</span>
+            Urutkan data: <div class="calc-data-display">${sorted.join(', ')}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">3</span>
+            Jumlah data (n) = <span class="calc-highlight">${n}</span>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">4</span>
+            <strong>Hitung Q2 (Kuartil Tengah / Median)</strong><br>
+            Q2 adalah median dari seluruh data
+            <div class="calc-formula">Q2 = ${Q2}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">5</span>
+            <strong>Hitung Q1 (Kuartil Bawah)</strong><br>
+            Q1 adalah median dari data bagian bawah:
+            <div class="calc-data-display">${lowerHalf.join(', ')}</div>
+            <div class="calc-formula">Q1 = ${Q1}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">6</span>
+            <strong>Hitung Q3 (Kuartil Atas)</strong><br>
+            Q3 adalah median dari data bagian atas:
+            <div class="calc-data-display">${upperHalf.join(', ')}</div>
+            <div class="calc-formula">Q3 = ${Q3}</div>
+          </div>
+          <div class="calc-step">
+            <span class="calc-step-number">7</span>
+            <strong>Hitung IQR (Jangkauan Kuartil)</strong><br>
+            <div class="calc-formula">IQR = Q3 - Q1 = ${Q3} - ${Q1} = ${IQR.toFixed(2)}</div>
+          </div>
+        </div>
+      `;
+      
+      const resultDiv = document.getElementById('resultKuartil');
+      resultDiv.innerHTML = html;
+      resultDiv.classList.add('show');
+    }
+    
+    // Tutup modal jika klik di luar konten
+    window.onclick = function(event) {
+      if (event.target.classList.contains('calc-modal')) {
+        event.target.classList.remove('active');
+      }
+    }
+    
+    // ========================================
+    // FUNGSI AUTO-CALCULATE PERSENTASE
+    // ========================================
+    
+    // Tabel 1: Total Tujuan Penggunaan HP (hanya total, tanpa persentase)
+    function calcTotalTujuan1() {
+      const belajar = parseFloat(document.getElementById('tujuan1_belajar')?.value) || 0;
+      const medas = parseFloat(document.getElementById('tujuan1_medas')?.value) || 0;
+      const gim = parseFloat(document.getElementById('tujuan1_gim')?.value) || 0;
+      
+      const total = belajar + medas + gim;
+      const totalInput = document.getElementById('tujuan1_total');
+      if (totalInput) {
+        totalInput.value = total;
+      }
+    }
+    
+    // Tabel 2: Menemukan Modus (dengan persentase)
+    function calcPersenTujuan2() {
+      const belajar = parseFloat(document.getElementById('tujuan2_belajar')?.value) || 0;
+      const medas = parseFloat(document.getElementById('tujuan2_medas')?.value) || 0;
+      const gim = parseFloat(document.getElementById('tujuan2_gim')?.value) || 0;
+      
+      const total = belajar + medas + gim;
+      
+      // Update total
+      const totalInput = document.getElementById('tujuan2_total');
+      if (totalInput) {
+        totalInput.value = total;
+      }
+      
+      // Hitung persentase
+      if (total > 0) {
+        const persenBelajar = (belajar / total * 100).toFixed(2);
+        const persenMedas = (medas / total * 100).toFixed(2);
+        const persenGim = (gim / total * 100).toFixed(2);
+        const persenTotal = (parseFloat(persenBelajar) + parseFloat(persenMedas) + parseFloat(persenGim)).toFixed(2);
+        
+        document.getElementById('tujuan2_belajar_persen').value = persenBelajar + '%';
+        document.getElementById('tujuan2_medas_persen').value = persenMedas + '%';
+        document.getElementById('tujuan2_gim_persen').value = persenGim + '%';
+        
+        const totalPersenInput = document.getElementById('tujuan2_total_persen');
+        totalPersenInput.value = persenTotal + '%';
+        
+        // Validasi: Hijau jika 100%, Merah jika tidak
+        if (Math.abs(persenTotal - 100) < 0.1) {
+          totalPersenInput.style.background = '#d1fae5';
+          totalPersenInput.style.color = '#065f46';
+        } else {
+          totalPersenInput.style.background = '#fee2e2';
+          totalPersenInput.style.color = '#991b1b';
+        }
+      } else {
+        document.getElementById('tujuan2_belajar_persen').value = '';
+        document.getElementById('tujuan2_medas_persen').value = '';
+        document.getElementById('tujuan2_gim_persen').value = '';
+        document.getElementById('tujuan2_total_persen').value = '';
+        document.getElementById('tujuan2_total_persen').style.background = '#e8f0ff';
+        document.getElementById('tujuan2_total_persen').style.color = '#0f172a';
+      }
+    }
+    
+    // Tabel 3: Analisis Waktu Penggunaan
+    function calcPersenWaktu() {
+      const siang = parseFloat(document.getElementById('waktu_siang')?.value) || 0;
+      const malam = parseFloat(document.getElementById('waktu_malam')?.value) || 0;
+      
+      const total = siang + malam;
+      
+      // Update total
+      const totalInput = document.getElementById('waktu_total');
+      if (totalInput) {
+        totalInput.value = total;
+      }
+      
+      // Hitung persentase
+      if (total > 0) {
+        const persenSiang = (siang / total * 100).toFixed(2);
+        const persenMalam = (malam / total * 100).toFixed(2);
+        const persenTotal = (parseFloat(persenSiang) + parseFloat(persenMalam)).toFixed(2);
+        
+        document.getElementById('waktu_siang_persen').value = persenSiang + '%';
+        document.getElementById('waktu_malam_persen').value = persenMalam + '%';
+        
+        const totalPersenInput = document.getElementById('waktu_total_persen');
+        totalPersenInput.value = persenTotal + '%';
+        
+        // Validasi: Hijau jika 100%, Merah jika tidak
+        if (Math.abs(persenTotal - 100) < 0.1) {
+          totalPersenInput.style.background = '#d1fae5';
+          totalPersenInput.style.color = '#065f46';
+        } else {
+          totalPersenInput.style.background = '#fee2e2';
+          totalPersenInput.style.color = '#991b1b';
+        }
+      } else {
+        document.getElementById('waktu_siang_persen').value = '';
+        document.getElementById('waktu_malam_persen').value = '';
+        document.getElementById('waktu_total_persen').value = '';
+        document.getElementById('waktu_total_persen').style.background = '#e8f0ff';
+        document.getElementById('waktu_total_persen').style.color = '#0f172a';
+      }
     }
   </script>
 </body>
