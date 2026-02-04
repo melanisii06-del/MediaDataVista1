@@ -333,14 +333,14 @@
                 <span style="font-size:12px;display:block">Peta Konsep</span>
               </button>
               <span style="font-size:20px;margin:0 8px">→</span>
-              <button id="toc-btn-7" class="toc-item genty" onclick="updateSlide(8)" style="flex:0 1 auto;opacity:0.5;cursor:not-allowed" disabled>
-                <span style="font-size:32px;display:block">📚</span>
-                <span style="font-size:12px;display:block">Materi</span>
-              </button>
-              <span style="font-size:20px;margin:0 8px">→</span>
-              <button id="toc-btn-8" class="toc-item genty" onclick="updateSlide(9)" style="flex:0 1 auto;opacity:0.5;cursor:not-allowed" disabled>
+              <button id="toc-btn-8" class="toc-item genty" onclick="updateSlide(8)" style="flex:0 1 auto;opacity:0.5;cursor:not-allowed" disabled>
                 <span style="font-size:32px;display:block">🚀</span>
                 <span style="font-size:12px;display:block">Proyek</span>
+              </button>
+              <span style="font-size:20px;margin:0 8px">→</span>
+              <button id="toc-btn-7" class="toc-item genty" onclick="updateSlide(9)" style="flex:0 1 auto;opacity:0.5;cursor:not-allowed" disabled>
+                <span style="font-size:32px;display:block">📚</span>
+                <span style="font-size:12px;display:block">Materi</span>
               </button>
             </div>
 
@@ -441,17 +441,36 @@
           <div class="card-lite" style="text-align:left;padding:32px 24px">
             <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:10px">🗺️ Peta Konsep</div>
             <div class="img-placeholder" style="padding:12px">
-              <img src="pk2.jpeg" alt="Peta Konsep DataVista (pk2)" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
+              <img src="pk.jpeg" alt="Peta Konsep DataVista (pk2)" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 20px rgba(15,23,42,0.12)">
             </div>
 
             <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
               <button onclick="updateSlide(6)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Tujuan</button>
-              <button onclick="markSlideAsRead(7); updateTocButtons(); updateSlide(8);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Materi →</button>
+              <button onclick="markSlideAsRead(7); updateTocButtons(); updateSlide(8);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Proyek →</button>
             </div>
           </div>
         </section>
 
-        <section class="slide" data-slide="8">
+        <section class="slide" data-slide="8"><!-- Section 2: Daftar Isi Pertemuan -->
+              <div style="margin-top:32px">
+                <div class="genty" style="font-size:18px;font-weight:700;margin-bottom:14px;text-align:center;color:#0f172a">📂 Pilih Pertemuan</div>
+                <div class="toc-grid" style="margin-bottom:32px">
+                  <button class="toc-item genty" onclick="updateSlide(91)">Pertemuan 1</button>
+                  <button class="toc-item genty" onclick="updateSlide(92)">Pertemuan 2</button>
+                  <button class="toc-item genty" onclick="updateSlide(93)">Pertemuan 3</button>
+                  <button class="toc-item genty" onclick="updateSlide(94)">Pertemuan 4</button>
+                  <button class="toc-item genty" onclick="updateSlide(95)">Pertemuan 5</button>
+                </div>
+              </div>
+              
+              <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+                <button onclick="updateSlide(7)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Peta Konsep</button>
+                <button onclick="markSlideAsRead(8); updateTocButtons(); updateSlide(9);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Materi →</button>
+              </div>
+            </div>
+        </section>
+
+        <section class="slide" data-slide="9">
           <div class="card-lite" style="text-align:left;padding:32px 24px">
             <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:12px">📚 Materi</div>
             <div class="toc-grid">
@@ -461,32 +480,11 @@
             </div>
 
             <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
-              <button onclick="updateSlide(7)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Peta Konsep</button>
+              <button onclick="updateSlide(8)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Proyek</button>
               
-              <button onclick="markSlideAsRead(8); updateTocButtons(); updateSlide(9);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Proyek →</button>
+              <button onclick="markSlideAsRead(9); updateTocButtons(); updateSlide(10);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Kalkulator Statistik →</button>
             </div>
           </div>
-        </section>
-
-        <section class="slide" data-slide="9">
-            <div class="card-lite" style="text-align:left;padding:32px 24px">
-              <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:20px;text-align:center">🚀 Proyek: Daftar Isi Pertemuan</div>
-              <div class="toc-grid" style="margin-bottom:32px">
-                <button class="toc-item genty" onclick="updateSlide(91)">Pertemuan 1</button>
-                <button class="toc-item genty" onclick="updateSlide(92)">Pertemuan 2</button>
-                <button class="toc-item genty" onclick="updateSlide(93)">Pertemuan 3</button>
-                <button class="toc-item genty" onclick="updateSlide(94)">Pertemuan 4</button>
-                <button class="toc-item genty" onclick="updateSlide(95)">Pertemuan 5</button>
-              </div>
-              <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
-                <button onclick="updateSlide(8)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Materi</button>
-                <button onclick="markSlideAsRead(9); updateTocButtons(); updateSlide(10);" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Kalkulator Statistik →</button>
-              </div>
-              <!-- Draf Daftar Kelompok, jangan dihapus! -->
-              <div id="draft-daftar-kelompok" style="display:none">
-                <!-- ...daftar kelompok lama disimpan di sini... -->
-              </div>
-            </div>
         </section>
 
           <!-- Placeholder 5 pertemuan proyek -->
@@ -537,7 +535,7 @@
                 </div>
               </div>
               <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
-                 <button onclick="updateSlide(9)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Daftar Proyek</button>
+                 <button onclick="updateSlide(8)" style="padding:12px 24px;background:#748cc4;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(116,140,196,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">← Kembali Proyek</button>
                  <button onclick="updateSlide(911)" style="padding:12px 24px;background:linear-gradient(135deg,#4b8df8,#6da8ff);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 4px 12px rgba(75,141,248,0.3);transition:all 0.22s ease" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">LKPD →</button>
               </div>
             </div>
@@ -771,14 +769,16 @@
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:16px">
               <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#f9fbff">
-                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Tabel Produksi Beras</div>
-                <table style="width:100%;border-collapse:collapse;font-size:14px">
-                  <tr style="background:#e8f0ff;font-weight:700"><th style="padding:8px;border:1px solid var(--line)">Bulan</th><th style="padding:8px;border:1px solid var(--line)">Produksi (Ribu Ton)</th></tr>
-                  <tr><td style="padding:8px;border:1px solid var(--line)">Jan</td><td style="padding:8px;border:1px solid var(--line)">420</td></tr>
-                  <tr><td style="padding:8px;border:1px solid var(--line)">Feb</td><td style="padding:8px;border:1px solid var(--line)">460</td></tr>
-                  <tr><td style="padding:8px;border:1px solid var(--line)">Mar</td><td style="padding:8px;border:1px solid var(--line)">510</td></tr>
-                  <tr><td style="padding:8px;border:1px solid var(--line)">Apr</td><td style="padding:8px;border:1px solid var(--line)">480</td></tr>
+                <div class="genty" style="font-weight:700;margin-bottom:8px;font-size:16px">Tabel Produksi Beras + Analisis Siswa</div>
+                <div style="overflow-x:auto">
+                <table style="width:100%;border-collapse:collapse;font-size:13px">
+                  <tr style="background:#e8f0ff;font-weight:700"><th style="padding:8px;border:1px solid var(--line);min-width:60px">Bulan</th><th style="padding:8px;border:1px solid var(--line);min-width:90px">Produksi (Ribu Ton)</th><th style="padding:8px;border:1px solid var(--line);min-width:100px">Analisis Siswa</th></tr>
+                  <tr><td style="padding:8px;border:1px solid var(--line)">Jan</td><td style="padding:8px;border:1px solid var(--line)">420</td><td style="padding:6px;border:1px solid var(--line)"><input type="text" placeholder="Ketik analisismu..." style="width:100%;padding:6px;border:1px solid #cbd5e1;border-radius:6px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif"></td></tr>
+                  <tr><td style="padding:8px;border:1px solid var(--line)">Feb</td><td style="padding:8px;border:1px solid var(--line)">460</td><td style="padding:6px;border:1px solid var(--line)"><input type="text" placeholder="Ketik analisismu..." style="width:100%;padding:6px;border:1px solid #cbd5e1;border-radius:6px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif"></td></tr>
+                  <tr><td style="padding:8px;border:1px solid var(--line)">Mar</td><td style="padding:8px;border:1px solid var(--line)">510</td><td style="padding:6px;border:1px solid var(--line)"><input type="text" placeholder="Ketik analisismu..." style="width:100%;padding:6px;border:1px solid #cbd5e1;border-radius:6px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif"></td></tr>
+                  <tr><td style="padding:8px;border:1px solid var(--line)">Apr</td><td style="padding:8px;border:1px solid var(--line)">480</td><td style="padding:6px;border:1px solid var(--line)"><input type="text" placeholder="Ketik analisismu..." style="width:100%;padding:6px;border:1px solid #cbd5e1;border-radius:6px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif"></td></tr>
                 </table>
+                </div>
               </div>
 
               <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:#f9fbff">
@@ -905,31 +905,36 @@
             <div style="margin-bottom:16px;font-size:15px">Pertanyaan Mendasar Proyek:<br><span style="display:inline-block;margin-top:8px;font-style:italic;font-weight:600;color:#4b8df8">“Bagaimana pola penggunaan HP siswa kelas VIII dan apa maknanya jika dianalisis menggunakan ukuran pemusatan dan penyebaran data?”</span></div>
             <div style="margin-bottom:14px;font-size:15px;font-weight:700">2. Pahami setiap bagian pertanyaan</div>
             <div style="overflow-x:auto;margin-bottom:18px">
-              <table style="width:100%;border-collapse:collapse;font-size:14px;text-align:left">
+              <table style="width:100%;border-collapse:collapse;font-size:13px;text-align:left">
                 <tr style="background:#e8f0ff;font-weight:700">
-                  <th style="padding:10px 8px;border:1px solid var(--line)">Bagian Pertanyaan</th>
-                  <th style="padding:10px 8px;border:1px solid var(--line)">Penjelasan</th>
-                  <th style="padding:10px 8px;border:1px solid var(--line)">Contoh</th>
+                  <th style="padding:10px 8px;border:1px solid var(--line);min-width:120px">Bagian Pertanyaan</th>
+                  <th style="padding:10px 8px;border:1px solid var(--line);min-width:160px">Penjelasan</th>
+                  <th style="padding:10px 8px;border:1px solid var(--line);min-width:130px">Contoh</th>
+                  <th style="padding:10px 8px;border:1px solid var(--line);min-width:140px;background:#fff8dc">Jawaban Siswa</th>
                 </tr>
                 <tr>
                   <td style="padding:8px;border:1px solid var(--line)">Pola Penggunaan HP</td>
                   <td style="padding:8px;border:1px solid var(--line)">Cara siswa menggunakan HP dalam kehidupan sehari-hari</td>
                   <td style="padding:8px;border:1px solid var(--line)">Durasi, waktu, tujuan penggunaan</td>
+                  <td style="padding:6px;border:1px solid var(--line);background:#fffbf0"><textarea placeholder="Tuliskan jawaban..." style="width:100%;min-height:40px;padding:6px;border:1px solid #ffc107;border-radius:6px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical"></textarea></td>
                 </tr>
                 <tr>
                   <td style="padding:8px;border:1px solid var(--line)">Siswa kelas VIII</td>
                   <td style="padding:8px;border:1px solid var(--line)">Populasi yang akan diteliti</td>
                   <td style="padding:8px;border:1px solid var(--line)">Semua siswa di kelas VIII</td>
+                  <td style="padding:6px;border:1px solid var(--line);background:#fffbf0"><textarea placeholder="Tuliskan jawaban..." style="width:100%;min-height:40px;padding:6px;border:1px solid #ffc107;border-radius:6px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical"></textarea></td>
                 </tr>
                 <tr>
                   <td style="padding:8px;border:1px solid var(--line)">Ukuran pemusatan data</td>
                   <td style="padding:8px;border:1px solid var(--line)">Nilai yang mewakili pusat data (mean, median, modus)</td>
                   <td style="padding:8px;border:1px solid var(--line)">Rata-rata durasi penggunaan HP</td>
+                  <td style="padding:6px;border:1px solid var(--line);background:#fffbf0"><textarea placeholder="Tuliskan jawaban..." style="width:100%;min-height:40px;padding:6px;border:1px solid #ffc107;border-radius:6px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical"></textarea></td>
                 </tr>
                 <tr>
                   <td style="padding:8px;border:1px solid var(--line)">Penyebaran data</td>
                   <td style="padding:8px;border:1px solid var(--line)">Seberapa beragam data (jangkauan, kuartil, IQR)</td>
                   <td style="padding:8px;border:1px solid var(--line)">Perbedaan durasi antara siswa yang paling banyak dan paling sedikit</td>
+                  <td style="padding:6px;border:1px solid var(--line);background:#fffbf0"><textarea placeholder="Tuliskan jawaban..." style="width:100%;min-height:40px;padding:6px;border:1px solid #ffc107;border-radius:6px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical"></textarea></td>
                 </tr>
               </table>
             </div>
@@ -963,18 +968,18 @@
                         </tr>
                         <tr>
                           <td style="padding:8px;border:1px solid var(--line)">Durasi Penggunaan HP</td>
-                          <td style="padding:8px;border:1px solid var(--line)"></td>
-                          <td style="padding:8px;border:1px solid var(--line)"></td>
+                          <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Contoh: Berapa jam/hari?" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
+                          <td style="padding:8px;border:1px solid var(--line)"><textarea placeholder="Jelaskan alasannya..." style="width:100%;min-height:35px;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;resize:vertical"></textarea></td>
                         </tr>
                         <tr>
                           <td style="padding:8px;border:1px solid var(--line)">Waktu Penggunaan HP</td>
-                          <td style="padding:8px;border:1px solid var(--line)"></td>
-                          <td style="padding:8px;border:1px solid var(--line)"></td>
+                          <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Contoh: Pagi/sore/malam?" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
+                          <td style="padding:8px;border:1px solid var(--line)"><textarea placeholder="Jelaskan alasannya..." style="width:100%;min-height:35px;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;resize:vertical"></textarea></td>
                         </tr>
                         <tr>
                           <td style="padding:8px;border:1px solid var(--line)">Tujuan Penggunaan HP</td>
-                          <td style="padding:8px;border:1px solid var(--line)"></td>
-                          <td style="padding:8px;border:1px solid var(--line)"></td>
+                          <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Contoh: Media sosial/game/belajar?" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
+                          <td style="padding:8px;border:1px solid var(--line)"><textarea placeholder="Jelaskan alasannya..." style="width:100%;min-height:35px;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;resize:vertical"></textarea></td>
                         </tr>
                       </table>
                     </div>
@@ -1015,25 +1020,25 @@
                                 <td style="padding:8px;border:1px solid var(--line)">1</td>
                                 <td style="padding:8px;border:1px solid var(--line)">Prediksi Mean (Rata-rata Durasi)</td>
                                 <td style="padding:8px;border:1px solid var(--line)">Berapa jam? .............</td>
-                                <td style="padding:8px;border:1px solid var(--line)"></td>
+                                <td style="padding:8px;border:1px solid var(--line)"><textarea placeholder="Jelaskan alasannya..." style="width:100%;min-height:35px;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;resize:vertical"></textarea></td>
                               </tr>
                               <tr>
                                 <td style="padding:8px;border:1px solid var(--line)">2</td>
                                 <td style="padding:8px;border:1px solid var(--line)">Prediksi Modus (Tujuan Dominan)</td>
                                 <td style="padding:8px;border:1px solid var(--line)">Belajar/Medsos/Gim</td>
-                                <td style="padding:8px;border:1px solid var(--line)"></td>
+                                <td style="padding:8px;border:1px solid var(--line)"><textarea placeholder="Jelaskan alasannya..." style="width:100%;min-height:35px;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;resize:vertical"></textarea></td>
                               </tr>
                               <tr>
                                 <td style="padding:8px;border:1px solid var(--line)">3</td>
                                 <td style="padding:8px;border:1px solid var(--line)">Prediksi Modus (Waktu Dominan)</td>
                                 <td style="padding:8px;border:1px solid var(--line)">Pagi/Siang/Sore/Malam</td>
-                                <td style="padding:8px;border:1px solid var(--line)"></td>
+                                <td style="padding:8px;border:1px solid var(--line)"><textarea placeholder="Jelaskan alasannya..." style="width:100%;min-height:35px;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;resize:vertical"></textarea></td>
                               </tr>
                               <tr>
                                 <td style="padding:8px;border:1px solid var(--line)">4</td>
                                 <td style="padding:8px;border:1px solid var(--line)">Prediksi Jangkauan</td>
                                 <td style="padding:8px;border:1px solid var(--line)">Dari …… jam hingga …… jam</td>
-                                <td style="padding:8px;border:1px solid var(--line)"></td>
+                                <td style="padding:8px;border:1px solid var(--line)"><textarea placeholder="Jelaskan alasannya..." style="width:100%;min-height:35px;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;resize:vertical"></textarea></td>
                               </tr>
                             </table>
                           </div>
@@ -1330,8 +1335,8 @@
         5: 'toc-btn-4', // Capaian
         6: 'toc-btn-5', // Tujuan
         7: 'toc-btn-6', // Peta Konsep
-        8: 'toc-btn-7', // Materi
-        9: 'toc-btn-8'  // Proyek (Data Kelompok)
+        8: 'toc-btn-8', // Proyek
+        9: 'toc-btn-7'  // Materi
       };
 
       const sequence = [4, 5, 6, 7, 8, 9];
