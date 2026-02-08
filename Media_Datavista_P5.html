@@ -121,451 +121,227 @@
       <!-- Slide 2: Tujuan Pembelajaran dan Petunjuk Kegiatan -->
       <section class="slide" data-slide="502" style="display:none">
         <div class="card-lite" style="text-align:left;padding:32px 24px">
-          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">A. Tujuan Pembelajaran</div>
-          <div style="margin-bottom:18px;font-size:16px">Melalui kegiatan presentasi, refleksi, dan evaluasi proyek ini, peserta didik diharapkan mampu menyajikan hasil analisis data secara runtut dan berbasis bukti, menginterpretasikan informasi statistik untuk pengambilan keputusan, serta merefleksikan pengalaman belajar guna memperkuat literasi statistik dan resiliensi diri.</div>
-          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:14px;text-align:center">B. Petunjuk Kegiatan</div>
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:12px;text-align:center">TUJUAN PEMBELAJARAN</div>
+          <div style="margin-bottom:14px;font-size:15px;text-align:center">Setelah menyelesaikan kegiatan ini, peserta didik diharapkan mampu:</div>
           <ol style="font-size:15px;line-height:1.8;margin-bottom:24px;padding-left:22px">
-            <li>Lakukan presentasi proyek secara berkelompok sesuai urutan yang ditentukan guru.</li>
-            <li>Dengarkan presentasi kelompok lain dengan sikap saling menghargai.</li>
-            <li>Berikan tanggapan atau pertanyaan secara sopan dan konstruktif.</li>
-            <li>Isilah bagian refleksi dan evaluasi secara jujur berdasarkan pengalaman belajar.</li>
+            <li>Menyajikan hasil analisis data statistik dalam bentuk infografis.</li>
+            <li>Mengkomunikasikan makna data secara jelas dan bertanggung jawab.</li>
+            <li>Menghubungkan hasil analisis statistik dengan pesan kesehatan siswa.</li>
+            <li>Merefleksikan proses belajar, kerja tim, dan sikap resiliensi selama proyek.</li>
           </ol>
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(501)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="updateSlide(503)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
       </section>
-      <!-- Slide 3: Presentasi Ringkasan Proyek Kelompok -->
+      <!-- Slide 503: Aktivitas 1: Finalisasi Infografis -->
       <section class="slide" data-slide="503" style="display:none">
-        <div style="padding:32px 24px;max-height:calc(100vh - 200px);overflow-y:auto">
-          <div class="genty" style="font-size:22px;font-weight:700;margin-bottom:20px;text-align:center;color:#0f172a">C. Presentasi Ringkasan Proyek Kelompok</div>
-          <div style="margin-bottom:28px;font-size:15px;color:#6b7280;text-align:center">Pilih kelompok yang presentasi, upload file, dan kelompok lain dapat memberikan komentar</div>
+        <div class="card-lite" style="text-align:left;padding:32px 18px;max-height:calc(100vh - 100px);overflow-y:auto">
+          <div class="genty" style="font-size:19px;font-weight:700;margin-bottom:12px;text-align:center">Aktivitas 1: Finalisasi Infografis</div>
+          <div style="margin-bottom:16px;font-size:15px">Gunakan hasil analisis dari LKPD Pertemuan 4 untuk menyelesaikan infografis kelompok.</div>
+
+          <div style="margin-bottom:18px;font-size:16px;font-weight:700">Cek Komponen Infografis</div>
+          <div style="margin-bottom:10px;font-size:14px;color:var(--muted)">Beri tanda centang (✓):</div>
+          <div style="margin-bottom:20px;padding:12px;background:#f9fbff;border-radius:8px;font-size:15px;line-height:1.8">
+            <div style="margin-bottom:8px"><input type="checkbox"> Judul jelas dan sesuai data</div>
+            <div style="margin-bottom:8px"><input type="checkbox"> Grafik sesuai dengan jenis data (batang/lingkaran/garis)</div>
+            <div style="margin-bottom:8px"><input type="checkbox"> Mean, median, atau modus dicantumkan dengan benar</div>
+            <div style="margin-bottom:8px"><input type="checkbox"> Pesan utama mudah dipahami</div>
+            <div><input type="checkbox"> Sumber data jelas (Data kelas VIII)</div>
+          </div>
+
+          <div style="margin-bottom:14px;font-size:15px;font-weight:700">Judul Infografis:</div>
+          <input type="text" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;margin-bottom:18px;font-family:inherit">
+
+          <div style="margin-bottom:14px;font-size:15px;font-weight:700">Jenis Grafik Utama:</div>
+          <input type="text" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;margin-bottom:18px;font-family:inherit">
+
+          <div style="margin-bottom:14px;font-size:15px;font-weight:700">Pesan utama yang ingin disampaikan:</div>
+          <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:60px;margin-bottom:18px;font-family:inherit"></textarea>
+
+          <div style="margin-bottom:12px;font-size:15px;font-weight:700">Kotak sketsa konsep infografis</div>
           
-          <!-- Pilih Kelompok Presentasi -->
-          <div style="background:linear-gradient(135deg,#4b8df8,#6da8ff);padding:20px;border-radius:16px;margin-bottom:24px;text-align:center">
-            <label style="color:white;font-weight:700;font-size:15px;display:block;margin-bottom:12px">👥 Kelompok yang Presentasi:</label>
-            <select id="presentingGroup" onchange="switchPresentingGroup()" style="width:100%;max-width:300px;padding:12px 16px;border:none;border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;cursor:pointer">
-              <option value="">-- Pilih Kelompok --</option>
-              <option value="Kelompok 1">Kelompok 1</option>
-              <option value="Kelompok 2">Kelompok 2</option>
-              <option value="Kelompok 3">Kelompok 3</option>
-              <option value="Kelompok 4">Kelompok 4</option>
-              <option value="Kelompok 5">Kelompok 5</option>
-              <option value="Kelompok 6">Kelompok 6</option>
-            </select>
+          <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:center">
+            <div style="display:flex;gap:8px;align-items:center">
+              <label style="font-size:13px;font-weight:700">Warna Pena:</label>
+              <input type="color" id="penColorP5" value="#000000" style="width:50px;height:40px;border:1px solid var(--line);border-radius:4px;cursor:pointer">
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <label style="font-size:13px;font-weight:700">Ukuran:</label>
+              <input type="range" id="penSizeP5" min="1" max="20" value="3" style="width:120px">
+              <span id="penSizeDisplayP5" style="font-size:13px;min-width:30px">3px</span>
+            </div>
+            <button onclick="setDrawingToolP5('pen')" id="penBtnP5" style="padding:8px 16px;background:#4b8df8;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px">✏️ Pena</button>
+            <button onclick="setDrawingToolP5('eraser')" id="eraserBtnP5" style="padding:8px 16px;background:#e5e7eb;color:#1f2937;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px">🧹 Penghapus</button>
+            <button onclick="clearCanvasP5()" style="padding:8px 16px;background:#ef4444;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px">🗑️ Hapus Semua</button>
           </div>
           
-          <div id="presentationArea"></div>
-          
-          <div style="margin-top:32px;display:flex;justify-content:space-between;gap:12px">
+          <div style="border:2px dashed var(--line);border-radius:8px;background:#fafafa;margin-bottom:24px">
+            <canvas id="sketchCanvasP5" width="800" height="400" style="display:block;width:100%;border-radius:6px;background:white;cursor:crosshair"></canvas>
+          </div>
+
+          <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(502)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="updateSlide(504)" class="btn-primary">Selanjutnya →</button>
           </div>
         </div>
-        
-        <style>
-          .presentation-card {
-            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-            border: 2px solid var(--line);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 8px 24px rgba(75, 141, 248, 0.12);
-            transition: all 0.3s ease;
-          }
-          .presentation-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 12px 32px rgba(75, 141, 248, 0.2);
-            transform: translateY(-4px);
-          }
-          .group-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 16px;
-            font-size: 16px;
-          }
-          .upload-area {
-            border: 2px dashed var(--primary);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            background: rgba(75, 141, 248, 0.05);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 16px;
-          }
-          .upload-area:hover {
-            background: rgba(75, 141, 248, 0.1);
-            border-color: var(--primary-soft);
-          }
-          .file-input {
-            display: none;
-          }
-          .file-preview {
-            margin-bottom: 12px;
-            max-height: 150px;
-            border-radius: 10px;
-            overflow: hidden;
-          }
-          .file-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-          .comments-section {
-            background: #f9fbff;
-            border-radius: 12px;
-            padding: 14px;
-            margin-top: 16px;
-            max-height: 250px;
-            overflow-y: auto;
-          }
-          .comment-item {
-            background: white;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            font-size: 13px;
-            border-left: 3px solid var(--primary);
-          }
-          .comment-author {
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 13px;
-            margin-bottom: 4px;
-          }
-          .comment-text {
-            color: #0f172a;
-            line-height: 1.4;
-          }
-          .comment-time {
-            font-size: 11px;
-            color: #9ca3af;
-            margin-top: 6px;
-          }
-          .comment-card {
-            background: white;
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 4px 12px rgba(75, 141, 248, 0.08);
-          }
-          .comment-textarea {
-            padding: 10px 12px;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            font-size: 13px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            resize: none;
-            height: 60px;
-          }
-          .btn-comment {
-            padding: 8px 14px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-          }
-          .btn-comment:hover {
-            background: var(--primary-soft);
-            transform: translateY(-1px);
-          }
-          .status-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-top: 8px;
-          }
-          .status-done {
-            background: #dcfce7;
-            color: #15803d;
-          }
-          .status-pending {
-            background: #fef3c7;
-            color: #b45309;
-          }
-        </style>
-        
-        <script>
-          // Data storage untuk presentasi kelompok
-          if (!window.groupPresentations) {
-            window.groupPresentations = {
-              'Kelompok 1': { file: null, fileName: '', comments: [], fileType: '' },
-              'Kelompok 2': { file: null, fileName: '', comments: [], fileType: '' },
-              'Kelompok 3': { file: null, fileName: '', comments: [], fileType: '' },
-              'Kelompok 4': { file: null, fileName: '', comments: [], fileType: '' },
-              'Kelompok 5': { file: null, fileName: '', comments: [], fileType: '' },
-              'Kelompok 6': { file: null, fileName: '', comments: [], fileType: '' }
-            };
-          }
-          
-          function switchPresentingGroup() {
-            const select = document.getElementById('presentingGroup');
-            const groupName = select.value;
-            const container = document.getElementById('presentationArea');
-            
-            if (!groupName) {
-              container.innerHTML = '<div style="text-align:center;color:#9ca3af;padding:40px 0;font-size:15px">👆 Pilih kelompok yang akan presentasi</div>';
-              return;
-            }
-            
-            const groups = ['Kelompok 1', 'Kelompok 2', 'Kelompok 3', 'Kelompok 4', 'Kelompok 5', 'Kelompok 6'];
-            const otherGroups = groups.filter(g => g !== groupName);
-            
-            container.innerHTML = `
-              <!-- Upload Area -->
-              <div style="background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);border:2px solid var(--line);border-radius:16px;padding:24px;margin-bottom:24px;box-shadow:0 8px 24px rgba(75,141,248,0.12)">
-                <div style="font-weight:700;font-size:18px;margin-bottom:16px;text-align:center;color:#0f172a">📤 Upload Presentasi</div>
-                
-                <div class="upload-area" onclick="document.getElementById('mainFileInput').click()">
-                  <input type="file" id="mainFileInput" class="file-input" accept="image/*,.pdf,.ppt,.pptx" onchange="handleFileUpload('${groupName}', this)">
-                  <div style="font-size:40px;margin-bottom:12px">📤</div>
-                  <div style="font-weight:700;color:#0f172a;margin-bottom:6px;font-size:16px">Klik atau Drag File ke Sini</div>
-                  <div style="font-size:14px;color:#6b7280">Foto, PDF, atau PowerPoint (Max 10MB)</div>
-                </div>
-                
-                <div id="mainFilePreview"></div>
-                <div id="mainStatus" style="text-align:center;margin-top:12px"></div>
-              </div>
-              
-              <!-- Comments Section -->
-              <div style="background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);border:2px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 8px 24px rgba(75,141,248,0.12)">
-                <div style="font-weight:700;font-size:18px;margin-bottom:16px;text-align:center;color:#0f172a">💬 Komentar dari Kelompok Lain</div>
-                
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px">
-                  ${otherGroups.map(g => `
-                    <div class="comment-card">
-                      <div style="background:linear-gradient(135deg,#6da8ff,#4b8df8);color:white;padding:10px;border-radius:10px;font-weight:700;text-align:center;margin-bottom:12px;font-size:14px">${g}</div>
-                      <div id="commentsList_${g.replace(' ', '_')}" style="min-height:100px;margin-bottom:12px;padding:12px;background:#f9fbff;border-radius:10px;max-height:180px;overflow-y:auto"></div>
-                      <textarea id="commentText_${g.replace(' ', '_')}" class="comment-textarea" placeholder="Tulis komentar..." style="width:100%;margin-bottom:8px"></textarea>
-                      <button class="btn-comment" onclick="submitComment('${groupName}', '${g}')" style="width:100%">Kirim Komentar</button>
-                    </div>
-                  `).join('')}
-                </div>
-              </div>
-            `;
-            
-            updateMainFilePreview(groupName);
-            updateMainStatus(groupName);
-            otherGroups.forEach(g => updateCommentsListForGroup(groupName, g));
-          }
-          
-          function handleFileUpload(groupName, input) {
-            if (input.files && input.files[0]) {
-              const file = input.files[0];
-              const reader = new FileReader();
-              
-              window.groupPresentations[groupName].fileName = file.name;
-              window.groupPresentations[groupName].fileType = file.type;
-              
-              reader.onload = function(e) {
-                window.groupPresentations[groupName].file = e.target.result;
-                updateMainFilePreview(groupName);
-                updateMainStatus(groupName);
-              };
-              reader.readAsDataURL(file);
-            }
-          }
-          
-          function submitComment(targetGroup, commenterGroup) {
-            const commentText = document.getElementById('commentText_' + commenterGroup.replace(' ', '_'));
-            const text = commentText.value.trim();
-            
-            if (!text) {
-              alert('Silakan tulis komentar Anda');
-              return;
-            }
-            
-            if (!window.groupPresentations[targetGroup].comments) {
-              window.groupPresentations[targetGroup].comments = [];
-            }
-            
-            window.groupPresentations[targetGroup].comments.push({
-              commenter: commenterGroup,
-              text: text,
-              timestamp: new Date().toLocaleString('id-ID', { hour: '2-digit', minute: '2-digit' })
-            });
-            
-            commentText.value = '';
-            updateCommentsListForGroup(targetGroup, commenterGroup);
-          }
-          
-          function updateCommentsListForGroup(targetGroup, commenterGroup) {
-            const listDiv = document.getElementById('commentsList_' + commenterGroup.replace(' ', '_'));
-            if (!listDiv) return;
-            
-            const comments = window.groupPresentations[targetGroup].comments || [];
-            const groupComments = comments.filter(c => c.commenter === commenterGroup);
-            
-            if (groupComments.length === 0) {
-              listDiv.innerHTML = '<div style="color:#9ca3af;font-size:12px;text-align:center;padding:10px 0">Belum ada komentar</div>';
-            } else {
-              listDiv.innerHTML = groupComments.map(c => `
-                <div style="background:white;padding:10px;border-radius:8px;margin-bottom:8px;border-left:3px solid var(--primary)">
-                  <div style="font-size:12px;color:#0f172a;line-height:1.4;margin-bottom:4px">${c.text}</div>
-                  <div style="font-size:10px;color:#9ca3af">${c.timestamp}</div>
-                </div>
-              `).join('');
-            }
-          }
-          
-          function updateMainFilePreview(groupName) {
-            const previewDiv = document.getElementById('mainFilePreview');
-            if (!previewDiv) return;
-            
-            const data = window.groupPresentations[groupName];
-            if (data.file) {
-              if (data.fileType.startsWith('image/')) {
-                previewDiv.innerHTML = `
-                  <div class="file-preview" style="margin-top:16px">
-                    <img src="${data.file}" alt="Preview" style="width:100%;max-height:300px;object-fit:contain;border-radius:12px">
-                  </div>
-                  <div style="font-size:14px;color:#6b7280;text-align:center;margin-top:12px">✓ ${data.fileName}</div>
-                `;
-              } else {
-                previewDiv.innerHTML = `
-                  <div style="background:#f0f4ff;padding:20px;border-radius:12px;text-align:center;margin-top:16px">
-                    <div style="font-size:36px;margin-bottom:12px">📎</div>
-                    <div style="font-size:14px;color:#0f172a;font-weight:700;word-break:break-word">${data.fileName}</div>
-                  </div>
-                `;
-              }
-            } else {
-              previewDiv.innerHTML = '';
-            }
-          }
-          
-          function updateMainStatus(groupName) {
-            const statusDiv = document.getElementById('mainStatus');
-            if (!statusDiv) return;
-            
-            const hasFile = window.groupPresentations[groupName].file !== null;
-            
-            if (hasFile) {
-              statusDiv.innerHTML = '<div class="status-badge status-done">✓ Presentasi Sudah Diupload</div>';
-            } else {
-              statusDiv.innerHTML = '<div class="status-badge status-pending">⏳ Menunggu Upload File</div>';
-            }
-          }
-          
-          // Initialize presentation area saat halaman dimuat
-          setTimeout(function() {
-            const container = document.getElementById('presentationArea');
-            if (container) {
-              container.innerHTML = '<div style="text-align:center;color:#9ca3af;padding:40px 0;font-size:15px">👆 Pilih kelompok yang akan presentasi</div>';
-            }
-          }, 100);
-        </script>
       </section>
-      <!-- Slide 4: Penyajian Hasil Statistik -->
+      <!-- Slide 504: Aktivitas 2: Menjelaskan Infografis -->
       <section class="slide" data-slide="504" style="display:none">
         <div class="card-lite" style="text-align:left;padding:32px 24px">
-          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">D. Penyajian Hasil Statistik</div>
-          <div style="margin-bottom:16px;font-size:16px">Lengkapi tabel berikut berdasarkan hasil analisis data kelompok</div>
-          <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
-            <thead>
-              <tr style="background:#f5f5f5">
-                <th>Ukuran Statistik</th>
-                <th>Nilai</th>
-                <th>Makna dalam Konteks Penggunaan HP</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Rata-rata</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
-              <tr><td>Median</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
-              <tr><td>Modus</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
-              <tr><td>Jangkauan</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
-              <tr><td>Kuartil</td><td><input type="text" style="width:100%"></td><td><input type="text" style="width:100%"></td></tr>
-            </tbody>
-          </table>
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">Aktivitas 2: Menjelaskan Infografis (Literasi Statistik)</div>
+          <div style="margin-bottom:18px;font-size:16px;font-weight:600">Jawab bersama kelompok:</div>
+          
+          <div style="margin-bottom:24px">
+            <div style="margin-bottom:10px;font-size:15px;font-weight:700">1. Jelaskan data yang digunakan?</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:80px;font-family:inherit"></textarea>
+          </div>
+
+          <div style="margin-bottom:24px">
+            <div style="margin-bottom:10px;font-size:15px;font-weight:700">2. Jelaskan hasil analisis utama?</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:80px;font-family:inherit"></textarea>
+          </div>
+
+          <div style="margin-bottom:24px">
+            <div style="margin-bottom:10px;font-size:15px;font-weight:700">3. Sampaikan pesan atau rekomendasi yang dihasilkan dari data?</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:80px;font-family:inherit"></textarea>
+          </div>
+
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(503)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="updateSlide(505)" class="btn-primary">Selanjutnya →</button>
           </div>
         </div>
       </section>
-      <!-- Slide 5: Kesimpulan Berbasis Data -->
+      <!-- Slide 505: Aktivitas 3: Tanya Jawab dan Diskusi -->
       <section class="slide" data-slide="505" style="display:none">
         <div class="card-lite" style="text-align:left;padding:32px 24px">
-          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">E. Kesimpulan Berbasis Data</div>
-          <div style="margin-bottom:16px;font-size:16px">Tuliskan kesimpulan utama berdasarkan hasil analisis data</div>
-          <textarea placeholder="Kesimpulan utama..." style="width:100%;min-height:64px;margin-bottom:24px"></textarea>
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">Aktivitas 3: Tanya Jawab dan Diskusi</div>
+          <div style="margin-bottom:20px;font-size:16px">Kelompok lain memberikan tanggapan atau pertanyaan terhadap presentasi yang disampaikan.</div>
+          
+          <div style="margin-bottom:24px">
+            <div style="margin-bottom:10px;font-size:15px;font-weight:700">Tuliskan satu pertanyaan atau tanggapan dari kelompok lain yang menurut kalian paling penting:</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:80px;font-family:inherit"></textarea>
+          </div>
+
+          <div style="margin-bottom:24px">
+            <div style="margin-bottom:10px;font-size:15px;font-weight:700">Jawaban kelompok terhadap pertanyaan teman:</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:100px;font-family:inherit"></textarea>
+          </div>
+
+          <div style="margin-bottom:24px">
+            <div style="margin-bottom:10px;font-size:15px;font-weight:700">Catatan umpan balik dari guru:</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:100px;font-family:inherit"></textarea>
+          </div>
+
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(504)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="updateSlide(506)" class="btn-primary">Selanjutnya →</button>
           </div>
         </div>
       </section>
-      <!-- Slide 6: Refleksi Kelompok -->
+      <!-- Slide 506: Aktivitas 4: Pesan Kesehatan Berbasis Data -->
       <section class="slide" data-slide="506" style="display:none">
         <div class="card-lite" style="text-align:left;padding:32px 24px">
-          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">F. Refleksi Kelompok</div>
-          <div style="margin-bottom:16px;font-size:16px">Jawablah pertanyaan berikut secara berkelompok</div>
-          <div style="margin-bottom:10px;font-size:15px">1. Hal paling menantang selama mengerjakan proyek ini adalah:</div>
-          <textarea placeholder="Jawaban..." style="width:100%;min-height:48px;margin-bottom:18px"></textarea>
-          <div style="margin-bottom:10px;font-size:15px">2. Cara kelompok mengatasi tantangan tersebut</div>
-          <textarea placeholder="Jawaban..." style="width:100%;min-height:48px;margin-bottom:18px"></textarea>
-          <div style="margin-bottom:10px;font-size:15px">3. Pelajaran penting yang diperoleh dari kerja kelompok</div>
-          <textarea placeholder="Jawaban..." style="width:100%;min-height:48px;margin-bottom:24px"></textarea>
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">Aktivitas 4: Pesan Kesehatan Berbasis Data</div>
+          <div style="margin-bottom:20px;font-size:16px">Berdasarkan hasil analisis data, tuliskan satu pesan kesehatan utama yang didukung oleh data.</div>
+          
+          <div style="margin-bottom:24px">
+            <div style="margin-bottom:10px;font-size:15px;font-weight:700">Pesan kesehatan kelompok kami:</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:100px;font-family:inherit"></textarea>
+          </div>
+
+          <div style="margin-bottom:24px">
+            <div style="margin-bottom:10px;font-size:15px;font-weight:700">Alasan pesan ini didukung oleh data:</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:120px;font-family:inherit"></textarea>
+          </div>
+
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(505)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="updateSlide(507)" class="btn-primary">Selanjutnya →</button>
           </div>
         </div>
       </section>
-      <!-- Slide 7: Evaluasi Diri Terhadap Proyek -->
+      <!-- Slide 507: Aktivitas 5: Refleksi Akhir Proyek -->
       <section class="slide" data-slide="507" style="display:none">
-        <div class="card-lite" style="text-align:left;padding:32px 24px">
-          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">G. Evaluasi Diri Terhadap Proyek</div>
-          <div style="margin-bottom:16px;font-size:16px">Berilah tanda centang (✓) sesuai dengan kondisi diri anda</div>
-          <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
-            <thead>
-              <tr style="background:#f5f5f5">
-                <th>Pernyataan</th>
-                <th style="width:80px">Ya</th>
-                <th style="width:80px">Tidak</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Saya berperan aktif dalam kelompok</td>
-                <td style="text-align:center"><input type="checkbox" name="aktif" value="ya"></td>
-                <td style="text-align:center"><input type="checkbox" name="aktif" value="tidak"></td>
-              </tr>
-              <tr>
-                <td>Saya memahami data yang dianalisis</td>
-                <td style="text-align:center"><input type="checkbox" name="paham" value="ya"></td>
-                <td style="text-align:center"><input type="checkbox" name="paham" value="tidak"></td>
-              </tr>
-              <tr>
-                <td>Saya berani menyampaikan pendapat</td>
-                <td style="text-align:center"><input type="checkbox" name="berani" value="ya"></td>
-                <td style="text-align:center"><input type="checkbox" name="berani" value="tidak"></td>
-              </tr>
-              <tr>
-                <td>Saya tidak mudah menyerah saat mengalami kesulitan</td>
-                <td style="text-align:center"><input type="checkbox" name="pantang" value="ya"></td>
-                <td style="text-align:center"><input type="checkbox" name="pantang" value="tidak"></td>
-              </tr>
-              <tr>
-                <td>Saya menggunakan data untuk menarik Kesimpulan</td>
-                <td style="text-align:center"><input type="checkbox" name="data" value="ya"></td>
-                <td style="text-align:center"><input type="checkbox" name="data" value="tidak"></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="card-lite" style="text-align:left;padding:32px 24px;max-height:calc(100vh - 100px);overflow-y:auto">
+          <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">Aktivitas 5: Refleksi Akhir Proyek</div>
+          <div style="margin-bottom:20px;font-size:16px">Jawablah pertanyaan berikut secara singkat dan jujur:</div>
+          
+          <div style="margin-bottom:20px">
+            <div style="margin-bottom:8px;font-size:15px;font-weight:700">1. Hal terpenting yang kami pelajari tentang statistika dari proyek ini:</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:70px;font-family:inherit"></textarea>
+          </div>
+
+          <div style="margin-bottom:20px">
+            <div style="margin-bottom:8px;font-size:15px;font-weight:700">2. Bagian mana yang paling menantang dalam mengolah dan menyajikan data?</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:70px;font-family:inherit"></textarea>
+          </div>
+
+          <div style="margin-bottom:20px">
+            <div style="margin-bottom:8px;font-size:15px;font-weight:700">3. Apa manfaat memahami data penggunaan HP bagi kehidupan sehari-hari?</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:70px;font-family:inherit"></textarea>
+          </div>
+
+          <div style="margin-bottom:20px">
+            <div style="margin-bottom:8px;font-size:15px;font-weight:700">4. Apa kekuatan utama kelompok kami selama proyek berlangsung?</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:70px;font-family:inherit"></textarea>
+          </div>
+
+          <div style="margin-bottom:20px">
+            <div style="margin-bottom:8px;font-size:15px;font-weight:700">5. Apa yang akan kami perbaiki jika proyek ini dilakukan kembali?</div>
+            <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;min-height:70px;font-family:inherit"></textarea>
+          </div>
+
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(506)" class="btn-ghost">← Sebelumnya</button>
-            <button onclick="showSelesaiPopup()" class="btn-primary">Selesai</button>
-            <button id="downloadPDFBtn" onclick="downloadPDF()" class="btn-primary">Download PDF</button>
+            <button onclick="updateSlide(508)" class="btn-primary">Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+      
+                <!-- Slide 508: Checklist Akhir Proyek -->
+                <section class="slide" data-slide="508" style="display:none">
+                  <div class="card-lite" style="text-align:left;padding:32px 24px">
+                    <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">Checklist Akhir Proyek</div>
+                    <div style="margin-bottom:24px;font-size:15px;text-align:center">Pastikan semua komponen proyek telah diselesaikan dengan baik.</div>
+          
+                    <div style="margin-bottom:24px;padding:20px;background:#f8fbff;border-radius:10px;border:1px solid var(--line)">
+                      <div style="margin-bottom:16px;display:flex;align-items:center;gap:12px">
+                        <input type="checkbox" id="check1" style="width:20px;height:20px;cursor:pointer">
+                        <label for="check1" style="font-size:15px;cursor:pointer">Infografis selesai dan berbasis data</label>
+                      </div>
+
+                      <div style="margin-bottom:16px;display:flex;align-items:center;gap:12px">
+                        <input type="checkbox" id="check2" style="width:20px;height:20px;cursor:pointer">
+                        <label for="check2" style="font-size:15px;cursor:pointer">Analisis statistik disajikan dengan benar</label>
+                      </div>
+
+                      <div style="margin-bottom:16px;display:flex;align-items:center;gap:12px">
+                        <input type="checkbox" id="check3" style="width:20px;height:20px;cursor:pointer">
+                        <label for="check3" style="font-size:15px;cursor:pointer">Pesan kesehatan dirumuskan berdasarkan data</label>
+                      </div>
+
+                      <div style="margin-bottom:16px;display:flex;align-items:center;gap:12px">
+                        <input type="checkbox" id="check4" style="width:20px;height:20px;cursor:pointer">
+                        <label for="check4" style="font-size:15px;cursor:pointer">Presentasi kelompok dilaksanakan</label>
+                      </div>
+
+                      <div style="display:flex;align-items:center;gap:12px">
+                        <input type="checkbox" id="check5" style="width:20px;height:20px;cursor:pointer">
+                        <label for="check5" style="font-size:15px;cursor:pointer">Refleksi proyek dituliskan</label>
+                      </div>
+                    </div>
+
+                    <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
+                      <button onclick="updateSlide(507)" class="btn-ghost">← Sebelumnya</button>
+                      <button onclick="showSelesaiPopup()" class="btn-primary">Selesai</button>
+                      <button id="downloadPDFBtn" onclick="downloadPDF()" class="btn-primary">Download PDF</button>
+                    </div>
+                  </div>
+                </section>
+      
           </div>
         </div>
       </section>
@@ -811,6 +587,35 @@
     document.addEventListener('DOMContentLoaded', function() {
       showSlideByDataSlide(501);
       // (Tombol Download PDF sekarang hanya ada di slide terakhir)
+      
+      // Initialize P5 Canvas Controls
+      const penColorInputP5 = document.getElementById('penColorP5');
+      if (penColorInputP5) {
+        penColorInputP5.addEventListener('change', function(e) {
+          currentColorP5 = e.target.value;
+        });
+      }
+      
+      const penSizeInputP5 = document.getElementById('penSizeP5');
+      if (penSizeInputP5) {
+        penSizeInputP5.addEventListener('input', function(e) {
+          currentSizeP5 = e.target.value;
+          document.getElementById('penSizeDisplayP5').textContent = e.target.value + 'px';
+        });
+      }
+
+      // Initialize canvas when slide 503 is shown
+      const observerP5 = new MutationObserver(function() {
+        const slide503 = document.querySelector('[data-slide="503"]');
+        if (slide503 && slide503.style.display !== 'none') {
+          setTimeout(initCanvasP5, 100);
+        }
+      });
+      
+      observerP5.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['style', 'display'] });
+      
+      // Try to initialize on first load
+      setTimeout(initCanvasP5, 500);
     });
     // Ganti semua tombol updateSlide agar pakai showSlideByDataSlide
     window.updateSlide = showSlideByDataSlide;
@@ -858,6 +663,97 @@
     // Pop up selesai
     function showSelesaiPopup() {
       alert('Pengerjaanmu selesai!');
+    }
+
+    // Canvas Drawing Functions untuk Slide 503 - P5
+    let canvasP5 = null;
+    let ctxP5 = null;
+    let isDrawingP5 = false;
+    let currentToolP5 = 'pen';
+    let currentColorP5 = '#000000';
+    let currentSizeP5 = 3;
+    let lastXP5 = 0;
+    let lastYP5 = 0;
+
+    function initCanvasP5() {
+      canvasP5 = document.getElementById('sketchCanvasP5');
+      if (!canvasP5) return;
+      ctxP5 = canvasP5.getContext('2d');
+      
+      // Set background to white
+      ctxP5.fillStyle = 'white';
+      ctxP5.fillRect(0, 0, canvasP5.width, canvasP5.height);
+      
+      // Event listeners
+      canvasP5.addEventListener('mousedown', startDrawingP5);
+      canvasP5.addEventListener('mousemove', drawP5);
+      canvasP5.addEventListener('mouseup', stopDrawingP5);
+      canvasP5.addEventListener('mouseout', stopDrawingP5);
+      canvasP5.addEventListener('touchstart', handleTouchP5);
+      canvasP5.addEventListener('touchmove', handleTouchP5);
+      canvasP5.addEventListener('touchend', stopDrawingP5);
+    }
+
+    function startDrawingP5(e) {
+      isDrawingP5 = true;
+      const rect = canvasP5.getBoundingClientRect();
+      lastXP5 = e.clientX - rect.left;
+      lastYP5 = e.clientY - rect.top;
+    }
+
+    function drawP5(e) {
+      if (!isDrawingP5) return;
+      
+      const rect = canvasP5.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      if (currentToolP5 === 'pen') {
+        ctxP5.strokeStyle = currentColorP5;
+        ctxP5.lineWidth = currentSizeP5;
+        ctxP5.lineCap = 'round';
+        ctxP5.lineJoin = 'round';
+        ctxP5.beginPath();
+        ctxP5.moveTo(lastXP5, lastYP5);
+        ctxP5.lineTo(x, y);
+        ctxP5.stroke();
+      } else if (currentToolP5 === 'eraser') {
+        ctxP5.clearRect(lastXP5 - currentSizeP5/2, lastYP5 - currentSizeP5/2, currentSizeP5, currentSizeP5);
+        ctxP5.clearRect(x - currentSizeP5/2, y - currentSizeP5/2, currentSizeP5, currentSizeP5);
+      }
+      
+      lastXP5 = x;
+      lastYP5 = y;
+    }
+
+    function handleTouchP5(e) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+        clientX: touch.clientX,
+        clientY: touch.clientY
+      });
+      canvasP5.dispatchEvent(mouseEvent);
+    }
+
+    function stopDrawingP5() {
+      isDrawingP5 = false;
+    }
+
+    function setDrawingToolP5(tool) {
+      currentToolP5 = tool;
+      document.getElementById('penBtnP5').style.background = tool === 'pen' ? '#4b8df8' : '#e5e7eb';
+      document.getElementById('penBtnP5').style.color = tool === 'pen' ? 'white' : '#1f2937';
+      document.getElementById('eraserBtnP5').style.background = tool === 'eraser' ? '#f97316' : '#e5e7eb';
+      document.getElementById('eraserBtnP5').style.color = tool === 'eraser' ? 'white' : '#1f2937';
+      canvasP5.style.cursor = tool === 'pen' ? 'crosshair' : 'cell';
+    }
+
+    function clearCanvasP5() {
+      if (canvasP5 && ctxP5) {
+        ctxP5.fillStyle = 'white';
+        ctxP5.fillRect(0, 0, canvasP5.width, canvasP5.height);
+      }
     }
 
     // Fungsi Download PDF
