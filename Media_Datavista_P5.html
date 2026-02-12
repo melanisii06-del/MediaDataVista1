@@ -125,9 +125,9 @@
           <div style="margin-bottom:14px;font-size:15px;text-align:center">Setelah menyelesaikan kegiatan ini, peserta didik diharapkan mampu:</div>
           <ol style="font-size:15px;line-height:1.8;margin-bottom:24px;padding-left:22px">
             <li>Menyajikan hasil analisis data statistik dalam bentuk infografis.</li>
-            <li>Mengkomunikasikan makna data secara jelas dan bertanggung jawab.</li>
-            <li>Menghubungkan hasil analisis statistik dengan pesan kesehatan siswa.</li>
-            <li>Merefleksikan proses belajar, kerja tim, dan sikap resiliensi selama proyek.</li>
+            <li>Menyampaikan informasi statistik secara jelas dan logis.</li>
+            <li>Menjelaskan makna data berdasarkan infografis yang dibuat.</li>
+            <li>Melakukan refleksi terhadap proses dan hasil proyek.</li>
           </ol>
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(501)" class="btn-ghost">← Sebelumnya</button>
@@ -756,126 +756,199 @@
       }
     }
 
-    // Fungsi Download PDF
-    async function downloadPDF() {
-      // Load jsPDF & html2canvas jika belum ada
-      if (typeof window.jspdf === 'undefined') {
-        await loadScript('tools/libs/jspdf.umd.min.js');
-      }
-      if (typeof window.html2canvas === 'undefined') {
-        await loadScript('tools/libs/html2canvas.min.js');
-      }
-      const { jsPDF } = window.jspdf;
+    function collectAllDataP5() {
+      const data = {};
 
-      // Ambil data identitas
-      const groupName = document.getElementById('groupName')?.value || '-';
-      const schoolName = document.getElementById('schoolName')?.value || '-';
-      // Ambil anggota kelompok (dari #membersList, fallback: kosong)
-      let anggota = [];
-      document.querySelectorAll('#membersList .anggota-nama').forEach(el => {
-        anggota.push(el.textContent.trim());
-      });
-      if (anggota.length === 0) anggota.push('-');
-
-      // Ambil semua textarea (urut sesuai tampilan)
-      const textareas = document.querySelectorAll('textarea');
-      // Ambil semua input (type text/number di slide 503, 504)
-      const inputs = document.querySelectorAll('section.slide input[type="text"], section.slide input[type="number"]');
-
-      // Ambil jawaban evaluasi (checkbox)
-      const evaluasi = [
-        { label: 'Saya berperan aktif dalam kelompok', name: 'aktif' },
-        { label: 'Saya memahami data yang dianalisis', name: 'paham' },
-        { label: 'Saya berani menyampaikan pendapat', name: 'berani' },
-        { label: 'Saya tidak mudah menyerah saat mengalami kesulitan', name: 'pantang' },
-        { label: 'Saya menggunakan data untuk menarik Kesimpulan', name: 'data' },
-      ];
-      function getCheckboxValue(name) {
-        const ya = document.querySelector('input[name="'+name+' "][value="ya"]')?.checked;
-        const tidak = document.querySelector('input[name="'+name+' "][value="tidak"]')?.checked;
-        if (ya) return 'Ya';
-        if (tidak) return 'Tidak';
-        return '-';
-      }
-
-      // Siapkan PDF
-      const doc = new jsPDF();
-      let y = 15;
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(16);
-      doc.text('HASIL PENGERJAAN KELOMPOK', 105, y, { align: 'center' });
-      y += 10;
-      doc.setFontSize(11);
-      doc.setFont('helvetica','normal');
-      doc.text('Nama Kelompok: ' + groupName, 15, y);
-      y += 7;
-      doc.text('Sekolah: ' + schoolName, 15, y);
-      y += 7;
-      doc.text('Anggota Kelompok:', 15, y);
-      y += 6;
-      anggota.forEach((nama, idx) => {
-        doc.text('- ' + nama, 20, y);
-        y += 6;
-      });
-      y += 2;
-      doc.setFont('helvetica','bold');
-      doc.text('Ringkasan Proyek:', 15, y);
-      doc.setFont('helvetica','normal');
-      y += 7;
-      doc.text('1. Fokus data: ' + (textareas[0]?.value || '-'), 15, y);
-      y += 7;
-      doc.text('2. Jumlah responden: ' + (inputs[0]?.value || '-'), 15, y);
-      y += 7;
-      doc.text('3. Informasi utama: ' + (textareas[1]?.value || '-'), 15, y);
-      y += 10;
-      doc.setFont('helvetica','bold');
-      doc.text('Penyajian Hasil Statistik:', 15, y);
-      doc.setFont('helvetica','normal');
-      y += 7;
-      const statistik = ['Rata-rata','Median','Modus','Jangkauan','Kuartil'];
-      for (let i=0; i<5; i++) {
-        doc.text(statistik[i]+': ' + (inputs[1+i*2]?.value || '-') + ' | ' + (inputs[2+i*2]?.value || '-'), 15, y);
-        y += 6;
-      }
-      y += 2;
-      doc.setFont('helvetica','bold');
-      doc.text('Kesimpulan:', 15, y);
-      doc.setFont('helvetica','normal');
-      y += 7;
-      doc.text((textareas[2]?.value || '-'), 15, y, { maxWidth: 180 });
-      y += 12;
-      doc.setFont('helvetica','bold');
-      doc.text('Refleksi Kelompok:', 15, y);
-      doc.setFont('helvetica','normal');
-      y += 7;
-      doc.text('1. Tantangan: ' + (textareas[3]?.value || '-'), 15, y, { maxWidth: 180 });
-      y += 7;
-      doc.text('2. Cara mengatasi: ' + (textareas[4]?.value || '-'), 15, y, { maxWidth: 180 });
-      y += 7;
-      doc.text('3. Pelajaran penting: ' + (textareas[5]?.value || '-'), 15, y, { maxWidth: 180 });
-      y += 10;
-      doc.setFont('helvetica','bold');
-      doc.text('Evaluasi Diri:', 15, y);
-      doc.setFont('helvetica','normal');
-      y += 7;
-      evaluasi.forEach((ev, idx) => {
-        doc.text((idx+1)+'. '+ev.label+': '+getCheckboxValue(ev.name), 15, y, { maxWidth: 180 });
-        y += 6;
+      data.groupName = document.getElementById('groupName')?.value || '';
+      data.schoolName = document.getElementById('schoolName')?.value || '';
+      data.members = [];
+      document.querySelectorAll('#membersList .anggota-item').forEach(item => {
+        const nama = item.querySelector('.anggota-nama')?.textContent || '';
+        const role = item.querySelector('.anggota-role')?.textContent.replace(/[()]/g, '') || '';
+        if (nama) data.members.push({ nama, role });
       });
 
-      doc.save('hasil_kelompok.pdf');
+      const slide503 = document.querySelector('[data-slide="503"]');
+      const slide503Inputs = slide503?.querySelectorAll('input[type="text"]') || [];
+      const slide503Textareas = slide503?.querySelectorAll('textarea') || [];
+      data.activity1 = {
+        judulInfografis: slide503Inputs[0]?.value || '',
+        jenisGrafikUtama: slide503Inputs[1]?.value || '',
+        pesanUtama: slide503Textareas[0]?.value || ''
+      };
+
+      const slide504 = document.querySelector('[data-slide="504"]');
+      const slide504Textareas = slide504?.querySelectorAll('textarea') || [];
+      data.activity2 = {
+        q1: slide504Textareas[0]?.value || '',
+        q2: slide504Textareas[1]?.value || '',
+        q3: slide504Textareas[2]?.value || ''
+      };
+
+      const slide505 = document.querySelector('[data-slide="505"]');
+      const slide505Textareas = slide505?.querySelectorAll('textarea') || [];
+      data.activity3 = {
+        pertanyaan: slide505Textareas[0]?.value || '',
+        jawaban: slide505Textareas[1]?.value || '',
+        catatan: slide505Textareas[2]?.value || ''
+      };
+
+      const slide506 = document.querySelector('[data-slide="506"]');
+      const slide506Textareas = slide506?.querySelectorAll('textarea') || [];
+      data.activity4 = {
+        pesanKesehatan: slide506Textareas[0]?.value || '',
+        alasanPesan: slide506Textareas[1]?.value || ''
+      };
+
+      const slide507 = document.querySelector('[data-slide="507"]');
+      const slide507Textareas = slide507?.querySelectorAll('textarea') || [];
+      data.activity5 = {
+        q1: slide507Textareas[0]?.value || '',
+        q2: slide507Textareas[1]?.value || '',
+        q3: slide507Textareas[2]?.value || '',
+        q4: slide507Textareas[3]?.value || '',
+        q5: slide507Textareas[4]?.value || ''
+      };
+
+      data.checklist = {
+        check1: document.getElementById('check1')?.checked || false,
+        check2: document.getElementById('check2')?.checked || false,
+        check3: document.getElementById('check3')?.checked || false,
+        check4: document.getElementById('check4')?.checked || false,
+        check5: document.getElementById('check5')?.checked || false
+      };
+
+      return data;
     }
 
-    // Loader eksternal script
-    function loadScript(src) {
-      return new Promise((resolve, reject) => {
-        const s = document.createElement('script');
-        s.src = src;
-        s.onload = resolve;
-        s.onerror = reject;
-        document.head.appendChild(s);
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf || {};
+      if (typeof jsPDF === 'undefined') {
+        alert('⚠️ Library PDF belum dimuat. Silakan refresh halaman dan coba lagi.');
+        return;
+      }
+
+      const loadingDiv = document.createElement('div');
+      loadingDiv.id = 'pdfLoading';
+      loadingDiv.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:9999;';
+      loadingDiv.innerHTML = '<div style="background:white;padding:30px;border-radius:16px;text-align:center;font-family:Plus Jakarta Sans"><div style="font-size:48px;margin-bottom:16px">📥</div><div style="font-size:18px;font-weight:700;color:#4b8df8">Membuat PDF...</div><div style="font-size:14px;color:#64748b;margin-top:8px">Mengumpulkan data...</div></div>';
+      document.body.appendChild(loadingDiv);
+
+      const data = collectAllDataP5();
+      const doc = new jsPDF('p', 'mm', 'a4');
+      const left = 15;
+      const maxWidth = 180;
+      let y = 20;
+
+      function ensureSpace(needed) {
+        if (y + needed > 280) {
+          doc.addPage();
+          y = 20;
+        }
+      }
+
+      function addSection(title) {
+        ensureSpace(12);
+        doc.setFontSize(12);
+        doc.setTextColor(75, 141, 248);
+        doc.text(title, left, y);
+        y += 7;
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+      }
+
+      function addLabelValue(label, value) {
+        ensureSpace(12);
+        doc.setFont(undefined, 'bold');
+        doc.text(label, left, y);
+        y += 5;
+        doc.setFont(undefined, 'normal');
+        const lines = doc.splitTextToSize(value || 'Belum diisi', maxWidth - 5);
+        doc.text(lines, left + 5, y);
+        y += (lines.length * 5) + 4;
+      }
+
+      doc.setFontSize(18);
+      doc.setTextColor(75, 141, 248);
+      doc.text('LKPD Pertemuan 5', 105, y, { align: 'center' });
+      y += 8;
+      doc.setFontSize(12);
+      doc.setTextColor(0, 0, 0);
+      doc.text('Penyajian dan Refleksi Proyek', 105, y, { align: 'center' });
+      y += 10;
+
+      addSection('IDENTITAS KELOMPOK');
+      doc.setFont(undefined, 'normal');
+      doc.text('Nama Kelompok: ' + (data.groupName || '-'), left, y);
+      y += 6;
+      doc.text('Sekolah: ' + (data.schoolName || '-'), left, y);
+      y += 6;
+      doc.setFont(undefined, 'bold');
+      doc.text('Anggota Kelompok:', left, y);
+      y += 6;
+      doc.setFont(undefined, 'normal');
+      if (data.members.length > 0) {
+        data.members.forEach((m, idx) => {
+          ensureSpace(6);
+          doc.text(`${idx + 1}. ${m.nama} - ${m.role}`, left + 5, y);
+          y += 5;
+        });
+      } else {
+        doc.text('Belum ada data anggota', left + 5, y);
+        y += 5;
+      }
+      y += 4;
+
+      addSection('AKTIVITAS 1: FINALISASI INFOGRAFIS');
+      addLabelValue('Judul Infografis:', data.activity1.judulInfografis);
+      addLabelValue('Jenis Grafik Utama:', data.activity1.jenisGrafikUtama);
+      addLabelValue('Pesan Utama:', data.activity1.pesanUtama);
+
+      addSection('AKTIVITAS 2: MENJELASKAN INFOGRAFIS');
+      addLabelValue('1. Jelaskan data yang digunakan:', data.activity2.q1);
+      addLabelValue('2. Jelaskan hasil analisis utama:', data.activity2.q2);
+      addLabelValue('3. Pesan atau rekomendasi dari data:', data.activity2.q3);
+
+      addSection('AKTIVITAS 3: TANYA JAWAB DAN DISKUSI');
+      addLabelValue('Pertanyaan/tanggapan dari kelompok lain:', data.activity3.pertanyaan);
+      addLabelValue('Jawaban kelompok:', data.activity3.jawaban);
+      addLabelValue('Catatan umpan balik guru:', data.activity3.catatan);
+
+      addSection('AKTIVITAS 4: PESAN KESEHATAN');
+      addLabelValue('Pesan kesehatan:', data.activity4.pesanKesehatan);
+      addLabelValue('Alasan didukung data:', data.activity4.alasanPesan);
+
+      addSection('AKTIVITAS 5: REFLEKSI AKHIR');
+      addLabelValue('1. Hal terpenting yang dipelajari:', data.activity5.q1);
+      addLabelValue('2. Bagian paling menantang:', data.activity5.q2);
+      addLabelValue('3. Manfaat memahami data:', data.activity5.q3);
+      addLabelValue('4. Kekuatan utama kelompok:', data.activity5.q4);
+      addLabelValue('5. Perbaikan untuk proyek berikutnya:', data.activity5.q5);
+
+      addSection('CHECKLIST AKHIR PROYEK');
+      const checklistItems = [
+        { label: 'Infografis selesai dan berbasis data', value: data.checklist.check1 },
+        { label: 'Analisis statistik disajikan dengan benar', value: data.checklist.check2 },
+        { label: 'Pesan kesehatan dirumuskan berdasarkan data', value: data.checklist.check3 },
+        { label: 'Presentasi kelompok dilaksanakan', value: data.checklist.check4 },
+        { label: 'Refleksi proyek dituliskan', value: data.checklist.check5 }
+      ];
+      checklistItems.forEach((item, idx) => {
+        ensureSpace(6);
+        doc.text(`${idx + 1}. ${item.label}: ${item.value ? 'Ya' : 'Tidak'}`, left, y);
+        y += 6;
       });
+
+      doc.setFontSize(8);
+      doc.setTextColor(120, 120, 120);
+      doc.text('Generated by Media DataVista - Pertemuan 5', 105, 285, { align: 'center' });
+
+      const filename = `LKPD_P5_${(data.groupName || 'Kelompok').replace(/\s+/g, '_')}.pdf`;
+      doc.save(filename);
+      document.body.removeChild(loadingDiv);
+      alert('✅ PDF berhasil diunduh!\n\nFile berisi semua data yang telah kalian input.');
     }
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
