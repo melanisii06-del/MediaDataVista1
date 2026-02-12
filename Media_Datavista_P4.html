@@ -459,12 +459,11 @@
           <div style="font-size:17px;font-weight:700;margin-bottom:16px;text-align:center">Pengolahan dan Penyajian Data</div>
           <div style="margin-bottom:18px;font-size:16px">Setelah menyelesaikan Bab 5 ini, kalian akan bisa:</div>
           <ol style="font-size:15px;line-height:1.8;margin-bottom:24px;padding-left:22px">
-            <li>A. Memahami konsep statistika dan pentingnya analisis data</li>
-            <li>B. Menghitung statistik pusat (Mean, Median, Modus) secara manual</li>
-            <li>C. Menganalisis sebaran data (Jangkauan, Quartil, IQR)</li>
-            <li>D. Menginterpretasi hasil analisis dengan tepat</li>
-            <li>E. Membuat visualisasi data secara manual atau dengan spreadsheet</li>
-            <li>F. Menghubungkan temuan data dengan pesan kesehatan</li>
+            <li>Menghitung ukuran pemusatan data secara manual</li>
+            <li>Menghitung ukuran penyebaran data secara manual</li>
+            <li>Menganalisis data numerik dan data kategorik secara tepat</li>
+            <li>Menginterpretasikan hasil analisis data penggunaan HP secara
+kontekstual</li>
           </ol>
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(401)" class="btn-ghost">← Sebelumnya</button>
@@ -1412,69 +1411,76 @@
       nameInput.focus();
     }
 
-    // Fungsi Download PDF
+    // Fungsi Download PDF (Screenshot-based seperti Pertemuan 2)
     async function downloadPDF() {
+      // Load libraries jika belum ada
       if (typeof window.jspdf === 'undefined') {
         await loadScript('tools/libs/jspdf.umd.min.js');
       }
       if (typeof window.html2canvas === 'undefined') {
         await loadScript('tools/libs/html2canvas.min.js');
       }
+      
       const { jsPDF } = window.jspdf;
-
-      // Ambil data identitas
-      const groupName = document.getElementById('groupName')?.value || '-';
-      const schoolName = document.getElementById('schoolName')?.value || '-';
-      // Ambil anggota kelompok (dari #membersList, fallback: kosong)
-      let anggota = [];
-      document.querySelectorAll('#membersList .anggota-nama').forEach(el => {
-        anggota.push(el.textContent.trim());
-      });
-      if (anggota.length === 0) anggota.push('-');
-
-      // Ambil semua textarea (urut sesuai tampilan)
-      const textareas = document.querySelectorAll('textarea');
-      // Ambil semua input (type text/number)
-      const inputs = document.querySelectorAll('section.slide input[type="text"], section.slide input[type="number"]');
-
-      // Siapkan PDF
-      const doc = new jsPDF();
-      let y = 15;
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(16);
-      doc.text('HASIL PENGERJAAN KELOMPOK', 105, y, { align: 'center' });
-      y += 10;
-      doc.setFontSize(11);
-      doc.setFont('helvetica','normal');
-      doc.text('Nama Kelompok: ' + groupName, 15, y);
-      y += 7;
-      doc.text('Sekolah: ' + schoolName, 15, y);
-      y += 7;
-      doc.text('Anggota Kelompok:', 15, y);
-      y += 6;
-      anggota.forEach((nama, idx) => {
-        doc.text('- ' + nama, 20, y);
-        y += 6;
-      });
-      y += 2;
-      doc.setFont('helvetica','bold');
-      doc.text('Jawaban:', 15, y);
-      doc.setFont('helvetica','normal');
-      y += 7;
-      textareas.forEach((ta, idx) => {
-        doc.text((idx+1)+'. ' + (ta.value || '-'), 15, y, { maxWidth: 180 });
-        y += 8;
-      });
-      y += 2;
-      doc.setFont('helvetica','bold');
-      doc.text('Input Lain:', 15, y);
-      doc.setFont('helvetica','normal');
-      y += 7;
-      inputs.forEach((inp, idx) => {
-        doc.text((idx+1)+'. ' + (inp.value || '-'), 15, y, { maxWidth: 180 });
-        y += 8;
-      });
-      doc.save('hasil_kelompok.pdf');
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [1100, 1400] });
+      
+      // Daftar slide yang akan di-capture (sesuaikan dengan slide Pertemuan 4)
+      const slides = ['401', '402', '403', '404', '405', '406', '407', '408', '409', '410', '411', '412', '413'];
+      
+      // Simpan slide yang sedang aktif
+      const currentActiveSlide = document.querySelector('.slide[style*="display: block"]')?.getAttribute('data-slide') || '401';
+      
+      // Loop untuk capture setiap slide
+      for (let i = 0; i < slides.length; i++) {
+        const slideNum = slides[i];
+        const slideElement = document.querySelector(`.slide[data-slide="${slideNum}"]`);
+        
+        if (!slideElement) continue;
+        
+        // Sembunyikan semua slide
+        document.querySelectorAll('.slide').forEach(s => s.style.display = 'none');
+        
+        // Tampilkan slide saat ini
+        slideElement.style.display = 'block';
+        
+        // Delay untuk rendering
+        await new Promise(r => setTimeout(r, 100));
+        
+        // Special handling untuk slide dengan chart (407)
+        if (slideNum === '407' && currentChartInstance) {
+          // Redraw chart jika ada
+          currentChartInstance.update();
+        }
+        
+        // Capture slide dengan html2canvas
+        const canvas = await html2canvas(slideElement, { 
+          scale: 1.2, 
+          useCORS: true, 
+          allowTaint: true, 
+          logging: false 
+        });
+        
+        const img = canvas.toDataURL('image/png');
+        const pageW = pdf.internal.pageSize.getWidth();
+        const imgW = pageW;
+        const imgH = canvas.height * (imgW / canvas.width);
+        
+        // Tambah halaman baru (kecuali halaman pertama)
+        if (i > 0) pdf.addPage();
+        
+        // Tambahkan image ke PDF
+        pdf.addImage(img, 'PNG', 0, 0, imgW, imgH);
+      }
+      
+      // Save PDF
+      pdf.save('Hasil_LKPD_DataVista_Pertemuan4.pdf');
+      
+      // Kembalikan ke slide yang sebelumnya aktif
+      document.querySelectorAll('.slide').forEach(s => s.style.display = 'none');
+      const returnSlide = document.querySelector(`.slide[data-slide="${currentActiveSlide}"]`);
+      if (returnSlide) returnSlide.style.display = 'block';
+      
+      alert('✅ PDF berhasil didownload!');
     }
 
     // Loader eksternal script
