@@ -126,19 +126,320 @@
       nameInput.focus();
     }
 
-    function downloadPDF() {
-      const element = document.body;
-      const opt = {
-        margin: 0.5,
-        filename: 'LKPD_Pertemuan_2_Perencanaan_Proyek.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-      };
-      if (typeof html2pdf !== 'undefined') {
-        html2pdf().set(opt).from(element).save();
+    // Fungsi mengumpulkan semua data input
+    function collectAllData() {
+      const data = {};
+      
+      // Slide 201: Identitas Kelompok
+      data.groupName = document.getElementById('groupName')?.value || '';
+      data.schoolName = document.getElementById('schoolName')?.value || '';
+      data.members = [];
+      document.querySelectorAll('#membersList .anggota-item').forEach(item => {
+        const nama = item.querySelector('.anggota-nama')?.textContent || '';
+        const role = item.querySelector('.anggota-role')?.textContent.replace(/[()]/g, '') || '';
+        if (nama) data.members.push({ nama, role });
+      });
+      
+      // Slide 203: Fokus Proyek
+      data.fokusProyek = Array.from(document.querySelectorAll('input[name="fokusProyek"]:checked'))
+        .map(cb => cb.value);
+      data.alasanFokus = document.getElementById('alasanFokus')?.value || '';
+      data.jenisData = Array.from(document.querySelectorAll('input[name="jenisdata"]:checked'))
+        .map(cb => cb.value);
+      data.penjelasanJenisData = document.getElementById('penjelasanJenisData')?.value || '';
+      
+      // Slide 204: Instrumen Pengumpulan Data
+      data.pertanyaanKuesioner = document.getElementById('pertanyaanKuesioner')?.value || '';
+      data.caraPengumpulan = Array.from(document.querySelectorAll('input[name="carapengumpulan"]:checked'))
+        .map(cb => cb.value);
+      
+      // Slide 205: Responden - ambil semua input dalam slide tersebut
+      const slide205 = document.querySelector('[data-slide="205"]');
+      const inputs205 = slide205?.querySelectorAll('input[type="text"], input[type="number"]') || [];
+      data.slide205Inputs = Array.from(inputs205).map(inp => inp.value).filter(v => v);
+      
+      // Slide 206: Pembagian Peran - ambil semua input
+      const slide206 = document.querySelector('[data-slide="206"]');
+      const inputs206 = slide206?.querySelectorAll('input[type="text"]') || [];
+      data.slide206Inputs = Array.from(inputs206).map(inp => inp.value).filter(v => v);
+      
+      // Slide 207: Jadwal - ambil semua input
+      const slide207 = document.querySelector('[data-slide="207"]');
+      const inputs207 = slide207?.querySelectorAll('input[type="text"]') || [];
+      data.slide207Inputs = Array.from(inputs207).map(inp => inp.value).filter(v => v);
+      
+      return data;
+    }
+
+    // Fungsi membuat template PDF dari data
+    function generatePDFTemplate(data) {
+      let membersHTML = '';
+      if (data.members.length > 0) {
+        data.members.forEach((m, idx) => {
+          membersHTML += `<div style="padding:5px 0;border-bottom:1px solid #ddd">${idx+1}. ${m.nama} - ${m.role}</div>`;
+        });
       } else {
-        alert('Fitur download PDF sedang dimuat. Silakan coba lagi dalam beberapa detik.');
+        membersHTML = '<div>Belum ada data anggota</div>';
+      }
+      
+      let html = `
+        <div style="font-family:Arial,sans-serif;padding:30px;background:#fff;width:700px">
+          <div style="text-align:center;margin-bottom:30px;border-bottom:3px solid #4b8df8;padding-bottom:15px">
+            <h1 style="color:#4b8df8;font-size:24px;margin:0 0 8px 0">LKPD Pertemuan 2</h1>
+            <h2 style="color:#333;font-size:18px;margin:0">Perencanaan Proyek Statistik</h2>
+            <p style="color:#666;margin:8px 0 0 0;font-size:12px">Tahun Ajaran 2025/2026</p>
+          </div>
+          
+          <div style="margin-bottom:25px">
+            <h3 style="color:#4b8df8;font-size:16px;border-left:4px solid #4b8df8;padding-left:10px;margin:0 0 12px 0">IDENTITAS KELOMPOK</h3>
+            <div style="margin-bottom:8px"><strong>Nama Kelompok:</strong> ${data.groupName || '-'}</div>
+            <div style="margin-bottom:12px"><strong>Sekolah:</strong> ${data.schoolName || '-'}</div>
+            <div style="font-weight:bold;margin-bottom:8px">Anggota Kelompok:</div>
+            ${membersHTML}
+          </div>
+          
+          <div style="margin-bottom:25px">
+            <h3 style="color:#4b8df8;font-size:16px;border-left:4px solid #4b8df8;padding-left:10px;margin:0 0 12px 0">AKTIVITAS 1: FOKUS PROYEK</h3>
+            <div style="margin-bottom:8px"><strong>Fokus yang Dipilih:</strong></div>
+            <div style="margin:0 0 12px 0;color:#333">${data.fokusProyek.length > 0 ? data.fokusProyek.join(', ') : 'Belum dipilih'}</div>
+            <div style="margin-bottom:8px"><strong>Alasan:</strong></div>
+            <div style="margin:0 0 12px 0;padding:8px;background:#f5f5f5;color:#333">${data.alasanFokus || 'Belum diisi'}</div>
+            <div style="margin-bottom:8px"><strong>Jenis Data:</strong></div>
+            <div style="margin:0 0 12px 0;color:#333">${data.jenisData.length > 0 ? data.jenisData.join(', ') : 'Belum dipilih'}</div>
+            <div style="margin-bottom:8px"><strong>Penjelasan:</strong></div>
+            <div style="margin:0 0 12px 0;padding:8px;background:#f5f5f5;color:#333">${data.penjelasanJenisData || 'Belum diisi'}</div>
+          </div>
+          
+          <div style="margin-bottom:25px">
+            <h3 style="color:#4b8df8;font-size:16px;border-left:4px solid #4b8df8;padding-left:10px;margin:0 0 12px 0">AKTIVITAS 2: INSTRUMEN PENGUMPULAN DATA</h3>
+            <div style="margin-bottom:8px"><strong>Pertanyaan Kuesioner:</strong></div>
+            <div style="margin:0 0 12px 0;padding:8px;background:#f5f5f5;color:#333;white-space:pre-wrap">${data.pertanyaanKuesioner || 'Belum diisi'}</div>
+            <div style="margin-bottom:8px"><strong>Cara Pengumpulan Data:</strong></div>
+            <div style="margin:0;color:#333">${data.caraPengumpulan.length > 0 ? data.caraPengumpulan.join(', ') : 'Belum dipilih'}</div>
+          </div>
+          
+          <div style="margin-bottom:25px">
+            <h3 style="color:#4b8df8;font-size:16px;border-left:4px solid #4b8df8;padding-left:10px;margin:0 0 12px 0">AKTIVITAS 3: RESPONDEN</h3>
+            <div style="color:#666;font-size:13px">${data.slide205Inputs.length > 0 ? data.slide205Inputs.join(', ') : 'Belum ada data'}</div>
+          </div>
+          
+          <div style="margin-bottom:25px">
+            <h3 style="color:#4b8df8;font-size:16px;border-left:4px solid #4b8df8;padding-left:10px;margin:0 0 12px 0">AKTIVITAS 4: PEMBAGIAN PERAN</h3>
+            <div style="color:#666;font-size:13px">${data.slide206Inputs.length > 0 ? data.slide206Inputs.join(', ') : 'Belum ada data'}</div>
+          </div>
+          
+          <div style="margin-bottom:25px">
+            <h3 style="color:#4b8df8;font-size:16px;border-left:4px solid #4b8df8;padding-left:10px;margin:0 0 12px 0">AKTIVITAS 5: JADWAL PELAKSANAAN</h3>
+            <div style="color:#666;font-size:13px">${data.slide207Inputs.length > 0 ? data.slide207Inputs.join(', ') : 'Belum ada data'}</div>
+          </div>
+          
+          <div style="text-align:center;margin-top:40px;padding-top:15px;border-top:2px solid #ddd;color:#888;font-size:11px">
+            Generated by Media DataVista - Pertemuan 2<br>
+            &copy; 2026 LKPD Statistik
+          </div>
+        </div>
+      `;
+      return html;
+    }
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      if (typeof jsPDF === 'undefined') {
+        alert('⚠️ Library PDF belum dimuat. Silakan refresh halaman dan coba lagi.');
+        return;
+      }
+
+      // Tampilkan loading
+      const loadingDiv = document.createElement('div');
+      loadingDiv.id = 'pdfLoading';
+      loadingDiv.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:9999;';
+      loadingDiv.innerHTML = '<div style="background:white;padding:30px;border-radius:16px;text-align:center;font-family:Plus Jakarta Sans"><div style="font-size:48px;margin-bottom:16px">📥</div><div style="font-size:18px;font-weight:700;color:#4b8df8">Membuat PDF...</div><div style="font-size:14px;color:#64748b;margin-top:8px">Mengumpulkan data...</div></div>';
+      document.body.appendChild(loadingDiv);
+
+      // Kumpulkan semua data
+      const allData = collectAllData();
+      console.log('Data terkumpul:', allData);
+      
+      try {
+        // Buat PDF
+        const doc = new jsPDF('p', 'mm', 'a4');
+        let yPos = 20;
+        const leftMargin = 15;
+        const pageWidth = 180;
+        
+        // Header
+        doc.setFontSize(20);
+        doc.setTextColor(75, 141, 248);
+        doc.text('LKPD Pertemuan 2', 105, yPos, { align: 'center' });
+        yPos += 8;
+        
+        doc.setFontSize(14);
+        doc.setTextColor(0, 0, 0);
+        doc.text('Perencanaan Proyek Statistik', 105, yPos, { align: 'center' });
+        yPos += 6;
+        
+        doc.setFontSize(10);
+        doc.setTextColor(100, 100, 100);
+        doc.text('Tahun Ajaran 2025/2026', 105, yPos, { align: 'center' });
+        yPos += 15;
+        
+        // Garis pemisah
+        doc.setDrawColor(75, 141, 248);
+        doc.setLineWidth(0.5);
+        doc.line(leftMargin, yPos, 195, yPos);
+        yPos += 10;
+        
+        // IDENTITAS KELOMPOK
+        doc.setFontSize(12);
+        doc.setTextColor(75, 141, 248);
+        doc.text('IDENTITAS KELOMPOK', leftMargin, yPos);
+        yPos += 8;
+        
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        doc.text('Nama Kelompok: ' + (allData.groupName || '-'), leftMargin, yPos);
+        yPos += 6;
+        doc.text('Sekolah: ' + (allData.schoolName || '-'), leftMargin, yPos);
+        yPos += 8;
+        
+        doc.setFont(undefined, 'bold');
+        doc.text('Anggota Kelompok:', leftMargin, yPos);
+        yPos += 6;
+        doc.setFont(undefined, 'normal');
+        
+        if (allData.members.length > 0) {
+          allData.members.forEach((m, idx) => {
+            const memberText = `${idx + 1}. ${m.nama} - ${m.role}`;
+            doc.text(memberText, leftMargin + 5, yPos);
+            yPos += 5;
+          });
+        } else {
+          doc.text('Belum ada data anggota', leftMargin + 5, yPos);
+          yPos += 5;
+        }
+        yPos += 5;
+        
+        // AKTIVITAS 1
+        doc.setFontSize(12);
+        doc.setTextColor(75, 141, 248);
+        doc.text('AKTIVITAS 1: FOKUS PROYEK', leftMargin, yPos);
+        yPos += 8;
+        
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        doc.setFont(undefined, 'bold');
+        doc.text('Fokus yang Dipilih:', leftMargin, yPos);
+        yPos += 6;
+        doc.setFont(undefined, 'normal');
+        doc.text(allData.fokusProyek.length > 0 ? allData.fokusProyek.join(', ') : 'Belum dipilih', leftMargin + 5, yPos);
+        yPos += 8;
+        
+        doc.setFont(undefined, 'bold');
+        doc.text('Alasan:', leftMargin, yPos);
+        yPos += 6;
+        doc.setFont(undefined, 'normal');
+        const alasanLines = doc.splitTextToSize(allData.alasanFokus || 'Belum diisi', pageWidth - 10);
+        doc.text(alasanLines, leftMargin + 5, yPos);
+        yPos += (alasanLines.length * 5) + 5;
+        
+        doc.setFont(undefined, 'bold');
+        doc.text('Jenis Data:', leftMargin, yPos);
+        yPos += 6;
+        doc.setFont(undefined, 'normal');
+        doc.text(allData.jenisData.length > 0 ? allData.jenisData.join(', ') : 'Belum dipilih', leftMargin + 5, yPos);
+        yPos += 8;
+        
+        doc.setFont(undefined, 'bold');
+        doc.text('Penjelasan:', leftMargin, yPos);
+        yPos += 6;
+        doc.setFont(undefined, 'normal');
+        const penjelasanLines = doc.splitTextToSize(allData.penjelasanJenisData || 'Belum diisi', pageWidth - 10);
+        doc.text(penjelasanLines, leftMargin + 5, yPos);
+        yPos += (penjelasanLines.length * 5) + 8;
+        
+        // Cek halaman baru jika perlu
+        if (yPos > 250) {
+          doc.addPage();
+          yPos = 20;
+        }
+        
+        // AKTIVITAS 2
+        doc.setFontSize(12);
+        doc.setTextColor(75, 141, 248);
+        doc.text('AKTIVITAS 2: INSTRUMEN PENGUMPULAN DATA', leftMargin, yPos);
+        yPos += 8;
+        
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        doc.setFont(undefined, 'bold');
+        doc.text('Pertanyaan Kuesioner:', leftMargin, yPos);
+        yPos += 6;
+        doc.setFont(undefined, 'normal');
+        const pertanyaanLines = doc.splitTextToSize(allData.pertanyaanKuesioner || 'Belum diisi', pageWidth - 10);
+        doc.text(pertanyaanLines, leftMargin + 5, yPos);
+        yPos += (pertanyaanLines.length * 5) + 5;
+        
+        doc.setFont(undefined, 'bold');
+        doc.text('Cara Pengumpulan Data:', leftMargin, yPos);
+        yPos += 6;
+        doc.setFont(undefined, 'normal');
+        doc.text(allData.caraPengumpulan.length > 0 ? allData.caraPengumpulan.join(', ') : 'Belum dipilih', leftMargin + 5, yPos);
+        yPos += 10;
+        
+        // AKTIVITAS 3, 4, 5
+        if (yPos > 230) {
+          doc.addPage();
+          yPos = 20;
+        }
+        
+        doc.setFontSize(12);
+        doc.setTextColor(75, 141, 248);
+        doc.text('AKTIVITAS 3: RESPONDEN', leftMargin, yPos);
+        yPos += 6;
+        doc.setFontSize(9);
+        doc.setTextColor(100, 100, 100);
+        const resp = allData.slide205Inputs.length > 0 ? allData.slide205Inputs.join(', ') : 'Belum ada data';
+        const respLines = doc.splitTextToSize(resp, pageWidth - 5);
+        doc.text(respLines, leftMargin, yPos);
+        yPos += (respLines.length * 4) + 8;
+        
+        doc.setFontSize(12);
+        doc.setTextColor(75, 141, 248);
+        doc.text('AKTIVITAS 4: PEMBAGIAN PERAN', leftMargin, yPos);
+        yPos += 6;
+        doc.setFontSize(9);
+        doc.setTextColor(100, 100, 100);
+        const peran = allData.slide206Inputs.length > 0 ? allData.slide206Inputs.join(', ') : 'Belum ada data';
+        const peranLines = doc.splitTextToSize(peran, pageWidth - 5);
+        doc.text(peranLines, leftMargin, yPos);
+        yPos += (peranLines.length * 4) + 8;
+        
+        doc.setFontSize(12);
+        doc.setTextColor(75, 141, 248);
+        doc.text('AKTIVITAS 5: JADWAL PELAKSANAAN', leftMargin, yPos);
+        yPos += 6;
+        doc.setFontSize(9);
+        doc.setTextColor(100, 100, 100);
+        const jadwal = allData.slide207Inputs.length > 0 ? allData.slide207Inputs.join(', ') : 'Belum ada data';
+        const jadwalLines = doc.splitTextToSize(jadwal, pageWidth - 5);
+        doc.text(jadwalLines, leftMargin, yPos);
+        
+        // Footer
+        doc.setFontSize(8);
+        doc.setTextColor(150, 150, 150);
+        doc.text('Generated by Media DataVista - Pertemuan 2 | © 2026 LKPD Statistik', 105, 285, { align: 'center' });
+        
+        // Save PDF
+        const filename = `LKPD_P2_${(allData.groupName || 'Kelompok').replace(/\s+/g, '_')}.pdf`;
+        doc.save(filename);
+        
+        document.body.removeChild(loadingDiv);
+        alert('✅ PDF berhasil diunduh!\n\nFile berisi semua data yang telah kalian input.');
+        
+      } catch (error) {
+        if (document.body.contains(loadingDiv)) document.body.removeChild(loadingDiv);
+        alert('❌ Gagal membuat PDF: ' + error.message);
+        console.error('Error:', error);
       }
     }
   </script>
@@ -197,16 +498,13 @@
             <section class="slide" data-slide="202" style="display:none">
         <div class="card-lite" style="text-align:left;padding:32px 24px">
           <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">Tujuan Kegiatan</div>
-          <div style="margin-bottom:16px;font-size:16px">Setelah menyelesaikan LKPD ini, kalian akan mampu:</div>
+          <div style="margin-bottom:16px;font-size:16px">Setelah menyelesaikan LKPD ini, kalian diharapkan mampu:</div>
           <ol style="font-size:15px;line-height:1.8;margin-bottom:24px;padding-left:22px">
-            <li>Memahami konsep perencanaan proyek dan pentingnya perencanaan yang matang</li>
-            <li>Menentukan fokus penelitian yang sesuai dengan minat dan kemampuan kelompok</li>
-            <li>Mengidentifikasi jenis data dan cara pengumpulannya</li>
-            <li>Menentukan responden yang representatif</li>
-            <li>Merencanakan produk akhir (infografis) yang akan dihasilkan</li>
-            <li>Membagi peran dan tanggung jawab dalam tim secara adil</li>
-            <li>Menyusun jadwal pelaksanaan proyek yang realistis</li>
-            <li>Mengidentifikasi risiko dan strategi mitigasi</li>
+            <li>Menentukan fokus proyek statistik yang akan diteliti.</li>
+            <li>Mengidentifikasi jenis data dan cara pengumpulannya.</li>
+            <li>Menyusun pertanyaan kuesioner sederhana dan relevan.</li>
+            <li>Menentukan responden yang representatif.</li>
+            <li>Membagi peran dalam kelompok secara bertanggung jawab.</li>
           </ol>
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(201)" class="btn-ghost">← Sebelumnya</button>
@@ -224,7 +522,7 @@
                   <label><input type="checkbox" name="fokusProyek" value="Tujuan Penggunaan HP" style="margin-right:8px"> Tujuan Penggunaan HP</label>
                 </div>
                 <div style="margin-bottom:8px;font-size:15px">Alasan memilih fokus ini:</div>
-                <textarea placeholder="Jelaskan alasanmu..." style="width:100%;min-height:50px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+                <textarea id="alasanFokus" placeholder="Jelaskan alasanmu..." style="width:100%;min-height:50px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
 
                 <div style="margin-bottom:10px;font-size:15px;font-weight:700">Menentukan Jenis Data</div>
                 <div style="margin-bottom:10px;font-size:15px">Berdasarkan fokus proyek yang telah dipilih, jenis data apa yang akan dikumpulkan?</div>
@@ -234,7 +532,7 @@
                   <label><input type="checkbox" name="jenisdata" value="Keduanya" style="margin-right:8px"> Keduanya</label>
                 </div>
                 <div style="margin-bottom:8px;font-size:15px;font-weight:700">Jelaskan:</div>
-                <textarea placeholder="Jelaskan jawabanmu..." style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+                <textarea id="penjelasanJenisData" placeholder="Jelaskan jawabanmu..." style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(201)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="updateSlide(204)" class="btn-primary">Selanjutnya →</button>
@@ -244,65 +542,75 @@
             <section class="slide" data-slide="204" style="display:none">
         <div class="card-lite" style="text-align:left;padding:32px 24px">
           <div class="genty" style="font-size:20px;font-weight:700;margin-bottom:18px;text-align:center">Aktivitas 2: Menyusun Instrumen dan Cara Pengumpulan Data</div>
+          
           <div style="margin-bottom:14px;font-size:15px;font-weight:700">A. Menyusun Pertanyaan Kuesioner</div>
-          <div style="margin-bottom:10px;font-size:15px">Tuliskan pertanyaan yang akan diajukan kepada responden. Pertanyaan harus jelas dan mudah dipahami</div>
-          <div style="margin-bottom:8px;font-size:14px;color:#475569">Contoh pertanyaan:</div>
-          <div style="margin-bottom:8px;font-size:14px">1. Berapa lama kamu menggunakan HP dalam satu hari?</div>
-          <div style="margin-bottom:10px;font-size:14px">2. Pada waktu apa kamu paling sering menggunakan HP?</div>
-          <div style="margin-bottom:8px;font-size:15px">Pertanyaan kuesioner kelompok:</div>
-          <textarea placeholder="Tuliskan pertanyaan kelompok..." style="width:100%;min-height:60px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
-          <div style="margin-bottom:14px;font-size:15px;font-weight:700">B. Menentukan Cara Pengumpulan Data</div>
-          <div style="margin-bottom:10px;font-size:15px">Cara pengumpulan data apa yang akan kalian gunakan?</div>
-          <div style="margin-bottom:10px;font-size:15px;line-height:2">
-            <label><input type="checkbox" name="carapengumpulan" value="Angket Tertulis"> ☐ Angket Tertulis (responden mengisi di kertas)</label><br>
-            <label><input type="checkbox" name="carapengumpulan" value="Angket Digital"> ☐ Angket Digital (responden mengisi di aplikasi/online)</label><br>
-            <label><input type="checkbox" name="carapengumpulan" value="Wawancara"> ☐ Wawancara (peneliti bertanya langsung)</label><br>
-            <label><input type="checkbox" name="carapengumpulan" value="Kombinasi"> ☐ Kombinasi (lebih dari satu cara)</label>
+          <div style="margin-bottom:10px;font-size:15px">Berdasarkan pada fokus penelitian yang sudah kalian pilih pada aktivitas 1,<br>Tuliskan pertanyaan yang akan diajukan kepada responden. Pertanyaan harus<br>jelas dan mudah dipahami</div>
+          
+          <div style="margin-bottom:12px;padding:12px;background:#f0f7ff;border-radius:8px;border-left:4px solid #4b8df8">
+            <div style="font-size:14px;font-weight:700;margin-bottom:8px">Fokus : Durasi Penggunaan HP</div>
+            <div style="font-size:14px;margin-bottom:8px">Contoh Pertanyaan:  Berapa lama kamu menggunakan HP dalam satu hari?</div>
           </div>
-          <div style="margin-bottom:8px;font-size:15px;font-weight:700">Alasan memilih cara ini:</div>
-          <textarea placeholder="Jelaskan alasanmu..." style="width:100%;min-height:40px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
-          <div style="margin-bottom:14px;font-size:15px;font-weight:700">C. Perbandingan Cara Pengumpulan Data</div>
-          <div style="margin-bottom:10px;font-size:15px">Lengkapi tabel perbandingan cara pengumpulan data:</div>
+          
+          <div style="margin-bottom:12px;padding:12px;background:#fff5f0;border-radius:8px;border-left:4px solid #f97316">
+            <div style="font-size:14px;font-weight:700;margin-bottom:8px">Fokus: Waktu Pengunaan HP</div>
+            <div style="font-size:14px">Contoh Pertanyaan: Kapan seringnya kalian menggunakan HP (pagi/siang/malam)?</div>
+          </div>
+          
+          <div style="margin-bottom:8px;font-size:15px;font-weight:700">Pertanyaan kuesioner lainnya:</div>
+          <textarea id="pertanyaanKuesioner" placeholder="Tuliskan pertanyaan kelompok..." style="width:100%;min-height:80px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;resize:vertical;margin-bottom:18px"></textarea>
+          
+          <div style="margin-bottom:14px;font-size:15px;font-weight:700">B. Perbandingan Cara Pengumpulan Data</div>
+          <div style="margin-bottom:10px;font-size:15px">Perhatikan tabel perbandingan cara pengumpulan data:</div>
           <div style="overflow-x:auto;margin-bottom:24px">
-            <table style="width:100%;border-collapse:collapse;font-size:14px;text-align:left">
+            <table style="width:100%;border-collapse:collapse;font-size:13px;text-align:left">
               <tr style="background:#e8f0ff;font-weight:700">
-                <th style="padding:10px 8px;border:1px solid var(--line);min-width:120px">Aspek</th>
-                <th style="padding:10px 8px;border:1px solid var(--line);min-width:150px">Angket Tertulis</th>
-                <th style="padding:10px 8px;border:1px solid var(--line);min-width:150px">Angket Digital</th>
-                <th style="padding:10px 8px;border:1px solid var(--line);min-width:120px">Wawancara</th>
+                <th style="padding:10px 8px;border:1px solid var(--line);width:100px">Aspek</th>
+                <th style="padding:10px 8px;border:1px solid var(--line);width:120px">Angket Tertulis</th>
+                <th style="padding:10px 8px;border:1px solid var(--line);width:120px">Angket Digital</th>
+                <th style="padding:10px 8px;border:1px solid var(--line);width:120px">Wawancara</th>
               </tr>
               <tr>
                 <td style="padding:8px;border:1px solid var(--line);font-weight:600">Kecepatan</td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
+                <td style="padding:8px;border:1px solid var(--line)">Cukup lambat (harus dibagikan dan dikumpulkan manual)</td>
+                <td style="padding:8px;border:1px solid var(--line)">Sangat cepat (bisa dikirim dan dikumpulkan secara online</td>
+                <td style="padding:8px;border:1px solid var(--line)">Relatif lama (dilakukan satu per satu)</td>
               </tr>
               <tr>
                 <td style="padding:8px;border:1px solid var(--line);font-weight:600">Biaya</td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
+                <td style="padding:8px;border:1px solid var(--line)">Cukup mahal (biaya cetak dan distribusi)</td>
+                <td style="padding:8px;border:1px solid var(--line)">Lebih murah (tanpa biaya cetak, hanya internet)</td>
+                <td style="padding:8px;border:1px solid var(--line)">Paling mahal (butuh waktu dan tenaga pewawancara)</td>
               </tr>
               <tr>
                 <td style="padding:8px;border:1px solid var(--line);font-weight:600">Jangkauan</td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
+                <td style="padding:8px;border:1px solid var(--line)">Terbatas pada lokasi tertentu</td>
+                <td style="padding:8px;border:1px solid var(--line)">Sangat luas (bisa menjangkau berbagai daerah)</td>
+                <td style="padding:8px;border:1px solid var(--line)">Terbatas (tergantung lokasi dan waktu)</td>
               </tr>
               <tr>
                 <td style="padding:8px;border:1px solid var(--line);font-weight:600">Akurasi Data</td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
+                <td style="padding:8px;border:1px solid var(--line)">Cukup akurat, tergantung kejujuran responden</td>
+                <td style="padding:8px;border:1px solid var(--line)">Cukup akurat, data otomatis terekam</td>
+                <td style="padding:8px;border:1px solid var(--line)">Sangat akurat karena bisa klarifikasi langsung</td>
               </tr>
               <tr>
                 <td style="padding:8px;border:1px solid var(--line);font-weight:600">Kemudahan</td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Jelaskan..." style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
+                <td style="padding:8px;border:1px solid var(--line)">Kurang praktis (harus tulis manual)</td>
+                <td style="padding:8px;border:1px solid var(--line)">Sangat mudah dan praktis</td>
+                <td style="padding:8px;border:1px solid var(--line)">Cukup sulit (butuh keterampilan bertanya)</td>
               </tr>
             </table>
           </div>
+          
+          <div style="margin-bottom:14px;font-size:15px;font-weight:700">C. Menentukan Cara Pengumpulan Data</div>
+          <div style="margin-bottom:10px;font-size:15px">Dari tabel bagian B di atas, cara pengumpulan data apa yang akan kalian gunakan?</div>
+          <div style="margin-bottom:18px;font-size:15px;line-height:2.2">
+            <label style="display:block;margin-bottom:8px"><input type="checkbox" name="carapengumpulan" value="Angket Tertulis"> ☐ Angket Tertulis (responden mengisi di kertas)</label>
+            <label style="display:block;margin-bottom:8px"><input type="checkbox" name="carapengumpulan" value="Angket Digital"> ☐ Angket Digital (responden mengisi di aplikasi/online)</label>
+            <label style="display:block;margin-bottom:8px"><input type="checkbox" name="carapengumpulan" value="Wawancara"> ☐ Wawancara (peneliti bertanya langsung)</label>
+            <label style="display:block"><input type="checkbox" name="carapengumpulan" value="Kombinasi"> ☐ Kombinasi (lebih dari satu cara)</label>
+          </div>
+          
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(203)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="updateSlide(205)" class="btn-primary">Selanjutnya →</button>
@@ -328,11 +636,17 @@
             <span>siswa</span>
           </div>
           <div style="margin-bottom:14px;font-size:15px;font-weight:700">B. Tentukan Ukuran Sampel</div>
-          <div style="margin-bottom:18px;font-size:15px;display:flex;align-items:center;flex-wrap:wrap;gap:6px">
-            <input type="number" placeholder="..." style="width:100px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
-            <span>=</span>
-            <input type="text" placeholder="..." style="width:100px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif">
-            <span>% Persentase sampel:</span>
+          <div style="margin-bottom:18px;font-size:15px">
+            <div style="margin-bottom:10px">Jumlah sampel yang direncanakan: <input type="number" placeholder="..." style="width:100px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif"> siswa</div>
+            <div style="margin-bottom:10px">
+              <span>Persentase sampel:</span>
+              <div style="display:inline-block;margin-left:10px;text-align:center">
+                <input type="number" placeholder="..." style="width:80px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;display:block;margin:0 auto;margin-bottom:2px">
+                <div style="border-top:2px solid #0f172a;width:80px;height:1px;margin:4px auto"></div>
+                <input type="number" placeholder="..." style="width:80px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;display:block;margin:0 auto;margin-top:2px">
+              </div>
+              <span style="margin-left:10px">× 100 = <input type="text" placeholder="..." style="width:80px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif"> %</span>
+            </div>
           </div>
           <div style="margin-bottom:14px;font-size:15px;font-weight:700">C. Pastikan Sampel Representatif</div>
           <div style="margin-bottom:10px;font-size:15px">Apakah sampel kalian mewakili keberagaman populasi?</div>
@@ -568,60 +882,6 @@
               </tr>
             </table>
           </div>
-          <div style="margin-bottom:14px;font-size:15px;font-weight:700">Milestone (Pencapaian Penting) Proyek</div>
-          <div style="margin-bottom:10px;font-size:15px">Milestone adalah pencapaian penting yang menunjukkan proyek berjalan sesuai<br>rencana.</div>
-          <div style="overflow-x:auto;margin-bottom:24px">
-            <table style="width:100%;border-collapse:collapse;font-size:14px;text-align:left">
-              <tr style="background:#e8f0ff;font-weight:700">
-                <th style="padding:10px 8px;border:1px solid var(--line);width:60px">No.</th>
-                <th style="padding:10px 8px;border:1px solid var(--line)">Milestone</th>
-                <th style="padding:10px 8px;border:1px solid var(--line);width:150px">Target Tanggal</th>
-                <th style="padding:10px 8px;border:1px solid var(--line);width:120px">Status</th>
-              </tr>
-              <tr>
-                <td style="padding:8px;border:1px solid var(--line);text-align:center">1</td>
-                <td style="padding:8px;border:1px solid var(--line)">Perencanaan selesai</td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="date" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Status" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-              </tr>
-              <tr>
-                <td style="padding:8px;border:1px solid var(--line);text-align:center">2</td>
-                <td style="padding:8px;border:1px solid var(--line)">Instrumen siap</td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="date" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Status" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-              </tr>
-              <tr>
-                <td style="padding:8px;border:1px solid var(--line);text-align:center">3</td>
-                <td style="padding:8px;border:1px solid var(--line)">Data 50% terkumpul</td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="date" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Status" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-              </tr>
-              <tr>
-                <td style="padding:8px;border:1px solid var(--line);text-align:center">4</td>
-                <td style="padding:8px;border:1px solid var(--line)">Data 100% terkumpul</td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="date" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Status" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-              </tr>
-              <tr>
-                <td style="padding:8px;border:1px solid var(--line);text-align:center">5</td>
-                <td style="padding:8px;border:1px solid var(--line)">Analisis data selesai</td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="date" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Status" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-              </tr>
-              <tr>
-                <td style="padding:8px;border:1px solid var(--line);text-align:center">6</td>
-                <td style="padding:8px;border:1px solid var(--line)">Infografis selesai</td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="date" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Status" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-              </tr>
-              <tr>
-                <td style="padding:8px;border:1px solid var(--line);text-align:center">7</td>
-                <td style="padding:8px;border:1px solid var(--line)">Presentasi dilaksanakan</td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="date" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-                <td style="padding:8px;border:1px solid var(--line)"><input type="text" placeholder="Status" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"></td>
-              </tr>
-            </table>
-          </div>
           <div style="margin-top:24px;display:flex;justify-content:space-between;gap:12px">
             <button onclick="updateSlide(206)" class="btn-ghost">← Sebelumnya</button>
             <button onclick="updateSlide(208)" class="btn-primary">Selanjutnya →</button>
@@ -651,5 +911,6 @@
       </section>
     </div>
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
